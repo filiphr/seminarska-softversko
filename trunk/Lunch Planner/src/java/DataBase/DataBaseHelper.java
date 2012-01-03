@@ -101,6 +101,10 @@ public class DataBaseHelper {
         String str = null;
         return str;
     }
-    
+    public static List<String> getAllUsernames()
+    {
+        List<String> lst = null;
+        return lst;
+    }
 }
     
