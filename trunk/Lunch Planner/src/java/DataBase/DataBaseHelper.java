@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class DataBaseHelper {
 
-    private ResultSet GetQuery(String query) {
+    public Pair GetQuery(String query) {
         String dbUrl = "jdbc:mysql://localhost:3306/mydb";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
@@ -36,18 +36,18 @@ public class DataBaseHelper {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
+        } /*finally {
             try{
                 conect.close();
             }catch(SQLException ex)
             {
                 Logger.getLogger(DataBaseHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        return rs;
+        }*/
+        return new Pair(rs, conect);
     }
     
-    private int ExecuteQuery(String Query)
+    public int ExecuteQuery(String Query)
     {
         String dbUrl = "jdbc:mysql://localhost:3306/mydb";
         String driver = "com.mysql.jdbc.Driver";
@@ -71,6 +71,30 @@ public class DataBaseHelper {
             }
         }
         return number;
+    }
+    
+    public static List<List<String>> getAllUserAndNames() throws SQLException
+    {
+        Pair p = new DataBaseHelper().GetQuery("SELECT * FROM Korisnik");
+        List<List<String>> lst = null;
+        List<String> tmp = null;
+        try
+        {
+        while(p.rSet.next())
+        {
+            tmp.add(p.rSet.getString("Ime"));
+            tmp.add(p.rSet.getString("Prezime"));
+            tmp.add(p.rSet.getString("User"));
+            tmp.add(p.rSet.getString("Email"));
+            lst.add(tmp);
+            tmp.clear();
+        }
+        p.conect.close();
+        }catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return lst;
     }
     
     public static boolean CheckUser(String user, String password)
