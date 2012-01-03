@@ -133,5 +133,49 @@ public class DataBaseHelper {
             
         return lst;
     }
+    public static String getUserIme (String username)
+    {
+        String str = null;
+        if("".equals(username))
+            str = new String();
+        else
+        {
+            //
+        }
+        return str;
+    }
+    public static String getUserPrezime (String username)
+    {
+        String str = null;
+        if("".equals(username))
+            str = new String();
+        else
+        {
+            //
+        }
+        return str;
+    }
+    public static String getUserEmail (String username)
+    {
+        String str = null;
+        if("".equals(username))
+            str = new String();
+        else
+        {
+            //
+        }
+        return str;
+    }
+    public static String getUserLozinka (String username)
+    {
+        String str = null;
+        if("".equals(username))
+            str = new String();
+        else
+        {
+            //
+        }
+        return str;
+    }
 }
     
