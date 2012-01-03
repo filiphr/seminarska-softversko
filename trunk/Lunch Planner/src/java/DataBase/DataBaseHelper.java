@@ -6,7 +6,6 @@ package DataBase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,30 +20,32 @@ import java.util.logging.Logger;
  */
 public class DataBaseHelper {
 
-    public Pair GetQuery(String query) {
+    public static List<String> GetQuery(String query, int number) {
         String dbUrl = "jdbc:mysql://localhost:3306/mydb";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
         String pass = "";
         Connection conect = null;
         ResultSet rs = null;
+        List<String> lst = new ArrayList<String>();
         try {
             Class.forName(driver).newInstance();
             conect = DriverManager.getConnection(dbUrl, user, pass);
             Statement s = conect.createStatement();
             rs = s.executeQuery(query);
-
+            while(rs.next())
+                lst.add(rs.getString(number));
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } /*finally {
+        } finally {
             try{
                 conect.close();
             }catch(SQLException ex)
             {
                 Logger.getLogger(DataBaseHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }*/
-        return new Pair(rs, conect);
+        }
+        return lst;
     }
     
     public int ExecuteQuery(String Query)
@@ -73,27 +74,11 @@ public class DataBaseHelper {
         return number;
     }
     
-    public static List<List<String>> getAllUserAndNames() throws SQLException
+    public static List<List<String>> getAllNamesSNamesUsersEmails() throws SQLException
     {
-        Pair p = new DataBaseHelper().GetQuery("SELECT * FROM Korisnik");
-        List<List<String>> lst = null;
-        List<String> tmp = null;
-        try
-        {
-        while(p.rSet.next())
-        {
-            tmp.add(p.rSet.getString("Ime"));
-            tmp.add(p.rSet.getString("Prezime"));
-            tmp.add(p.rSet.getString("User"));
-            tmp.add(p.rSet.getString("Email"));
-            lst.add(tmp);
-            tmp.clear();
-        }
-        p.conect.close();
-        }catch(SQLException e)
-        {
-            e.printStackTrace();
-        }
+        List<List<String>> lst = new ArrayList<List<String>>();;
+            for(int i = 1; i<=4; i++)
+                lst.add(GetQuery("SELECT * FROM korisnik", i));
         return lst;
     }
     

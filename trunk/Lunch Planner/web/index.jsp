@@ -4,6 +4,8 @@
     Author     : user
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="DataBase.DataBaseHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
