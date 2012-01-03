@@ -1,57 +1,36 @@
-/* 
-    Document   : tabs-accordion
-    Created on : Jan 3, 2012, 2:31:36 PM
-    Author     : pc
-    Description:
-        Purpose of the stylesheet follows.
-*/
-
-/* 
-   TODO customize this sample style
-   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
-*/
-#accordion {
-	background:#333 url(/img/global/gradient/h300.png) 0 0;
-	width: 300px;
-	border:1px solid #333;	
-	-background:#666;
+.AccordionTitle, .AccordionContent, .AccordionContainer
+{
+  position:relative;
+  width:200px;
 }
 
-/* accordion header */
-#accordion h2 {
-	background:#ccc url(/img/global/gradient/h30.png);
-	margin:0;
-	padding:5px 15px;
-	font-size:14px;
-	font-weight:normal;
-	border:1px solid #fff;
-	border-bottom:1px solid #ddd;
-	cursor:pointer;		
+.AccordionTitle
+{
+  height:20px;
+  overflow:hidden;
+  cursor:pointer;
+  font-family:Arial;
+  font-size:8pt;
+  font-weight:bold;
+  vertical-align:middle;
+  text-align:center;
+  background-repeat:repeat-x;
+  display:table-cell;
+  background-image:url('title_repeater.jpg');
+  -moz-user-select:none;
 }
 
-/* currently active header */
-#accordion h2.current {
-	cursor:default;
-	background-color:#fff;
+.AccordionContent
+{
+  height:0px;
+  overflow:auto;
+  display:none; 
 }
 
-/* accordion pane */
-#accordion .pane {
-	border:1px solid #fff;
-	border-width:0 2px;
-	display:none;
-	height:180px;
-	padding:15px;
-	color:#fff;
-	font-size:12px;
+.AccordionContainer
+{
+  border-top: solid 1px #C1C1C1;
+  border-bottom: solid 1px #C1C1C1;
+  border-left: solid 2px #C1C1C1;
+  border-right: solid 2px #C1C1C1;
 }
-
-/* a title inside pane */
-#accordion .pane h3 {
-	font-weight:normal;
-	margin:0 0 -5px 0;
-	font-size:16px;
-	color:#999;
-}
-
-
