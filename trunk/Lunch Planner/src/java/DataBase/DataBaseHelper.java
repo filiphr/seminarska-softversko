@@ -123,7 +123,14 @@ public class DataBaseHelper {
     }
     public static List<String> getAllMenuItems(String RestaurantNames)
     {
-        List<String> lst = new ArrayList<String>();
+        List<String> lst = null;
+        if("".equals(RestaurantNames))
+            lst = new ArrayList<String>();
+        else
+        {
+            /* IGOR TVOJOT KOD TUKA SAMO DA NE VRAKJA NULL NIKOGAS*/
+        }
+            
         return lst;
     }
 }
