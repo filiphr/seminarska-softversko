@@ -121,5 +121,10 @@ public class DataBaseHelper {
         List<String> lst = new ArrayList<String>();
         return lst;
     }
+    public static List<String> getAllMenuItems(String RestaurantNames)
+    {
+        List<String> lst = new ArrayList<String>();
+        return lst;
+    }
 }
     
