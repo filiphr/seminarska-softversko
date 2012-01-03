@@ -10,19 +10,32 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <%! String resNameDeleteItem = "";%>
-    <%! String resNameAddItem = "";%>
-    <%! String resNameDelete = "";%>
-    <%! String usrNameUpdate = "";%>
-    <%! String usrNameDelete = "";%>
-
+    <input type="hidden" name="selectedAccordion" value="0"/>
+    <% int selectedAccordion = 0;
+        if (request.getParameter("selectedAccordion") != null) {
+            selectedAccordion = Integer.parseInt(request.getParameter("selectedAccordion"));
+        }
+    %>
+    <% String usrNameDelete = "";
+        if (request.getParameter("usrNameDelete") != null) {
+            usrNameDelete = request.getParameter("usrNameDelete");
+        }
+    %>
+    <% String resNameDeleteItem = "";
+        if (request.getParameter("resNameDeleteItem") != null) {
+            resNameDeleteItem = request.getParameter("resNameDeleteItem");
+        }
+    %>
     <script lang="JavaScript" src="accordion-js.js"></script>
+    <script lang="JavaScript" src="submiting_funcions.js"></script>
     <link rel="stylesheet" type="text/css" href="tabs-accordion.css">
 
     <head>
         <title>Ажурирање на податоци</title>
     </head>
+    
     <body>
+        
         <div id="AccordionContainer" class="AccordionContainer">
 
             <div onclick="runAccordion(1);">
@@ -51,25 +64,28 @@
                 </div>
             </div>
             <div id="Accordion2Content" class="AccordionContent">
-                <form method="POST" action="UpdateUser.do">
-                    <table>
-                        <tr><td colspan="2"><select name="Username" size="1">
-                                    <%
-                                        List<String> iminja1 = DataBaseHelper.getAllUsernames();
-                                        for (int i = 0; i < iminja1.size(); i++) {
-                                            String s = iminja1.get(i);
-                                    %>
-                                    <option value="s"><%=s%></option>
-                                    <%
-                                        }
-                                    %>
-                                </select></td></tr>
+
+                <table>
+                    <form id="usrUpdateForm" action="" method="POST"/>
+                    <tr><td colspan="2"><select name="Username" size="1" onclick="<%selectedAccordion = 2;%>;submitUserUpdate()">
+                                <%
+                                    List<String> iminja1 = DataBaseHelper.getAllUsernames();
+                                    for (int i = 0; i < iminja1.size(); i++) {
+                                        String s = iminja1.get(i);
+                                %>
+                                <option value="s"><%=s%></option>
+                                <%
+                                    }
+                                %>
+                            </select></td></tr>
+                    </form>
+                    <form method="POST" action="UpdateUser.do">
                         <tr><td>Име</td><td><input type="text" name="Ime"/></td></tr>
                         <tr><td>Презиме</td><td><input type="text" name="Prezime"/></td></tr>
                         <tr><td>Лозинка</td><td><input type="text" name="Lozinka"/></td></tr>
                         <tr><td>e-mail</td><td><input type="text" name="email"/></td></tr>
                         <tr><td colspan="2"><input type="submit" value="Промени"/></td></tr>
-                    </table>
+                </table>
                 </form>
             </div>
             <div onclick="runAccordion(3);">
@@ -79,7 +95,7 @@
             </div>
             <div id="Accordion3Content" class="AccordionContent">
                 <form method="POST" action="DeleteUser.do">
-                    <select name="Username" size="1">
+                    <select name="Username" size="1" onclick="<%selectedAccordion = 3;%>;submitDeleteUser()">
                         <%
                             List<String> iminja2 = DataBaseHelper.getAllUsernames();
                             for (int i = 0; i < iminja2.size(); i++) {
@@ -90,7 +106,7 @@
                             }
                         %>
                     </select></br>
-                    Име и презиме:Фукнција за име и презиме <%-- dodadi ime i prezime --%></br>
+                    Име и презиме:<%=DataBaseHelper.getUserIme(usrNameDelete)%> <%=DataBaseHelper.getUserPrezime(usrNameDelete)%> </br>
                     <input type="submit" value="Избриши"/>
                 </form>
 
