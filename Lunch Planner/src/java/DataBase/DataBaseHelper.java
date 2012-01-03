@@ -104,7 +104,12 @@ public class DataBaseHelper {
     }
     public static List<String> getAllUsernames()
     {
-        List<String> lst = new ArrayList<String>() {};
+        List<String> lst = new ArrayList<String>();
+        return lst;
+    }
+    public static List<String> getAllRestaurantNames()
+    {
+        List<String> lst = new ArrayList<String>();
         return lst;
     }
 }
