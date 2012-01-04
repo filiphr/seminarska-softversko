@@ -17,6 +17,10 @@
         <servlet-name>Popolni</servlet-name>
         <servlet-class>Popolni</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddUser</servlet-name>
+        <servlet-class>Admin.AddUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -24,6 +28,10 @@
     <servlet-mapping>
         <servlet-name>Popolni</servlet-name>
         <url-pattern>/Popolni.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddUser</servlet-name>
+        <url-pattern>/AddUser.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

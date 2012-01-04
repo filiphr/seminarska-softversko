@@ -11,7 +11,11 @@
 <!DOCTYPE html>
 <html>
 
-    <%! int selectedAccordion = 0;%> 
+    <% int selectedAccordion = 0;
+        if (request.getParameter("selectedAccordion") != null) 
+            if (request.getParameter("selectedAccordion")!="0")
+            selectedAccordion = Integer.parseInt(request.getParameter("selectedAccordion"));
+    %> 
     <% String usrNameDelete = "";
         if (request.getParameter("usrNameDelete") != null) {
             usrNameDelete = request.getParameter("usrNameDelete");
@@ -31,13 +35,13 @@
     <script lang="JavaScript" src="submiting_functions.js"></script>
     <link rel="stylesheet" type="text/css" href="tabs-accordion.css">
 
-    <head >
-        <title>Ажурирање на податоци </title>
+    <head>
+        <title>Ажурирање на податоци <%=selectedAccordion%></title>
     </head>
 
     <body onload="runAccordion(<%=selectedAccordion%>);">
 
-        <form id="ViewState"> 
+        <form id="ViewState" method="post" action=""> 
             <input type="hidden" name="selectedAccordion" value="0"/>
         </form>
 
@@ -52,7 +56,7 @@
             </div>
             <div id="Accordion1Content" class="AccordionContent">
 
-                <form method="POST" action="AddUser.do">
+                <form method="post" action="/AddUser.do">
                     <table>
                         <tr><td>Корисничко име</td><td><input type="text" name="Username"/></td></tr>
                         <tr><td>Име</td><td><input type="text" name="Ime"/></td></tr>
@@ -77,7 +81,7 @@
 
                 <table>
                     <form id="usrUpdateForm" action="" method="post"/>
-                    <tr><td colspan="2"><select name="usrNameUpdate" size="1" onchange="submitUserUpdate();<%=selectedAccordion = 2%>">
+                    <tr><td colspan="2"><select name="usrNameUpdate" size="1"  onchange="submitUserUpdate();" >
                                 <option value="">-селектирај корисник-</option>
                                 <%
                                     List<String> iminja1 = DataBaseHelper.getAllUsernames();
@@ -119,7 +123,7 @@
             <div id="Accordion3Content" class="AccordionContent">
                 <table>
                 <form method="post" action="" id="usrDeleteForm"/>
-                <tr><td colspan="2"><select name="usrNameDelete" size="1" onchange="submitUserDelete();<%=selectedAccordion = 3%>">
+                <tr><td colspan="2"><select name="usrNameDelete" size="1" onchange="submitUserDelete();" >
                     <option value="">-селектирај корисник-</option>
                     <%
                         List<String> iminja2 = DataBaseHelper.getAllUsernames();
@@ -193,14 +197,13 @@
 
 
 
-
             <div onclick="runAccordion(6);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Додавање ставка во менито
                 </div>
             </div>
             <div id="Accordion6Content" class="AccordionContent">
-                <form method="POST" action="AddUser.do">
+                <form method="POST" action="AddMenuItem.do">
                     <table>
                         <tr><td colspan="2"><select name="Ime" size="1">
                                     <%
@@ -230,10 +233,9 @@
                 </div>
             </div>
             <div id="Accordion7Content" class="AccordionContent">
-
-                <form method="POST" action="AddUser.do">
-                    <table>
-                        <tr><td><select name="Ime" size="1">
+                <table>
+                    <form method="post" action="" id="itemDeleteForm">  
+                        <tr><td><select name="resNameDeleteItem" size="1" onchange="submitItemDelete()">
                                     <%
                                         List<String> lst3 = DataBaseHelper.getAllRestaurantNames();
                                         for (int i = 0; i < lst3.size(); i++) {
@@ -244,6 +246,9 @@
                                         }
                                     %>
                                 </select></td></tr>
+                    </form>
+                    <form method="POST" action="DeleteMenuItem.do">
+                        <input type="hidden" name="Ime" value="<%=resNameDeleteItem%>"
                         <tr><td><select name="Meni" size="1">
                                     <%
                                         List<String> lst4 = DataBaseHelper.getAllMenuItems(resNameDeleteItem);
@@ -256,7 +261,7 @@
                                     %>
                                 </select></td></tr>
                         <tr><td><input type="submit" value="Избриши"/></td></tr>
-                    </table>
+                </table>
                 </form>
 
             </div>
