@@ -43,6 +43,8 @@
     
         <div id="AccordionContainer" class="AccordionContainer">
 
+            
+            
             <div onclick="runAccordion(1);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Додавање на корисник
@@ -63,6 +65,9 @@
 
             </div>
 
+            
+            
+            
             <div onclick="runAccordion(2);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Менување на корисник
@@ -78,21 +83,28 @@
                                                     for (int i = 0; i < iminja1.size(); i++) {
                                                         String s = iminja1.get(i);
                                                 %>
-                                                <option value="s"><%=s%></option>
+                                                <option value="<%=s%>"><%=s%></option>
                                 <%
                                     }
                                 %>
                             </select></td></tr>
                     </form>
                     <form method="POST" action="UpdateUser.do">
-                        <tr><td>Име</td><td><input type="text" name="Ime"/></td></tr>
-                        <tr><td>Презиме</td><td><input type="text" name="Prezime"/></td></tr>
-                        <tr><td>Лозинка</td><td><input type="text" name="Lozinka"/></td></tr>
-                        <tr><td>e-mail</td><td><input type="text" name="email"/></td></tr>
+                        <tr><td>Име</td>
+                            <td><input type="text" name="Ime" value="<%=DataBaseHelper.getUserIme(usrNameUpdate)%>"/></td></tr>
+                        <tr><td>Презиме</td>
+                            <td><input type="text" name="Prezime" value="<%=DataBaseHelper.getUserPrezime(usrNameUpdate)%>"/></td></tr>
+                        <tr><td>Лозинка</td>
+                            <td><input type="text" name="Lozinka" value="<%=DataBaseHelper.getUserLozinka(usrNameUpdate) %>"/></td></tr>
+                        <tr><td>e-mail</td><td><input type="text" name="email" value="<%=DataBaseHelper.getUserEmail(usrNameUpdate) %>"/></td></tr>
                         <tr><td colspan="2"><input type="submit" value="Промени"/></td></tr>
                 </table>
                 </form>
             </div>
+                        
+                        
+                        
+                        
             <div onclick="runAccordion(3);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Бришење на корисник
@@ -116,6 +128,10 @@
                 </form>
 
             </div>
+                    
+                    
+                    
+                    
             <div onclick="runAccordion(4);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Додавање на ресторант
@@ -131,6 +147,10 @@
                 </form>
 
             </div>
+                    
+                    
+                    
+                    
             <div onclick="runAccordion(5);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Бришење ресторант
@@ -155,6 +175,10 @@
                 </form>
 
             </div>
+                                
+                                
+                                
+                                
             <div onclick="runAccordion(6);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Додавање ставка во менито
@@ -181,6 +205,10 @@
                 </form>
 
             </div>
+                                
+                                
+                                
+                                
             <div onclick="runAccordion(7);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Бришење ставка од менито
@@ -217,6 +245,9 @@
                 </form>
 
             </div>
+                                
+                                
+                                
         </div>
     </body>
 </html>
