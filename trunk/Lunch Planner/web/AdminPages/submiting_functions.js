@@ -6,12 +6,16 @@
 
 function submitUserUpdate()
 {
-    var forma= document.getElementById("usrUpdateForm");
+    var forma = document.getElementById("ViewState");
+    forma.elements["selectedAccordion"].value="2";
+        forma= document.getElementById("usrUpdateForm");
     forma.submit();
 }
 
 function submitUserDelete()
 {
-    var forma= document.getElementById("usrDeleteForm");
+    var forma = document.getElementById("ViewState");
+    forma.elements["selectedAccordion"].value="3";
+        forma== document.getElementById("usrDeleteForm");
     forma.submit();
 }
