@@ -10,13 +10,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <form id="ViewState" 
-    <input type="hidden" name="selectedAccordion" value="0"/>
-    <% int selectedAccordion = 0;
-        if (request.getParameter("selectedAccordion") != null) {
-            selectedAccordion = Integer.parseInt(request.getParameter("selectedAccordion"));
-        }
-    %>
+
+    <%! int selectedAccordion = 0;%> 
     <% String usrNameDelete = "";
         if (request.getParameter("usrNameDelete") != null) {
             usrNameDelete = request.getParameter("usrNameDelete");
@@ -37,15 +32,19 @@
     <link rel="stylesheet" type="text/css" href="tabs-accordion.css">
 
     <head >
-        <title>Ажурирање на податоци</title>
+        <title>Ажурирање на податоци </title>
     </head>
 
-    <body onpageshow="runAccordion(<%=selectedAccordion%>);">
-    
+    <body onload="runAccordion(<%=selectedAccordion%>);">
+
+        <form id="ViewState"> 
+            <input type="hidden" name="selectedAccordion" value="0"/>
+        </form>
+
         <div id="AccordionContainer" class="AccordionContainer">
 
-            
-            
+
+
             <div onclick="runAccordion(1);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Додавање на корисник
@@ -66,9 +65,9 @@
 
             </div>
 
-            
-            
-            
+
+
+
             <div onclick="runAccordion(2);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Менување на корисник
@@ -78,62 +77,76 @@
 
                 <table>
                     <form id="usrUpdateForm" action="" method="post"/>
-                    <tr><td colspan="2"><select name="usrNameUpdate" size="1" onchange="submitUserUpdate()">
+                    <tr><td colspan="2"><select name="usrNameUpdate" size="1" onchange="submitUserUpdate();<%=selectedAccordion = 2%>">
                                 <option value="">-селектирај корисник-</option>
-                                                <%
-                                                    List<String> iminja1 = DataBaseHelper.getAllUsernames();
-                                                    for (int i = 0; i < iminja1.size(); i++) {
-                                                        String s = iminja1.get(i);
-                                                %>
-                                                <option value="<%=s%>"><%=s%></option>
+                                <%
+                                    List<String> iminja1 = DataBaseHelper.getAllUsernames();
+                                    for (int i = 0; i < iminja1.size(); i++) {
+                                        String s = iminja1.get(i);
+                                %>
+                                <option value="<%=s%>"
+                                        <% if (s.equals(usrNameUpdate)) {
+                                                out.write("selected=\"true\"");
+                                            }%>
+                                                    ><%=s%></option>
                                 <%
                                     }
                                 %>
                             </select></td></tr>
                     </form>
                     <form method="POST" action="UpdateUser.do">
+                        <input type="hidden" name="Username"value="<%=usrNameUpdate%>"/>
                         <tr><td>Име</td>
                             <td><input type="text" name="Ime" value="<%=DataBaseHelper.getUserIme(usrNameUpdate)%>"/></td></tr>
                         <tr><td>Презиме</td>
                             <td><input type="text" name="Prezime" value="<%=DataBaseHelper.getUserPrezime(usrNameUpdate)%>"/></td></tr>
                         <tr><td>Лозинка</td>
-                            <td><input type="text" name="Lozinka" value="<%=DataBaseHelper.getUserLozinka(usrNameUpdate) %>"/></td></tr>
-                        <tr><td>e-mail</td><td><input type="text" name="email" value="<%=DataBaseHelper.getUserEmail(usrNameUpdate) %>"/></td></tr>
+                            <td><input type="text" name="Lozinka" value="<%=DataBaseHelper.getUserLozinka(usrNameUpdate)%>"/></td></tr>
+                        <tr><td>e-mail</td><td><input type="text" name="email" value="<%=DataBaseHelper.getUserEmail(usrNameUpdate)%>"/></td></tr>
                         <tr><td colspan="2"><input type="submit" value="Промени"/></td></tr>
                 </table>
                 </form>
             </div>
-                        
-                        
-                        
-                        
+
+
+
+
             <div onclick="runAccordion(3);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Бришење на корисник
                 </div>
             </div>
             <div id="Accordion3Content" class="AccordionContent">
-                <form method="POST" action="DeleteUser.do">
-                    <select name="Username" size="1" onclick="submitDeleteUser()">
-                        <%
-                            List<String> iminja2 = DataBaseHelper.getAllUsernames();
-                            for (int i = 0; i < iminja2.size(); i++) {
-                                String s = iminja2.get(i);
-                        %>
-                        <option value="<%=s%>"><%=s%></option>
-                        <%
-                            }
-                        %>
-                    </select></br>
-                    Име и презиме:<%=DataBaseHelper.getUserIme(usrNameDelete)%> <%=DataBaseHelper.getUserPrezime(usrNameDelete)%> </br>
-                    <input type="submit" value="Избриши"/>
+                <table>
+                <form method="post" action="" id="usrDeleteForm"/>
+                <tr><td colspan="2"><select name="usrNameDelete" size="1" onchange="submitUserDelete();<%=selectedAccordion = 3%>">
+                    <option value="">-селектирај корисник-</option>
+                    <%
+                        List<String> iminja2 = DataBaseHelper.getAllUsernames();
+                        for (int i = 0; i < iminja2.size(); i++) {
+                            String s = iminja2.get(i);
+                    %>
+                    <option value="<%=s%>"
+                            <% if (s.equals(usrNameDelete)) {
+                                    out.write("selected=\"true\"");
+                                }%>
+                            ><%=s%></option>
+                    <%
+                        }
+                    %>
+                        </select></td></tr>
                 </form>
-
+                <input type="hidden" name="Username"value="<%=usrNameDelete%>"/>
+                <form method="POST" action="DeleteUser.do">
+                    <tr><td>Име и презиме:</td><td><%=DataBaseHelper.getUserIme(usrNameDelete)%> <%=DataBaseHelper.getUserPrezime(usrNameDelete)%> </td></tr>
+                    <tr><td colspan="2"><input type="submit" value="Избриши"/></td></tr>
+                </form>
+                </table>
             </div>
-                    
-                    
-                    
-                    
+
+
+
+
             <div onclick="runAccordion(4);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Додавање на ресторант
@@ -149,10 +162,10 @@
                 </form>
 
             </div>
-                    
-                    
-                    
-                    
+
+
+
+
             <div onclick="runAccordion(5);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Бришење ресторант
@@ -177,10 +190,10 @@
                 </form>
 
             </div>
-                                
-                                
-                                
-                                
+
+
+
+
             <div onclick="runAccordion(6);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Додавање ставка во менито
@@ -207,10 +220,10 @@
                 </form>
 
             </div>
-                                
-                                
-                                
-                                
+
+
+
+
             <div onclick="runAccordion(7);">
                 <div class="AccordionTitle" onselectstart="return false;">
                     Бришење ставка од менито
@@ -247,9 +260,9 @@
                 </form>
 
             </div>
-                                
-                                
-                                
+
+
+
         </div>
     </body>
 </html>
