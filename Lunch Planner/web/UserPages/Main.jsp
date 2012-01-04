@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        
+
         <form method="POST" action="">
             <table>
                 <tr class="header">
@@ -30,7 +30,24 @@
                     <td>
                         <%=request.getParameter("username")%><br/>
                         <%=request.getParameter("password")%><br/>
+                        <%=request.getSession().getAttribute("username")%><br/>
+                        <%Cookie[] cookies = request.getCookies();
+                            for (int i = 0; i < cookies.length; i++) {
+                                Cookie c = cookies[i];
+                                if ("username".equals(c.getName())) {
+                        %>
+                        <%=c.getValue()%><br/>
+                        <%
+                            }
+                            if ("password".equals(c.getName())) {
+                        %>
+                        <%=c.getValue()%><br/>
+                        <%
+                                }
+                            }
+                        %>
                     </td>
+
                 </tr>
                 <tr class="footer" >
                     <td>
