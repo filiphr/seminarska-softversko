@@ -12,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -71,24 +72,26 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = null;
-        String password = null;
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         String remember = request.getParameter("remember");
         //DO check in database
 
-        username=request.getParameter("username");
-        password=request.getParameter("password");
         if (username != null && password != null) {
-            if ("selected".equals(remember)) {
-                Cookie c = new Cookie("username", username);
-                c.setMaxAge(100000);
-                response.addCookie(c);
+//            if ("selected".equals(remember)) {
+//                Cookie c = new Cookie("username", username);
+//                c.setMaxAge(100000);
+//                response.addCookie(c);
+//
+//                c = new Cookie("password", password);
+//                c.setMaxAge(100000);
+//                response.addCookie(c);
+//            }
 
-                c = new Cookie("password", password);
-                c.setMaxAge(100000);
-                response.addCookie(c);
-            }
-            RequestDispatcher rd = request.getRequestDispatcher("Main.jsp");
+            
+            HttpSession session=request.getSession();
+            session.setAttribute("username", username);
+            RequestDispatcher rd = request.getRequestDispatcher("UserPages/Main.jsp");
             rd.forward(request, response);
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("Najava.jsp");
