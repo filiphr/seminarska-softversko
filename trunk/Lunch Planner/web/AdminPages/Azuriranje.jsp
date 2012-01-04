@@ -21,6 +21,11 @@
             usrNameDelete = request.getParameter("usrNameDelete");
         }
     %>
+    <% String usrNameUpdate = "";
+        if (request.getParameter("usrNameUpdate") != null) {
+            usrNameUpdate = request.getParameter("usrNameUpdate");
+        }
+    %>
     <% String resNameDeleteItem = "";
         if (request.getParameter("resNameDeleteItem") != null) {
             resNameDeleteItem = request.getParameter("resNameDeleteItem");
@@ -30,13 +35,13 @@
     <script lang="JavaScript" src="submiting_funcions.js"></script>
     <link rel="stylesheet" type="text/css" href="tabs-accordion.css">
 
-    <head>
+    <head >
         <title>Ажурирање на податоци</title>
     </head>
-    
+
     <body onpageshow="runAccordion(<%=selectedAccordion%>);">
-        
-    <div id="AccordionContainer" class="AccordionContainer">
+    
+        <div id="AccordionContainer" class="AccordionContainer">
 
             <div onclick="runAccordion(1);">
                 <div class="AccordionTitle" onselectstart="return false;">
@@ -67,13 +72,13 @@
 
                 <table>
                     <form id="usrUpdateForm" action="" method="POST"/>
-                    <tr><td colspan="2"><select name="Username" size="1" onclick=""submitUserUpdate()">
-                                <%
-                                    List<String> iminja1 = DataBaseHelper.getAllUsernames();
-                                    for (int i = 0; i < iminja1.size(); i++) {
-                                        String s = iminja1.get(i);
-                                %>
-                                <option value="s"><%=s%></option>
+                    <tr><td colspan="2"><select name="usrNameUpdate" size="1" onclick=""submitUserUpdate()">
+                                                <%
+                                                    List<String> iminja1 = DataBaseHelper.getAllUsernames();
+                                                    for (int i = 0; i < iminja1.size(); i++) {
+                                                        String s = iminja1.get(i);
+                                                %>
+                                                <option value="s"><%=s%></option>
                                 <%
                                     }
                                 %>
@@ -214,6 +219,4 @@
             </div>
         </div>
     </body>
-    <h1></h1>
-</body>
 </html>
