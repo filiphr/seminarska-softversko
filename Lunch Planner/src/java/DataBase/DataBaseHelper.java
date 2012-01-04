@@ -53,7 +53,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "";
+        String pass = "admin";
         Connection conect = null;
         int number = 0;
         try {
@@ -104,14 +104,14 @@ public class DataBaseHelper {
     public static String getPreferencesMeal(String user)
     {
         List<String> lst = (GetQuery("select Ime from stavkameni,preferences WHERE idStavkaMeni=StavkaMeni_idStavkaMeni And Korisnik_User = '" + user + "'", 1));
-        if(lst.size() != 0)
+        if(!lst.isEmpty())
             return lst.get(0);
         return new String();
     }
     public static String getPreferencesRestoran(String user)
     {
         List<String> lst = (GetQuery("select * from preferences where Korisnik_User = '" + user + "'", 3));
-        if(lst.size() != 0)
+        if(!lst.isEmpty())
             return lst.get(0);
         return new String();
     }
@@ -142,28 +142,28 @@ public class DataBaseHelper {
     public static String getUserIme (String username)
     {
         List<String> lst = (GetQuery("select * from korisnik where User = '" + username + "'", 1));
-        if(lst.size() != 0)
+        if(!lst.isEmpty())
             return lst.get(0);
         return new String();
     }
     public static String getUserPrezime (String username)
     {
         List<String> lst = (GetQuery("select * from korisnik where User = '" + username + "'", 2));
-        if(lst.size() != 0)
+        if(!lst.isEmpty())
             return lst.get(0);
         return new String();
     }
     public static String getUserEmail (String username)
     {
         List<String> lst = (GetQuery("select * from korisnik where User = '" + username + "'", 4));
-        if(lst.size() != 0)
+        if(!lst.isEmpty())
             return lst.get(0);
         return new String();
     }
     public static String getUserLozinka (String username)
     {
         List<String> lst  = (GetQuery("select * from korisnik where User = '" + username + "'", 5));
-        if(lst.size() != 0)
+        if(!lst.isEmpty())
             return lst.get(0);
         return new String();
     }
