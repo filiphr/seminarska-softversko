@@ -6,7 +6,12 @@
 
 function submitUserUpdate()
 {
-    var forma = document.getElementById("usrUpdateForm");
+    var forma= document.getElementById("usrUpdateForm");
     forma.submit();
 }
 
+function submitUserDelete()
+{
+    var forma= document.getElementById("usrDeleteForm");
+    forma.submit();
+}
