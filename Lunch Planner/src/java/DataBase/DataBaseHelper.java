@@ -170,7 +170,7 @@ public class DataBaseHelper {
     }
     public static void insertUser(String ime, String prezime, String user, String email, String password)
     {
-        StringBuilder sqlStr = new StringBuilder("INSERT INTO korisnik VALUES(' ");
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO korisnik VALUES('");
         sqlStr.append(ime);
         sqlStr.append("', '");
         sqlStr.append(prezime);
