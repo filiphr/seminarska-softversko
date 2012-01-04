@@ -14,6 +14,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>POPOLNUVANJE NA BAZATA</h1>
+        <form method="POST" action ="Popolni.do">
+            <input type="submit" value="POPOLNI"/>
+        </form>
     </body>
 </html>
