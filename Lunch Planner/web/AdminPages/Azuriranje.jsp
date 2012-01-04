@@ -34,9 +34,9 @@
         <title>Ажурирање на податоци</title>
     </head>
     
-    <body>
+    <body onpageshow="runAccordion(<%=selectedAccordion%>);">
         
-        <div id="AccordionContainer" class="AccordionContainer">
+    <div id="AccordionContainer" class="AccordionContainer">
 
             <div onclick="runAccordion(1);">
                 <div class="AccordionTitle" onselectstart="return false;">
@@ -67,7 +67,7 @@
 
                 <table>
                     <form id="usrUpdateForm" action="" method="POST"/>
-                    <tr><td colspan="2"><select name="Username" size="1" onclick="<%selectedAccordion = 2;%>;submitUserUpdate()">
+                    <tr><td colspan="2"><select name="Username" size="1" onclick=""submitUserUpdate()">
                                 <%
                                     List<String> iminja1 = DataBaseHelper.getAllUsernames();
                                     for (int i = 0; i < iminja1.size(); i++) {
@@ -95,7 +95,7 @@
             </div>
             <div id="Accordion3Content" class="AccordionContent">
                 <form method="POST" action="DeleteUser.do">
-                    <select name="Username" size="1" onclick="<%selectedAccordion = 3;%>;submitDeleteUser()">
+                    <select name="Username" size="1" onclick="submitDeleteUser()">
                         <%
                             List<String> iminja2 = DataBaseHelper.getAllUsernames();
                             for (int i = 0; i < iminja2.size(); i++) {
