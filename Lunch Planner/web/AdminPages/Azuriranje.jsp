@@ -10,6 +10,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <form id="ViewState" 
     <input type="hidden" name="selectedAccordion" value="0"/>
     <% int selectedAccordion = 0;
         if (request.getParameter("selectedAccordion") != null) {

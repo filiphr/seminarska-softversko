@@ -24,7 +24,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "";
+        String pass = "admin";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
