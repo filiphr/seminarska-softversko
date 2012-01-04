@@ -33,7 +33,7 @@
         }
     %>
     <script lang="JavaScript" src="accordion-js.js"></script>
-    <script lang="JavaScript" src="submiting_funcions.js"></script>
+    <script lang="JavaScript" src="submiting_functions.js"></script>
     <link rel="stylesheet" type="text/css" href="tabs-accordion.css">
 
     <head >
@@ -77,8 +77,9 @@
             <div id="Accordion2Content" class="AccordionContent">
 
                 <table>
-                    <form id="usrUpdateForm" action="" method="POST"/>
-                    <tr><td colspan="2"><select name="usrNameUpdate" size="1" onclick=""submitUserUpdate()">
+                    <form id="usrUpdateForm" action="" method="post"/>
+                    <tr><td colspan="2"><select name="usrNameUpdate" size="1" onchange="submitUserUpdate()">
+                                <option value="">-селектирај корисник-</option>
                                                 <%
                                                     List<String> iminja1 = DataBaseHelper.getAllUsernames();
                                                     for (int i = 0; i < iminja1.size(); i++) {
