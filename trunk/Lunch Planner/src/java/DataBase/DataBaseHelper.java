@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class DataBaseHelper {
 
     public static List<String> GetQuery(String query, int number) {
-        String dbUrl = "jdbc:mysql://localhost:3306/mydb";
+        String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
         String pass = "";
@@ -50,7 +50,7 @@ public class DataBaseHelper {
     
     public int ExecuteQuery(String Query)
     {
-        String dbUrl = "jdbc:mysql://localhost:3306/mydb";
+        String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
         String pass = "";
@@ -74,10 +74,10 @@ public class DataBaseHelper {
         return number;
     }
     
-    public static List<List<String>> getAllNamesSNamesUsersEmails() throws SQLException
+    public static List<List<String>> getAllNamesSNamesUsersEmailsPass() throws SQLException
     {
         List<List<String>> lst = new ArrayList<List<String>>();;
-            for(int i = 1; i<=4; i++)
+            for(int i = 1; i<=5; i++)
                 lst.add(GetQuery("SELECT * FROM korisnik", i));
         return lst;
     }
@@ -103,22 +103,28 @@ public class DataBaseHelper {
     }
     public static String getPreferencesMeal(String user)
     {
-        String str = null;
-        return str;
+        List<String> lst = (GetQuery("select Ime from stavkameni,preferences WHERE idStavkaMeni=StavkaMeni_idStavkaMeni And Korisnik_User = '" + user + "'", 1));
+        if(lst.size() != 0)
+            return lst.get(0);
+        return new String();
     }
     public static String getPreferencesRestoran(String user)
     {
-        String str = null;
-        return str;
+        List<String> lst = (GetQuery("select * from preferences where Korisnik_User = '" + user + "'", 3));
+        if(lst.size() != 0)
+            return lst.get(0);
+        return new String();
     }
     public static List<String> getAllUsernames()
     {
         List<String> lst = new ArrayList<String>();
+        lst = GetQuery("select * from korisnik", 3);
         return lst;
     }
     public static List<String> getAllRestaurantNames()
     {
         List<String> lst = new ArrayList<String>();
+        lst = GetQuery("select * from restoran", 1);
         return lst;
     }
     public static List<String> getAllMenuItems(String RestaurantNames)
@@ -135,47 +141,31 @@ public class DataBaseHelper {
     }
     public static String getUserIme (String username)
     {
-        String str = null;
-        if("".equals(username))
-            str = new String();
-        else
-        {
-            //
-        }
-        return str;
+        List<String> lst = (GetQuery("select * from korisnik where User = '" + username + "'", 1));
+        if(lst.size() != 0)
+            return lst.get(0);
+        return new String();
     }
     public static String getUserPrezime (String username)
     {
-        String str = null;
-        if("".equals(username))
-            str = new String();
-        else
-        {
-            //
-        }
-        return str;
+        List<String> lst = (GetQuery("select * from korisnik where User = '" + username + "'", 2));
+        if(lst.size() != 0)
+            return lst.get(0);
+        return new String();
     }
     public static String getUserEmail (String username)
     {
-        String str = null;
-        if("".equals(username))
-            str = new String();
-        else
-        {
-            //
-        }
-        return str;
+        List<String> lst = (GetQuery("select * from korisnik where User = '" + username + "'", 4));
+        if(lst.size() != 0)
+            return lst.get(0);
+        return new String();
     }
     public static String getUserLozinka (String username)
     {
-        String str = null;
-        if("".equals(username))
-            str = new String();
-        else
-        {
-            //
-        }
-        return str;
+        List<String> lst  = (GetQuery("select * from korisnik where User = '" + username + "'", 5));
+        if(lst.size() != 0)
+            return lst.get(0);
+        return new String();
     }
 }
     
