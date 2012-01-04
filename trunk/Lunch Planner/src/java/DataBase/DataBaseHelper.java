@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  * @author user
  */
 public class DataBaseHelper {
+    private static int ID_Meni = 0;
 
     public static List<String> GetQuery(String query, int number) {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
@@ -212,6 +213,14 @@ public class DataBaseHelper {
         sqlStr.append(password);
         sqlStr.append("' );");
         ExecuteQuery(sqlStr.toString());
+    }
+    public static void insertMeni(String Cena, String Restoran, String Stavka)
+    {
+        ExecuteQuery("INSERT INTO meni VALUES('" + Integer.toString(ID_Meni++) + "', '" + Cena + "', '" + Restoran + "', '" + Stavka + "'");
+    }
+    public static void insertRestoran(String Ime, String Adresa)
+    {
+        ExecuteQuery("INSERT INTO restoran VALUES('" + Ime + "', '" + Adresa + "'");
     }
 }
     
