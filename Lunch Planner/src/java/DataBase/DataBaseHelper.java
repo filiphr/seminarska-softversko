@@ -49,7 +49,7 @@ public class DataBaseHelper {
         return lst;
     }
     
-    public int ExecuteQuery(String Query)
+    public static int ExecuteQuery(String Query)
     {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
@@ -167,6 +167,21 @@ public class DataBaseHelper {
         if(!lst.isEmpty())
             return lst.get(0);
         return new String();
+    }
+    public static void insertUser(String ime, String prezime, String user, String email, String password)
+    {
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO korisnik VALUES(' ");
+        sqlStr.append(ime);
+        sqlStr.append("', '");
+        sqlStr.append(prezime);
+        sqlStr.append("', '");
+        sqlStr.append(user);
+        sqlStr.append("', '");
+        sqlStr.append(email);
+        sqlStr.append("', '");
+        sqlStr.append(password);
+        sqlStr.append("' );");
+        ExecuteQuery(sqlStr.toString());
     }
 }
     
