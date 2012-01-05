@@ -16,13 +16,66 @@
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Ажурирање корисник</title>
+        <script type="text/javascript" >
+            function validateAddUserForm()
+            {
+                var x=document.forms["AddUserForm"]["Username"].value;
+                if (x==null || x=="")
+                {
+                    alert("Пополнете го корисничкото име");
+                    return false;
+                }
+                x=document.forms["AddUserForm"]["Ime"].value;
+                if (x==null || x=="")
+                {
+                    alert("Пополнете го името");
+                    return false;
+                }
+                x=document.forms["AddUserForm"]["Prezime"].value;
+                if (x==null || x=="")
+                {
+                    alert("Пополнете го презимето");
+                    return false;
+                }
+                x=document.forms["AddUserForm"]["Lozinka"].value;
+                if (x==null || x=="")
+                {
+                    alert("Пополнете ја лозинката");
+                    return false;
+                }
+                x=document.forms["AddUserForm"]["email"].value;
+                if (x==null || x=="")
+                {
+                    alert("Пополнете го е-маилот");
+                    return false;
+                }
+                x=document.forms["AddUserForm"]["email"].value;
+                var atpos=x.indexOf("@");
+                var dotpos=x.lastIndexOf(".");
+                if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+                {
+                    alert("Невалиден е-маил");
+                    return false;
+                }
+            }
+            function validateDeleteUserForm()
+            {
+                var x=document.forms["DeleteUserForm"]["Username"].value;
+                if (x==null || x=="-селектирај корисник-")
+                {
+                    alert("Изберете корисничко име");
+                    return false;
+                }
+            }
+            
+        </script>
     </head>
     <body>
 
 
         <div>
-            <form method="post" action="AddUser.do">
+            <form name="AddUserForm" method="post" action="AddUser.do">
                 <table>
                     <tr><th width="300px" colspan="2">Внесување на корисник</th></tr>
                     <tr><td>Корисничко име</td><td><input type="text" name="Username"/></td></tr>
@@ -58,7 +111,7 @@
                             </select></td></tr>
                 </table>
             </form>
-            <form method="POST" action="DeleteUser.do">
+            <form name="DeleteUserForm" method="POST" action="DeleteUser.do">
                 <input type="hidden" name="UsernameDelete" value="<%=usrNameDelete%>"/>
                 <table>
                     <tr><td width="150px">Име и презиме:</td><td><%=DataBaseHelper.getUserIme(usrNameDelete)%> <%=DataBaseHelper.getUserPrezime(usrNameDelete)%> </td></tr>
