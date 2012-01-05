@@ -262,19 +262,7 @@ public class DataBaseHelper {
     //insert into stavkameni (Ime) VALUES ('Burek');
 
     public static void insertNaracka(String User, int ID_Grupa, String Stavka) {
-        int ID_Naracka;
-        List<String> lst = GetQuery("select idNaracka from naracka order by idNaracka", 1);
-        if (!lst.isEmpty()) {
-            ID_Naracka = Integer.parseInt(lst.get(lst.size() - 1));
-            ID_Naracka++;
-        } else {
-            ID_Naracka = 0;
-        }
-        StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka VALUES('");
-        sqlStr.append(ID_Naracka);
-        sqlStr.append("', '");
-        sqlStr.append(" ");
-        sqlStr.append("', '");
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka (Korisnik_User, TekovnaGrupa_idTekovnaGrupa, stavkameni_Ime) VALUES('");
         sqlStr.append(User);
         sqlStr.append("', '");
         sqlStr.append(ID_Grupa);
@@ -285,17 +273,7 @@ public class DataBaseHelper {
     }
 
     public static void insertNaracka(String User, int ID_Grupa, String Stavka, String Komentar) {
-        int ID_Naracka;
-        List<String> lst = GetQuery("select idNaracka from naracka order by idNaracka", 1);
-        if (!lst.isEmpty()) {
-            ID_Naracka = Integer.parseInt(lst.get(lst.size() - 1));
-            ID_Naracka++;
-        } else {
-            ID_Naracka = 0;
-        }
-        StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka VALUES('");
-        sqlStr.append(ID_Naracka);
-        sqlStr.append("', '");
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka (Komentar, Korisnik_User, TekovnaGrupa_idTekovnaGrupa, stavkameni_Ime) VALUES('");
         sqlStr.append(Komentar);
         sqlStr.append("', '");
         sqlStr.append(User);
@@ -325,11 +303,18 @@ public class DataBaseHelper {
             ExecuteQuery("UPDATE preferences SET StavkaMeni_Ime = '" + Stavka + "' WHERE Korisnik_User = '" + User + "';");
         }
     }
+    public static void updatePreferencesKomentar(String Komentar, String User)
+    {
+        if (!Komentar.isEmpty() && !(User.isEmpty())) {
+            ExecuteQuery("UPDATE preferences SET Komentar = '" + Komentar + "' WHERE Korisnik_User = '" + User + "';");
+        }
+    }
 
-    public static void updatePreferences(String User, String Vreme, String Restoran, String Stavka) {
+    public static void updatePreferences(String User, String Vreme, String Restoran, String Stavka, String Komentar) {
         updatePreferencesRestoran(Restoran, User);
         updatePreferencesStavka(Stavka, User);
         updatePreferencesVreme(Vreme, User);
+        updatePreferencesKomentar(Komentar, User);
     }
     
     public static void deleteUser (String User)

@@ -4,9 +4,7 @@
  */
 
 import DataBase.DataBaseHelper;
-import com.mysql.jdbc.DatabaseMetaData;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -56,9 +54,34 @@ public class Popolni extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          DataBaseHelper.insertUser("marko","docevski","mdocevski","mdocevski@gmail.com ","marko");
-         DataBaseHelper.insertUser("igor","sudiovski","isudiovski","isudiovski@gmail.com ","igor");
+         DataBaseHelper.insertUser("igor","sudijovski","isudijovski","isudijovski@gmail.com ","igor");
          DataBaseHelper.insertUser("filip","hrisafov","fhrisafov","fhrisafov@gmail.com ","filip");
-         
+         DataBaseHelper.insertRestoran("Enriko", "Leptokarija");
+         DataBaseHelper.insertRestoran("Vegera", "Karpos 3");
+         DataBaseHelper.insertRestoran("Staro Bure", "Leptokarija");
+         DataBaseHelper.insertStavkaMeni("Pica");
+         DataBaseHelper.insertStavkaMeni("Sendvic");
+         DataBaseHelper.insertStavkaMeni("Lazanji");
+         DataBaseHelper.insertStavkaMeni("Gevrek");
+         DataBaseHelper.insertStavkaMeni("Kifla");
+         DataBaseHelper.insertStavkaMeni("Burek");
+         DataBaseHelper.insertStavkaMeni("Kebap");
+         DataBaseHelper.insertStavkaMeni("Lovecka");
+         DataBaseHelper.insertStavkaMeni("Pileski prsti");
+         DataBaseHelper.insertMeni("250", "Enriko", "Pica");
+         DataBaseHelper.insertMeni("80", "Enriko", "Sendvic");
+         DataBaseHelper.insertMeni("280", "Enriko", "Lazanji");
+         DataBaseHelper.insertMeni("20", "Vegera", "Gevrek");
+         DataBaseHelper.insertMeni("30", "Vegera", "Kifla");
+         DataBaseHelper.insertMeni("50", "Vegera", "Burek");
+         DataBaseHelper.insertMeni("12", "Staro Bure", "Kebap");
+         DataBaseHelper.insertMeni("170", "Staro Bure", "Lovecka");
+         DataBaseHelper.insertMeni("250", "Staro Bure", "Pileski prsti");
+         DataBaseHelper.insertTekovnaGrupa("12:00:00", "isudijovski", "Enriko");
+         DataBaseHelper.insertTekovnaGrupa("11:30:00", "mdocevski", "Vegera");
+         DataBaseHelper.insertNaracka("fhrisafov", 1, "Pica", "Bez Kecap");
+         DataBaseHelper.insertNaracka("isudijovski", 1, "Lazanji");
+         DataBaseHelper.insertNaracka("mdocevski", 2, "Burek");
         response.sendRedirect("Najava.jsp");
     }
 
