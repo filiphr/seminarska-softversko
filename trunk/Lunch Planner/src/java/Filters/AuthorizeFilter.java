@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -106,8 +107,11 @@ public class AuthorizeFilter implements Filter {
         HttpSession session = httpRequest.getSession();
         String user = (String) session.getAttribute("username");
         if (user == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("Najava.jsp");
-            rd.forward(request, response);
+            //RequestDispatcher rd = httpRequest.getRequestDispatcher("Najava.jsp");
+            //rd.forward(request, response);
+            HttpServletResponse httpResponse = (HttpServletResponse) response;
+            httpResponse.sendRedirect("../Najava.jsp");
+            
         } else {
             chain.doFilter(request, response);
         }

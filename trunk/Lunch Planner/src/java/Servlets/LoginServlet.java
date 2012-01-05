@@ -96,7 +96,7 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
-            RequestDispatcher rd = request.getRequestDispatcher("Main.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("UserPages/Main.jsp");
             rd.forward(request, response);
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("Najava.jsp");
