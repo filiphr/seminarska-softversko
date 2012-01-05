@@ -19,13 +19,12 @@ import java.util.logging.Logger;
  * @author user
  */
 public class DataBaseHelper {
-    private static int ID_Meni = 0;
 
     public static List<String> GetQuery(String query, int number) {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -55,7 +54,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         int number = 0;
         try {
@@ -64,7 +63,8 @@ public class DataBaseHelper {
             Statement s = conect.createStatement();
             number = s.executeUpdate(Query);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
+            //throw new RuntimeException(e);
         } finally {
             try{
                 conect.close();
@@ -97,7 +97,7 @@ public class DataBaseHelper {
         List<String> lst = GetQuery("select * from tekovnagrupa", 1);
         return lst;
     }
-    public static List<List<String>> getNameSNameAndLunch(String ID_Group)
+    public static List<List<String>> getNameSNameAndLunch(int ID_Group)
     {
         List<List<String>> lst = new ArrayList<List<String>>();
         List<String> users = GetQuery("select Korisnik_User from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = '" + ID_Group + "'", 0);
@@ -126,6 +126,13 @@ public class DataBaseHelper {
         if(!lst.isEmpty())
             return lst.get(0);
         return new String();
+    }
+    public static int getIDStavka(String Jadenje)
+    {
+        List<String> lst = GetQuery("select idStavkaMeni from stavkameni where Ime = '" + Jadenje + "'", 1);
+        if(!lst.isEmpty())
+            return Integer.parseInt(lst.get(0));
+        return -1;
     }
     public static String getPreferencesHour(String user)
     {
@@ -213,14 +220,130 @@ public class DataBaseHelper {
         sqlStr.append(password);
         sqlStr.append("' );");
         ExecuteQuery(sqlStr.toString());
+        StringBuilder sqlStr1 = new StringBuilder("insert into preferences (Korisnik_User) VALUES('");
+        sqlStr1.append(user);
+        sqlStr1.append("' );");
+        ExecuteQuery(sqlStr1.toString());
     }
     public static void insertMeni(String Cena, String Restoran, String Stavka)
     {
-        ExecuteQuery("INSERT INTO meni VALUES('" + Integer.toString(ID_Meni++) + "', '" + Cena + "', '" + Restoran + "', '" + Stavka + "'");
+        int ID_Meni;
+        List<String> lst = GetQuery("select idMeni from meni order by idMeni", 1);
+        if(!lst.isEmpty())
+                {
+        ID_Meni = Integer.parseInt(lst.get(lst.size()-1));
+        ID_Meni++;
+                }else ID_Meni = 0;
+        ExecuteQuery("INSERT INTO meni VALUES('" + Integer.toString(ID_Meni) + "', '" + Cena + "', '" + Restoran + "', '" + getIDStavka(Stavka) + "');");
     }
     public static void insertRestoran(String Ime, String Adresa)
     {
-        ExecuteQuery("INSERT INTO restoran VALUES('" + Ime + "', '" + Adresa + "'");
+        ExecuteQuery("INSERT INTO restoran VALUES('" + Ime + "', '" + Adresa + "');");
     }
-}
+    public static void insertStavkaMeni(String Ime) //throws SQLException
+    {
+        int ID_Stavka;
+        List<String> lst = GetQuery("select idStavkaMeni from stavkameni order by idStavkaMeni", 1);
+        if(!lst.isEmpty())
+        {
+        ID_Stavka = Integer.parseInt(lst.get(lst.size()-1));
+        ID_Stavka++;
+        }else ID_Stavka = 0;
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO stavkameni VALUES('");
+        sqlStr.append(ID_Stavka);
+        sqlStr.append("', '");
+        sqlStr.append(Ime);
+        sqlStr.append("' );");
+        ExecuteQuery(sqlStr.toString());
+    }
+    public static void insertTekovnaGrupa(String Vreme, String User, String Restoran)
+    {
+        int ID_Grupa;
+        List<String> lst = GetQuery("select idTekovnaGrupa from tekovnagrupa order by idTekovnaGrupa", 1);
+        if(!lst.isEmpty())
+        {
+            ID_Grupa = Integer.parseInt(lst.get(lst.size()-1));
+            ID_Grupa++;
+        }else ID_Grupa = 0;
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO tekovnagrupa VALUES('");
+        sqlStr.append(ID_Grupa);
+        sqlStr.append("', '");
+        sqlStr.append(Vreme);
+        sqlStr.append("', '");
+        sqlStr.append(User);
+        sqlStr.append("', '");
+        sqlStr.append(Restoran);
+        sqlStr.append("' );");
+        ExecuteQuery(sqlStr.toString());
+    }
+    public static void insertNaracka(String User, int ID_Grupa, String Stavka)
+    {
+        int ID_Naracka;
+        List<String> lst = GetQuery("select idNaracka from naracka order by idNaracka", 1);
+        if(!lst.isEmpty())
+        {
+            ID_Naracka = Integer.parseInt(lst.get(lst.size()-1));
+            ID_Naracka++;
+        }else ID_Naracka = 0;
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka VALUES('");
+        sqlStr.append(ID_Naracka);
+        sqlStr.append("', '");
+        sqlStr.append(" ");
+        sqlStr.append("', '");
+        sqlStr.append(User);
+        sqlStr.append("', '");
+        sqlStr.append(ID_Grupa);
+        sqlStr.append("', '");
+        sqlStr.append(getIDStavka(Stavka));
+        sqlStr.append("' );");
+        ExecuteQuery(sqlStr.toString());
+    }
+    public static void insertNaracka(String User, int ID_Grupa, String Stavka, String Komentar)
+    {
+        int ID_Naracka;
+        List<String> lst = GetQuery("select idNaracka from naracka order by idNaracka", 1);
+        if(!lst.isEmpty())
+        {
+            ID_Naracka = Integer.parseInt(lst.get(lst.size()-1));
+            ID_Naracka++;
+        }else ID_Naracka = 0;
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka VALUES('");
+        sqlStr.append(ID_Naracka);
+        sqlStr.append("', '");
+        sqlStr.append(Komentar);
+        sqlStr.append("', '");
+        sqlStr.append(User);
+        sqlStr.append("', '");
+        sqlStr.append(ID_Grupa);
+        sqlStr.append("', '");
+        sqlStr.append(getIDStavka(Stavka));
+        sqlStr.append("' );");
+        ExecuteQuery(sqlStr.toString());
+    }
+    //UPDATE dbsoftversko.preferences SET `Restoran_Ime` = 'Enriko' WHERE `Korisnik_User` = 'isudijovski';
+    public static void updatePreferencesRestoran(String Restoran, String User)
+    {
+        if(!Restoran.isEmpty() && !(User.isEmpty()))
+            ExecuteQuery("UPDATE preferences SET Restoran_Ime = '"+ Restoran +"' WHERE Korisnik_User = '" + User +"';");
+    }
     
+    public static void updatePreferencesVreme(String Vreme, String User)
+    {
+        if(!Vreme.isEmpty() && !(User.isEmpty()))
+            ExecuteQuery("UPDATE preferences SET Vreme = '"+ Vreme +"' WHERE Korisnik_User = '" + User +"';");
+    }
+    
+    public static void updatePreferencesStavka(String Stavka, String User)
+    {
+        if(!Stavka.isEmpty() && !(User.isEmpty()))
+            ExecuteQuery("UPDATE preferences SET StavkaMeni_idStavkaMeni = '"+ getIDStavka(Stavka) +"' WHERE Korisnik_User = '" + User +"';");
+    }
+    
+    public static void updatePreferences(String User, String Vreme, String Restoran, String Stavka)
+    {
+        updatePreferencesRestoran(Restoran, User);
+        updatePreferencesStavka(Stavka, User);
+        updatePreferencesVreme(Vreme, User);
+    }
+    
+}
