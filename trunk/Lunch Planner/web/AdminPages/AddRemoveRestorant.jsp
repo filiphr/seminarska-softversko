@@ -11,11 +11,38 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Ажурирање на листа на ресторанти</title>
+        <script type="text/javascript">
+            function validateAddRestorantForm()
+            {
+                var x=document.forms["AddRestorantForm"]["ImeDodadi"].value;
+                if (x==null || x=="")
+                {
+                    alert("Пополнете го името");
+                    return false;
+                }
+                x=document.forms["AddRestorantForm"]["AdresaDodadi"].value;
+                if (x==null || x=="")
+                {
+                    alert("Пополнете ја адресата");
+                    return false;
+                }
+            }
+            function validateRemoveRestorantForm()
+            {
+                var x=document.forms["RemoveRestorantForm"]["ImeIzberi"].value;
+                if (x==null || x=="")
+                {
+                    alert("Изберете ресторант");
+                    return false;
+                }
+            }
+            
+        </script>
     </head>
     <body>
         <div>
-            <form method="POST" action="AddRestaurant.do">
+            <form name="AddRestorantForm" method="POST" action="AddRestaurant.do" onsubmit="validateAddRestorantForm()">
                 <table>
                     <tr><th width="300px" colspan="2">Внесување на ресторант</th></tr>
                     <tr><td>Име</td><td><input type="text" name="ImeDodadi"/></td></tr>
@@ -25,10 +52,11 @@
             </form>
         </div>
         <div>
-            <form method="POST" action="DeleteRestaurant.do">
+            <form name="RemoveRestorantForm" method="POST" action="RemoveRestorant.do">
                 <table>
                     <tr><th width="300px">Бришење ресторант</th></tr>
                     <tr><td><select name="ImeIzbrisi" size="1">
+                                <option value="">-избери ресторант-</option>
                                 <%
                                     List<String> lst1 = DataBaseHelper.getAllRestaurantNames();
                                     for (int i = 0; i < lst1.size(); i++) {

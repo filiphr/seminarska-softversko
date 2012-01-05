@@ -17,11 +17,34 @@
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Aжурирање на мени на ресторантите</title>
+        <script type="text/javascript">
+            function validateAddMenuItemForm()
+            {
+                var x = document.forms["AddMenuItemForm"]["ImeDodadi"].value
+                if(x==null || x=="")
+                {
+                    alert("Изберете ресторант");
+                    return false;
+                }
+                x = document.forms["AddMenuItemForm"]["ImeStavka"].value
+                if(x==null || x=="")
+                {
+                    alert("Пополнете го името на ставката");
+                    return false;
+                }
+                x=document.forms["AddMenuItemForm"]["CenaStavka"].value
+                if(x==null || x=="")
+                {
+                    alert("Пополнете ја цената на ставката");
+                    return false;
+                }
+            }
+        </script>
     </head>
     <body>
         <div>
-            <form method="POST" action="AddMenuItem.do">
+            <form name="AddMenuItemForm" method="POST" action="AddMenuItem.do" onsubmit="return validateAddMenuItemForm()">
                 <table>
                     <tr><th width="300px" colspan="2">Додавање ставка во менито</th></tr>
                     <tr><td width="200px" colspan="2"><select name="ImeDodadi" size="1">
