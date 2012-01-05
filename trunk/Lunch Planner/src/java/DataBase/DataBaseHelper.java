@@ -335,10 +335,37 @@ public class DataBaseHelper {
     public static void deleteRestoran(String Ime)
     {
         String sqlStr = "DELETE FROM restoran WHERE Ime='" +Ime+"'";
-        ExecuteQuery(Ime);
+        ExecuteQuery(sqlStr);
     }
     public static void deleteMeni (String Restoran, String Stavka)
     {
-        //String sqlStr = "DELETE FROM Meni WHERE Restoran_ime='"+Restoran+"'"
+        String sqlStr = "DELETE FROM Meni WHERE Restoran_ime='"+Restoran+"' And StavkaMeni_Ime = '" + Stavka +"'";
+        ExecuteQuery(sqlStr);
+    }
+    //UPDATE dbsoftversko.naracka SET `stavkameni_Ime` = 'Sendvic', `Komentar` = 'So Kecap' WHERE `idNaracka` = 1;
+    public static void UpdateNaracka(int ID_Naracka, String Komentar, String Stavka)
+    {
+        ExecuteQuery("UPDATE naracka SET stavkameni_Ime = '" + Stavka + "' , Komentar = '" + Komentar + "' WHERE idNaracka = " + ID_Naracka);
+    }
+    public static int getIDNaracka(String User, int ID_Grupa, String Stavka)
+    {
+        StringBuilder sqlStr = new StringBuilder("select idNaracka from naracke where Korisnik_User = '");
+        sqlStr.append(User);
+        sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
+        sqlStr.append(ID_Grupa);
+        sqlStr.append(" And stavkameni_Ime =  '");
+        sqlStr.append(Stavka);
+        sqlStr.append("'");
+        List<String> lst = GetQuery(sqlStr.toString(), 1);
+        int ID;
+        if(!lst.isEmpty())
+        {
+            ID = Integer.parseInt(lst.get(0));
+        }else ID = -1;
+        return ID;
+    }
+    public static void deleteNaracka(int ID_Naracka)
+    {
+        ExecuteQuery("DELETE FROM naracka WHERE idNaracka = " + ID_Naracka);
     }
 }
