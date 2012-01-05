@@ -74,7 +74,7 @@ public class RemoveRestorant extends HttpServlet {
         String ime = request.getParameter("ImeIzbrisi");
         DataBaseHelper.deleteRestoran(ime);
         
-        RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("AddRemoveRestorant.jsp");
         rd.forward(request, response);
 
     }

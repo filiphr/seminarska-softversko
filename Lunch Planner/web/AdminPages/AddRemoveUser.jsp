@@ -16,7 +16,7 @@
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Ажурирање корисник</title>
+        <title>Ажурирање на листата на корисници</title>
         <script type="text/javascript" >
             function validateAddUserForm()
             {
@@ -62,7 +62,7 @@
             function validateDeleteUserForm()
             {
                 var x=document.forms["DeleteUserForm"]["Username"].value;
-                if (x==null || x=="-селектирај корисник-")
+                if (x==null || x=="")
                 {
                     alert("Изберете корисничко име");
                     return false;
@@ -75,7 +75,7 @@
 
 
         <div>
-            <form name="AddUserForm" method="post" action="AddUser.do">
+            <form name="AddUserForm" method="post" action="AddUser.do" onsubmit="return validateAddUserForm()">
                 <table>
                     <tr><th width="300px" colspan="2">Внесување на корисник</th></tr>
                     <tr><td>Корисничко име</td><td><input type="text" name="Username"/></td></tr>
@@ -111,7 +111,7 @@
                             </select></td></tr>
                 </table>
             </form>
-            <form name="DeleteUserForm" method="POST" action="DeleteUser.do">
+            <form name="DeleteUserForm" method="POST" action="DeleteUser.do" onsubmit="return validateDeleteUserForm()">
                 <input type="hidden" name="UsernameDelete" value="<%=usrNameDelete%>"/>
                 <table>
                     <tr><td width="150px">Име и презиме:</td><td><%=DataBaseHelper.getUserIme(usrNameDelete)%> <%=DataBaseHelper.getUserPrezime(usrNameDelete)%> </td></tr>

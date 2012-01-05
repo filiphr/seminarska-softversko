@@ -17,7 +17,50 @@
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Ажурирање податоци за корисник</title>
+        <script type="text/javascript">
+            function validateUpdateUserForm()
+            {
+                var x=document.forms["UpdateUserForm"]["Username"].value;
+                if (x==null || x=="")
+                {
+                    alert("Изберете корисник");
+                    return false;
+                }
+                x=document.forms["UpdateUserForm"]["Ime"].value;
+                if (x==null || x=="")
+                {
+                    alert("Името не смее да биде празно");
+                    return false;
+                }
+                x=document.forms["UpdateUserForm"]["Prezime"].value;
+                if (x==null || x=="")
+                {
+                    alert("Презимето не смее да биде празно");
+                    return false;
+                }
+                x=document.forms["UpdateUserForm"]["Lozinka"].value;
+                if (x==null || x=="")
+                {
+                    alert("Лозинката не смее да биде празна");
+                    return false;
+                }
+                x=document.forms["UpdateUserForm"]["email"].value;
+                if (x==null || x=="")
+                {
+                    alert("е-маилот не смее да биде празен");
+                    return false;
+                }
+                x=document.forms["UpdateUserForm"]["email"].value;
+                var atpos=x.indexOf("@");
+                var dotpos=x.lastIndexOf(".");
+                if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+                {
+                    alert("Невалиден е-маил");
+                    return false;
+                }
+            }
+        </script>
     </head>
     <body>
 
@@ -42,7 +85,7 @@
                         </select></td></tr>
             </table>
         </form>
-        <form method="POST" action="UpdateUser.do">
+        <form method="POST" name="UpdateUserForm" action="UpdateUser.do" onsubmit="return validateUpdateUserForm()" >
             <input type="hidden" name="Username"value="<%=usrNameUpdate%>"/>
             <table>
                 <tr><td>Име</td>

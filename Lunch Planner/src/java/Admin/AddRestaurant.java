@@ -76,7 +76,7 @@ public class AddRestaurant extends HttpServlet {
         
         DataBaseHelper.insertRestoran(ime, adresa);
         
-        RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("AddRemoveRestorant.jsp");
         rd.forward(request, response);
     }
 
