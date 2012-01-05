@@ -4,8 +4,10 @@
  */
 package Admin;
 
+import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -73,24 +75,9 @@ public class AddUser extends HttpServlet {
         String prezime = request.getParameter("Prezime");
         String lozinka = request.getParameter("Lozinka");
         String mail = request.getParameter("email");
-
-
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddUser</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println(username + " " + ime + " " + prezime + " " + lozinka + " " + mail);
-            out.println("</body>");
-            out.println("</html>");
-
-        } finally {
-            out.close();
-        }
+        DataBaseHelper.insertUser(ime, prezime, username, mail, mail);
+        RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
+        rd.forward(request, response);
     }
 
     /** 
