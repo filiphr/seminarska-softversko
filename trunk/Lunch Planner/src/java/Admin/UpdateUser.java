@@ -70,12 +70,15 @@ public class UpdateUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String username = request.getParameter("Username");
         String ime = request.getParameter("Ime");
         String prezime = request.getParameter("Prezime");
         String lozinka = request.getParameter("Lozinka");
         String mail = request.getParameter("email");
+        
         DataBaseHelper.updateUser(ime, prezime, username, lozinka, mail);
+        
         RequestDispatcher rd = request.getRequestDispatcher("UpdateUser.jsp");
         rd.forward(request, response);
     }
