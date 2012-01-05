@@ -209,6 +209,7 @@ public class DataBaseHelper {
     }
 
     public static void insertUser(String ime, String prezime, String user, String email, String password) {
+        if(ime.isEmpty() || prezime.isEmpty() || user.isEmpty() || password.isEmpty()) return;
         StringBuilder sqlStr = new StringBuilder("INSERT INTO korisnik VALUES('");
         sqlStr.append(ime);
         sqlStr.append("', '");
