@@ -24,7 +24,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "";
+        String pass = "admin";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -41,9 +41,9 @@ public class DataBaseHelper {
             //throw new RuntimeException(e);
         } finally {
             try {
-                if (conect != null) {
+                
                     conect.close();
-                }
+                
             } catch (SQLException ex) {
                 Logger.getLogger(DataBaseHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -55,7 +55,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "";
+        String pass = "admin";
         Connection conect = null;
         int number = 0;
         try {
@@ -68,7 +68,8 @@ public class DataBaseHelper {
             //throw new RuntimeException(e);
         } finally {
             try {
-                conect.close();
+                if(conect!=null)
+                    conect.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DataBaseHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
