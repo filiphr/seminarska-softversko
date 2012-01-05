@@ -119,8 +119,8 @@ public class DataBaseHelper {
         return lst;
     }
 
-    public static String getLunch(String ID_Stavka) {
-        List<String> lst = (GetQuery("select * from stavkameni WHERE Ime = '" + ID_Stavka + "'", 2));
+    public static String getLunch(String Stavka) {
+        List<String> lst = (GetQuery("select Ime from stavkameni WHERE Ime = '" + Stavka + "'", 1));
         if (!lst.isEmpty()) {
             return lst.get(0);
         }
@@ -227,6 +227,9 @@ public class DataBaseHelper {
     }
 
     public static void insertMeni(String Cena, String Restoran, String Stavka) {
+        String str = getLunch(Stavka);
+        if(str.isEmpty())
+            insertStavkaMeni(Stavka);
         StringBuilder sqlStr = new StringBuilder("INSERT INTO meni (Cena,Restoran_Ime, StavkaMeni_Ime) VALUES('");
         sqlStr.append(Cena);
         sqlStr.append("', '");
@@ -367,5 +370,44 @@ public class DataBaseHelper {
     public static void deleteNaracka(int ID_Naracka)
     {
         ExecuteQuery("DELETE FROM naracka WHERE idNaracka = " + ID_Naracka);
+    }
+    
+    public static void insertPokani(String User, int ID_Grupa)
+    {
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO pokani VALUES('");
+        sqlStr.append(User);
+        sqlStr.append("', ");
+        sqlStr.append(ID_Grupa);
+        sqlStr.append(" );");
+        ExecuteQuery(sqlStr.toString());
+    }
+    
+    public static void deletePokani(String User, int ID_Grupa)
+    {
+        StringBuilder sqlStr = new StringBuilder("DELETE FROM pokani WHERE korisnik_USer = '");
+        sqlStr.append(User);
+        sqlStr.append("' And tekovnagrupa_idTekovnaGrupa = ");
+        sqlStr.append(ID_Grupa);
+        sqlStr.append(" );");
+        ExecuteQuery(sqlStr.toString());
+    }
+    
+    public static void insertPreferencesParticipant(String User, String participant)
+    {
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO korisnik_has_preferences VALUES('");
+        sqlStr.append(participant);
+        sqlStr.append("', '");
+        sqlStr.append(User);
+        sqlStr.append("' );");
+        ExecuteQuery(sqlStr.toString());
+    }
+    public static void deletePreferencesParticipant(String User, String participant)
+    {
+        StringBuilder sqlStr = new StringBuilder("DELETE FROM korisnik_has_preferences WHERE korisnik_USer = '");
+        sqlStr.append(participant);
+        sqlStr.append("' And  preferences_Korisnik_User = '");
+        sqlStr.append(User);
+        sqlStr.append("' );");
+        ExecuteQuery(sqlStr.toString());
     }
 }

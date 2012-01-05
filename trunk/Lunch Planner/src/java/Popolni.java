@@ -60,13 +60,9 @@ public class Popolni extends HttpServlet {
          DataBaseHelper.insertRestoran("Vegera", "Karpos 3");
          DataBaseHelper.insertRestoran("Staro Bure", "Leptokarija");
          DataBaseHelper.insertStavkaMeni("Pica");
-         DataBaseHelper.insertStavkaMeni("Sendvic");
          DataBaseHelper.insertStavkaMeni("Lazanji");
-         DataBaseHelper.insertStavkaMeni("Gevrek");
          DataBaseHelper.insertStavkaMeni("Kifla");
-         DataBaseHelper.insertStavkaMeni("Burek");
          DataBaseHelper.insertStavkaMeni("Kebap");
-         DataBaseHelper.insertStavkaMeni("Lovecka");
          DataBaseHelper.insertStavkaMeni("Pileski prsti");
          DataBaseHelper.insertMeni("250", "Enriko", "Pica");
          DataBaseHelper.insertMeni("80", "Enriko", "Sendvic");
