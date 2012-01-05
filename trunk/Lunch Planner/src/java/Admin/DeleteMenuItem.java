@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Home
  */
-public class AddUser extends HttpServlet {
+public class DeleteMenuItem extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -32,14 +32,14 @@ public class AddUser extends HttpServlet {
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddUser</title>");  
+            out.println("<title>Servlet DeleteMenuItem</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddUser at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet DeleteMenuItem at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
              */
-        } finally {
+        } finally {            
             out.close();
         }
     }
@@ -68,29 +68,16 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("Username");
-        String ime = request.getParameter("Ime");
-        String prezime = request.getParameter("Prezime");
-        String lozinka = request.getParameter("Lozinka");
-        String mail = request.getParameter("email");
-
-
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddUser</title>");
+            out.println("<title>Servlet DeleteenuItem</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println(username + " " + ime + " " + prezime + " " + lozinka + " " + mail);
+            out.print(request.getParameter("ImeIzbrisi")+" "+request.getParameter("Meni")+"<br>");
             out.println("</body>");
             out.println("</html>");
-
-        } finally {
-            out.close();
-        }
     }
 
     /** 
