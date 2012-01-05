@@ -24,7 +24,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -34,7 +34,9 @@ public class DataBaseHelper {
             Statement s = conect.createStatement();
             rs = s.executeQuery(query);
             while (rs.next()) {
+                if(rs.getString(number)!=null)
                 lst.add(rs.getString(number));
+                else lst.add("");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -55,7 +57,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         int number = 0;
         try {
@@ -210,6 +212,7 @@ public class DataBaseHelper {
     }
 
     public static void insertUser(String ime, String prezime, String user, String email, String password) {
+        if((ime == null) || (prezime == null) || (user == null) || (email == null) || (password == null)) return;
         if(ime.isEmpty() || prezime.isEmpty() || user.isEmpty() || password.isEmpty()) return;
         StringBuilder sqlStr = new StringBuilder("INSERT INTO korisnik VALUES('");
         sqlStr.append(ime);
@@ -230,6 +233,8 @@ public class DataBaseHelper {
     }
 
     public static void insertMeni(String Cena, String Restoran, String Stavka) {
+        if(Restoran == null || Cena == null || Stavka == null) return;
+        if(Restoran.isEmpty() || Stavka.isEmpty()) return;
         String str = getLunch(Stavka);
         if(str.isEmpty())
             insertStavkaMeni(Stavka);
@@ -243,12 +248,16 @@ public class DataBaseHelper {
         ExecuteQuery(sqlStr.toString());
     }
 
-    public static void insertRestoran(String Ime, String Adresa) {
+    public static void insertRestoran(String Ime, String Adresa, String Telefon) {
+        if(Ime == null || Adresa == null || Telefon == null) return;
+        if(Ime.isEmpty()) return;
         ExecuteQuery("INSERT INTO restoran VALUES('" + Ime + "', '" + Adresa + "');");
     }
 
     public static void insertStavkaMeni(String Ime) //throws SQLException
     {
+        if(Ime == null) return;
+        if(Ime.isEmpty()) return;
         StringBuilder sqlStr = new StringBuilder("INSERT INTO stavkameni (Ime) VALUES('");
         sqlStr.append(Ime);
         sqlStr.append("' );");
@@ -256,6 +265,7 @@ public class DataBaseHelper {
     }
 
     public static void insertTekovnaGrupa(String Vreme, String User, String Restoran) {
+        if(Vreme.isEmpty() || User.isEmpty() || Restoran.isEmpty()) return;
         StringBuilder sqlStr = new StringBuilder("INSERT INTO tekovnagrupa (Vreme,Korisnik_USer,Restoran_Ime) VALUES('");
         sqlStr.append(Vreme);
         sqlStr.append("', '");
@@ -268,6 +278,8 @@ public class DataBaseHelper {
     //insert into stavkameni (Ime) VALUES ('Burek');
 
     public static void insertNaracka(String User, int ID_Grupa, String Stavka) {
+        if(User == null) return;
+        if(User.isEmpty()) return;
         StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka (Korisnik_User, TekovnaGrupa_idTekovnaGrupa, stavkameni_Ime) VALUES('");
         sqlStr.append(User);
         sqlStr.append("', '");
@@ -279,6 +291,8 @@ public class DataBaseHelper {
     }
 
     public static void insertNaracka(String User, int ID_Grupa, String Stavka, String Komentar) {
+        if(User == null) return;
+        if(User.isEmpty()) return;
         StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka (Komentar, Korisnik_User, TekovnaGrupa_idTekovnaGrupa, stavkameni_Ime) VALUES('");
         sqlStr.append(Komentar);
         sqlStr.append("', '");

@@ -14,6 +14,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <% DataBaseHelper.deleteTekovnaGrupa(1); %>
         <h1>POPOLNUVANJE NA BAZATA</h1>
         <form method="POST" action ="Popolni.do">
             <input type="submit" value="POPOLNI"/>
