@@ -70,8 +70,10 @@ public class RemoveRestorant extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String ime = request.getParameter("ImeIzbrisi");
         DataBaseHelper.deleteRestoran(ime);
+        
         RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
         rd.forward(request, response);
 

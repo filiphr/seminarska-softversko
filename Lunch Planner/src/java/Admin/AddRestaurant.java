@@ -70,9 +70,12 @@ public class AddRestaurant extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String ime = request.getParameter("ImeDodadi");
         String adresa = request.getParameter("AdresaDodadi");
+        
         DataBaseHelper.insertRestoran(ime, adresa);
+        
         RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
         rd.forward(request, response);
     }
