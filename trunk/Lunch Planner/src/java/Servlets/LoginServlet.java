@@ -4,6 +4,7 @@
  */
 package Servlets;
 
+import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -76,8 +77,12 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
         //DO check in database
+        String user = null;
+        if (DataBaseHelper.CheckUser(username, password)) {
+            user = username;
+        }
 
-        if (username != null && password != null) {
+        if (user != null) {
 //            if ("selected".equals(remember)) {
 //                Cookie c = new Cookie("username", username);
 //                c.setMaxAge(100000);
@@ -88,10 +93,10 @@ public class LoginServlet extends HttpServlet {
 //                response.addCookie(c);
 //            }
 
-            
-            HttpSession session=request.getSession();
+
+            HttpSession session = request.getSession();
             session.setAttribute("username", username);
-            RequestDispatcher rd = request.getRequestDispatcher("UserPages/Main.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Main.jsp");
             rd.forward(request, response);
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("Najava.jsp");
