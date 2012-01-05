@@ -68,9 +68,10 @@
                     <tr><td width="200px" ><select  name="Meni" size="1">
                                 <option value="">-избери ставка-</option>
                                 <%
-                                    List<String> lst4 = DataBaseHelper.getAllMenuItems(resNameDeleteItem);
-                                    for (int i = 0; i < lst4.size(); i++) {
-                                        String s = lst4.get(i);
+                                    List<List<String>> lst4 = DataBaseHelper.getAllMenuItemsAndPrice(resNameDeleteItem);
+                                    //List<String> lst4 = DataBaseHelper.getAllMenuItems(resNameDeleteItem);
+                                    for (int i = 0; i < lst4.get(0).size(); i++) {
+                                        String s = lst4.get(0).get(i);
                                 %>
                                 <option value="<%=s%>"><%=s%></option>
                                 <%
