@@ -18,6 +18,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ажурирање податоци за корисник</title>
+        <link rel="stylesheet" type="text/css" href="NazadCss.css" />
         <script type="text/javascript">
             function validateUpdateUserForm()
             {
@@ -98,5 +99,6 @@
                 <tr><td colspan="2"><input type="submit" value="Промени"/></td></tr>
             </table>
         </form>
+        <p><a href="Azuriranje.jsp"><b>Назад</b></a></p>
     </body>
 </html>

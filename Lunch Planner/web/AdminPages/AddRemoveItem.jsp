@@ -7,6 +7,9 @@
 <%@page import="DataBase.DataBaseHelper"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -18,6 +21,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Aжурирање на мени на ресторантите</title>
+        <link rel="stylesheet" type="text/css" href="NazadCss.css" />
         <script type="text/javascript">
             function validateAddMenuItemForm()
             {
@@ -78,7 +82,11 @@
                                     for (int i = 0; i < lst3.size(); i++) {
                                         String s = lst3.get(i);
                                 %>
-                                <option value="<%=s%>"><%=s%></option>
+                                <option value="<%=s%>"
+                                        <% if (s.equals(resNameDeleteItem)) {
+                                                out.write("selected=\"true\"");
+                                            }%>
+                                        ><%=s%></option>
                                 <%
                                     }
                                 %>
@@ -105,5 +113,6 @@
                 </table>
             </form>
         </div>
+        <p><a href="Azuriranje.jsp"><b>Назад</b></a></p>
     </body>
 </html>

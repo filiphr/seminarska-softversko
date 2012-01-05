@@ -17,6 +17,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ажурирање на листата на корисници</title>
+        <link rel="stylesheet" type="text/css" href="NazadCss.css" />
         <script type="text/javascript" >
             function validateAddUserForm()
             {
@@ -119,5 +120,6 @@
                 </table>
             </form>
         </div>
+        <p><a href="Azuriranje.jsp"><b>Назад</b></a></p>
     </body>
 </html>
