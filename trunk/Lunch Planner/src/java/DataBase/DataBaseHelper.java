@@ -37,7 +37,8 @@ public class DataBaseHelper {
                 lst.add(rs.getString(number));
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
+            //throw new RuntimeException(e);
         } finally {
             try {
                 if (conect != null) {
@@ -408,6 +409,32 @@ public class DataBaseHelper {
         sqlStr.append("' And  preferences_Korisnik_User = '");
         sqlStr.append(User);
         sqlStr.append("' );");
+        ExecuteQuery(sqlStr.toString());
+    }
+    
+    public static void deleteTekovnaGrupa(int ID_Grupa)
+    {
+        ExecuteQuery("DELETE FROM tekovnagrupa where idTekovnaGrupa = " + ID_Grupa);
+    }
+    public static void deleteAllGroups()
+    {
+        ExecuteQuery("DELETE FROM tekovnagrupa");
+    }
+    public static void deleteAllNaracki()
+    {
+        ExecuteQuery("DELETE FROM naracka");
+    }
+    public static void insertArhiviraniGrupi(String Vreme, String User, String Restoran, String Stavka)
+    {
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO arhiviranagrupa VALUES('");
+        sqlStr.append(Vreme);
+        sqlStr.append("', ");
+        sqlStr.append(User);
+        sqlStr.append("', ");
+        sqlStr.append(Restoran);
+        sqlStr.append("', ");
+        sqlStr.append(Stavka);
+        sqlStr.append(" );");
         ExecuteQuery(sqlStr.toString());
     }
 }
