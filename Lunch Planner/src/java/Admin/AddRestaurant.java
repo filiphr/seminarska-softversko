@@ -4,8 +4,10 @@
  */
 package Admin;
 
+import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -68,16 +70,11 @@ public class AddRestaurant extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddRestaurant</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println(request.getParameter("ImeDodadi")+" "+request.getParameter("AdresaDodadi"));
-            out.println("</body>");
-            out.println("</html>");
+        String ime = request.getParameter("ImeDodadi");
+        String adresa = request.getParameter("AdresaDodadi");
+        DataBaseHelper.insertRestoran(ime, adresa);
+        RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
+        rd.forward(request, response);
     }
 
     /** 

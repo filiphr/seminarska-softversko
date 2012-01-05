@@ -58,6 +58,7 @@ public class Popolni extends HttpServlet {
          DataBaseHelper.insertUser("marko","docevski","mdocevski","mdocevski@gmail.com ","marko");
          DataBaseHelper.insertUser("igor","sudiovski","isudiovski","isudiovski@gmail.com ","igor");
          DataBaseHelper.insertUser("filip","hrisafov","fhrisafov","fhrisafov@gmail.com ","filip");
+         
         response.sendRedirect("Najava.jsp");
     }
 
