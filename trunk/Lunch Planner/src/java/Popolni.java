@@ -56,9 +56,9 @@ public class Popolni extends HttpServlet {
          DataBaseHelper.insertUser("marko","docevski","mdocevski","mdocevski@gmail.com ","marko");
          DataBaseHelper.insertUser("igor","sudijovski","isudijovski","isudijovski@gmail.com ","igor");
          DataBaseHelper.insertUser("filip","hrisafov","fhrisafov","fhrisafov@gmail.com ","filip");
-         DataBaseHelper.insertRestoran("Enriko", "Leptokarija");
-         DataBaseHelper.insertRestoran("Vegera", "Karpos 3");
-         DataBaseHelper.insertRestoran("Staro Bure", "Leptokarija");
+         DataBaseHelper.insertRestoran("Enriko", "Leptokarija", "076512354");
+         DataBaseHelper.insertRestoran("Vegera", "Karpos 3", "076512354");
+         DataBaseHelper.insertRestoran("Staro Bure", "Leptokarija", "076512354");
          DataBaseHelper.insertStavkaMeni("Pica");
          DataBaseHelper.insertStavkaMeni("Lazanji");
          DataBaseHelper.insertStavkaMeni("Kifla");
