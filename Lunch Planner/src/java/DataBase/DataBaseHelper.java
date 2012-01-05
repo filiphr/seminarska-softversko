@@ -331,4 +331,29 @@ public class DataBaseHelper {
         updatePreferencesStavka(Stavka, User);
         updatePreferencesVreme(Vreme, User);
     }
+    
+    public static void deleteUser (String User)
+    {
+        String sqlStr = "DELETE FROM korisnik WHERE User='" + User +"'";
+        ExecuteQuery(User);
+    }
+    public static void updateUser (String ime, String prezime, String user, String lozinka, String mail)
+    {
+        StringBuilder sqlSqtr = new StringBuilder("UPDATE korisnik SET");
+        sqlSqtr.append("Ime='").append(ime).append("', ");
+        sqlSqtr.append("Prezime='").append(prezime).append("', ");
+        sqlSqtr.append("Email='").append(mail).append("', ");
+        sqlSqtr.append("Password='").append(lozinka).append("' ");
+        sqlSqtr.append("WHERE User='").append(user).append("'");
+        ExecuteQuery(sqlSqtr.toString());
+    }
+    public static void deleteRestoran(String Ime)
+    {
+        String sqlStr = "DELETE FROM restoran WHERE Ime='" +Ime+"'";
+        ExecuteQuery(Ime);
+    }
+    public static void deleteMeni (String Restoran, String Stavka)
+    {
+        //String sqlStr = "DELETE FROM Meni WHERE Restoran_ime='"+Restoran+"'"
+    }
 }
