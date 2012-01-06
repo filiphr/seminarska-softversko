@@ -87,7 +87,7 @@
         </form>
 
 
-        <form method="post" name="PreferenceForm" method="post" action="Preferences.do" onsubmit="return validatePreferenceForm()">
+        <form method="post" name="PreferenceForm" action="Preferences.do" onsubmit="return validatePreferenceForm()">
             <input type="hidden" name="ImeRestorant" value="<%=resNamePrefItem%>"/>
             <table>
                 <tr><td colspan="2" width="300px" ><select  name="Meni" size="1">
@@ -140,8 +140,7 @@
                     <form method="post" name="ParticipantiOdzemiForm" action="ParticipantiOdzemi.do" onsubmit="return validateParticipantiOdzemiForm()">
                         <select size="8" name="ParticipantiOdzemi" multiple="multiple">
                             <%
-                                //SMENI GO!
-                                List<String> lst2 = DataBaseHelper.getPreferencesParticipant("mdocevski");
+                                List<String> lst2 = DataBaseHelper.getPreferencesParticipant(userID);
                                 for (int i = 0; i < lst2.size(); i++) {
                                     String s = lst2.get(i);
                             %>
