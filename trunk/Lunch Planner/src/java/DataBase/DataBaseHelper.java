@@ -144,20 +144,27 @@ public class DataBaseHelper {
     }
 
     public static String getPreferencesHour(String user) {
-        List<String> lst = (GetQuery("select * from preferences where Korisnik_User = '" + user + "'", 1));
+        List<String> lst = (GetQuery("select Vreme from preferences where Korisnik_User = '" + user + "'", 1));
         if (!lst.isEmpty()) {
             return lst.get(0);
         }
         return new String();
     }
 
+    public static String getPreferencesKomentar (String user) {
+        List<String> lst = (GetQuery("select Komentar from preferences where Korisnik_User = '" + user + "'", 1));
+        if (!lst.isEmpty()) {
+            return lst.get(0);
+        }
+        return new String();
+    }
     public static List<String> getPreferencesParticipant(String user) {
         List<String> lst = GetQuery("select korisnik_User from korisnik_has_preferences where preferences_Korisnik_User = '" + user + "'", 1);
         return lst;
     }
 
     public static String getPreferencesMeal(String user) {
-        List<String> lst = (GetQuery("select Ime from stavkameni,preferences WHERE Ime=StavkaMeni_Ime And Korisnik_User = '" + user + "'", 1));
+        List<String> lst = (GetQuery("select stavkameni_Ime from preferences WHERE Korisnik_User = '" + user + "'", 1));
         if (!lst.isEmpty()) {
             return lst.get(0);
         }
@@ -182,6 +189,14 @@ public class DataBaseHelper {
         return lst;
     }
 
+    public static List<String> getAllItems()
+    {
+        List<String> lst = GetQuery("SELECT * FROM stavkameni",1);
+        if(lst!=null)
+            return lst;
+        else return new ArrayList<String>();
+    }
+    
     public static List<List<String>> getAllMenuItemsAndPrice(String RestaurantName) {
         List<List<String>> lst = new ArrayList<List<String>>();
         lst.add(GetQuery("select Ime from meni,stavkameni where Ime = StavkaMeni_Ime And Restoran_Ime = '" + RestaurantName + "'", 1));
@@ -377,6 +392,10 @@ public class DataBaseHelper {
                     + "' WHERE Korisnik_User = '" + User + "';";
             ExecuteQuery(str);
 
+        }
+        else
+        {
+            getAllUsernames();
         }
     }
 

@@ -127,6 +127,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>najava.jsp</welcome-file>
+        <welcome-file>Najava.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

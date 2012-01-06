@@ -12,17 +12,9 @@
 <!DOCTYPE html>
 <html>
     <%
-        String userID="";
+        String userID = "";
         synchronized (session) {
             userID = (String) session.getAttribute("username");
-        }
-        
-        String resNamePrefItem = DataBaseHelper.getPreferencesRestoran(userID);
-        if (resNamePrefItem == null) {
-            resNamePrefItem = "";
-        }
-        if (request.getParameter("resNamePrefItem") != null) {
-            resNamePrefItem = request.getParameter("resNamePrefItem");
         }
     %>
     <head>
@@ -63,12 +55,13 @@
         </script>
     </head>
     <body>
-
-        <form action="" method="post">
+        <%=userID%>
+        <br/>
+        <form method="post" name="PreferenceForm" action="Preferences.do" onsubmit="return validatePreferenceForm()">
             <table>
                 <tr><th colspan="2">Преферирани опции</th></tr>
                 <tr><td colspan="2" width="300px">
-                        <select name="resNamePrefItem" size="1" onchange="submit()">
+                        <select name="ImeRestorant" size="1" onchange="submit()">
                             <option value="">-избери ресторант-</option>
                             <%
                                 List<String> lst3 = DataBaseHelper.getAllRestaurantNames();
@@ -76,7 +69,7 @@
                                     String s = lst3.get(i);
                             %>
                             <option value="<%=s%>"
-                                    <% if (s.equals(resNamePrefItem)) {
+                                    <% if (s.equals(DataBaseHelper.getPreferencesRestoran(userID))) {
                                             out.write("selected=\"true\"");
                                         }%>
                                     ><%=s%></option>
@@ -84,19 +77,12 @@
                                 }
                             %>
                         </select><a href="ClearPreference.do?what=restorant">Избриши</a></td></tr>
-            </table>
-        </form>
-
-
-        <form method="post" name="PreferenceForm" action="Preferences.do" onsubmit="return validatePreferenceForm()">
-            <input type="hidden" name="ImeRestorant" value="<%=resNamePrefItem%>"/>
-            <table>
                 <tr><td colspan="2" width="300px" ><select  name="Meni" size="1">
                             <option value="">-избери ставка-</option>
                             <%
-                                List<List<String>> lst4 = DataBaseHelper.getAllMenuItemsAndPrice(resNamePrefItem);
-                                for (int i = 0; i < lst4.get(0).size(); i++) {
-                                    String s = lst4.get(0).get(i);
+                                List<String> lst4 = DataBaseHelper.getAllItems();
+                                for (int i = 0; i < lst4.size(); i++) {
+                                    String s = lst4.get(i);
                             %>
                             <option value="<%=s%>"
                                     <%
@@ -110,9 +96,9 @@
 
                                 }
                             %>
-                        </select><a href="ClearPreference.do?what=stavka"></a></td></tr>
-                <tr><td>Време:</td><td><input type="text" name="Vreme"/><a href="ClearPreference.do?what=vreme"></a></td></tr>
-                <tr><td>Коментар:</td><td><input type="text" name="Komentar"/><a href="ClearPreference.do?what=komentar"></a></tr>
+                        </select><a href="ClearPreference.do?what=stavka">Избриши</a></td></tr>
+                <tr><td>Време:</td><td><input type="text" value="<%= DataBaseHelper.getPreferencesHour(userID)%>" name="Vreme"/><a href="ClearPreference.do?what=vreme">Избриши</a></td></tr>
+                <tr><td>Коментар:</td><td><input type="text" value="<%= DataBaseHelper.getPreferencesKomentar(userID)%>" name="Komentar"/><a href="ClearPreference.do?what=komentar">Избриши</a></tr>
                 <tr><td colspan="2"><input type="submit"/></td></tr>
             </table>
         </form>

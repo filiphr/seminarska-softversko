@@ -58,7 +58,7 @@ public class ClearPreference extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String what = request.getParameter("atribut");
+        String what = request.getParameter("what");
         HttpSession ses = request.getSession();
         String user = null;
         synchronized(ses)
