@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Home
  */
-public class ParticipantiDodadi extends HttpServlet {
+public class ParticipantiOdzemi extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +33,10 @@ public class ParticipantiDodadi extends HttpServlet {
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Participanti</title>");  
+            out.println("<title>Servlet ParticipantiOdzemi</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Participanti at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ParticipantiOdzemi at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
              */

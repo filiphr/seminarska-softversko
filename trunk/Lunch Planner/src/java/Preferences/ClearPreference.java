@@ -4,19 +4,20 @@
  */
 package Preferences;
 
+import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Home
  */
-public class ParticipantiDodadi extends HttpServlet {
+public class ClearPreference extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +34,10 @@ public class ParticipantiDodadi extends HttpServlet {
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Participanti</title>");  
+            out.println("<title>Servlet ClearPreference</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Participanti at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ClearPreference at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
              */
@@ -56,7 +57,21 @@ public class ParticipantiDodadi extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String what = request.getParameter("atribut");
+        HttpSession ses = request.getSession();
+        String user = null;
+        synchronized(ses)
+        {
+            user = (String) ses.getAttribute("username");
+        }
+        if("vreme".equals(what))
+        DataBaseHelper.clearPreferenceTime(user);
+        else if ("stavka".equals(what))
+            DataBaseHelper.clearPreferenceMeal(user);
+        else if ("restorant".equals(what))
+            DataBaseHelper.clearPreferenceRestorant(user);
+        else if ("komentar".equals(what))
+            DataBaseHelper.clearPreferenceKomentar(user);
     }
 
     /** 
@@ -69,8 +84,7 @@ public class ParticipantiDodadi extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("Preferences.jsp");
-        rd.forward(request, response);
+        processRequest(request, response);
     }
 
     /** 

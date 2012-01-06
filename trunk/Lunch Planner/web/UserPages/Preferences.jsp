@@ -4,22 +4,23 @@
     Author     : Home
 --%>
 
+<%@page import="org.apache.catalina.Session"%>
 <%@page import="com.sun.org.apache.regexp.internal.RESyntaxException"%>
 <%@page import="DataBase.DataBaseHelper"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <%!        String userID = "mdocevski";
-        //synchronized (session) {
-        //   userID = (String) session.getAttribute("username");
-        //}
-        String resNamePrefItem = DataBaseHelper.getPreferencesRestoran(userID);
-            
-    %>
     <%
-    
-    if(resNamePrefItem==null) resNamePrefItem = "";
+        String userID="";
+        synchronized (session) {
+            userID = (String) session.getAttribute("username");
+        }
+        
+        String resNamePrefItem = DataBaseHelper.getPreferencesRestoran(userID);
+        if (resNamePrefItem == null) {
+            resNamePrefItem = "";
+        }
         if (request.getParameter("resNamePrefItem") != null) {
             resNamePrefItem = request.getParameter("resNamePrefItem");
         }
@@ -82,7 +83,7 @@
                             <%
                                 }
                             %>
-                        </select></td></tr>
+                        </select><a href="ClearPreference.do?what=restorant">Избриши</a></td></tr>
             </table>
         </form>
 
@@ -109,9 +110,9 @@
 
                                 }
                             %>
-                        </select></td></tr>
-                <tr><td>Време:</td><td><input type="text" name="Vreme"/></td></tr>
-                <tr><td>Коментар:</td><td><input type="text" name="Komentar"/></tr>
+                        </select><a href="ClearPreference.do?what=stavka"></a></td></tr>
+                <tr><td>Време:</td><td><input type="text" name="Vreme"/><a href="ClearPreference.do?what=vreme"></a></td></tr>
+                <tr><td>Коментар:</td><td><input type="text" name="Komentar"/><a href="ClearPreference.do?what=komentar"></a></tr>
                 <tr><td colspan="2"><input type="submit"/></td></tr>
             </table>
         </form>
