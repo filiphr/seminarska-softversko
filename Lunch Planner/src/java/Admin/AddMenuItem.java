@@ -76,7 +76,7 @@ public class AddMenuItem extends HttpServlet {
             
             DataBaseHelper.insertMeni(cenaStavka, imeRes, imeStavka);
             
-            RequestDispatcher rd = request.getRequestDispatcher("Azuriranje.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("AddRemoveItem.jsp");
             rd.forward(request, response);
     }
 
