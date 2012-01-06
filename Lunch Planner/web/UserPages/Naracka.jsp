@@ -99,15 +99,18 @@
                                                         if ("Meni".equals(pom)) {
                                                             if (odbrano != null) {
                                                                 Odbrani.add(odbrano);
-                                                                session.setAttribute("Odbrani", Odbrani);
+                                                                
                                                             }
                                                         } else if ("odbrani".equals(pom)){
                                                             if (remove!=null){
                                                                 Odbrani.remove(remove);
-                                                                session.setAttribute("Odbrani", Odbrani);
-                                                            }
-                                                            
+                                                            }   
                                                         }
+                                                        String prefMeal = DataBaseHelper.getPreferencesMeal((String)session.getAttribute("username"));
+                                                        if (prefMeal!=null && !Odbrani.contains(prefMeal)){
+                                                            Odbrani.add(prefMeal);                                                                                                                     
+                                                        }
+                                                        session.setAttribute("Odbrani", Odbrani);
                                                         for (int i = 0; i < Odbrani.size(); i++) {
                                                             String s = Odbrani.get(i);
                                                     %>
