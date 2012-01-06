@@ -72,7 +72,7 @@ public class AddMenuItem extends HttpServlet {
             throws ServletException, IOException {
             String imeRes = request.getParameter("ImeDodadi");
             String imeStavka = request.getParameter("ImeStavka");
-            String cenaStavka = request.getParameter("CenaStafka");
+            String cenaStavka = request.getParameter("CenaStavka");
             
             DataBaseHelper.insertMeni(cenaStavka, imeRes, imeStavka);
             
