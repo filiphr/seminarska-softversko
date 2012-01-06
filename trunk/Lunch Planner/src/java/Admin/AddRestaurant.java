@@ -74,7 +74,6 @@ public class AddRestaurant extends HttpServlet {
         String ime = request.getParameter("ImeDodadi");
         String adresa = request.getParameter("AdresaDodadi");
         String broj = request.getParameter("TelefonDodadi");
-        DataBaseHelper.insertRestoran(ime, adresa, broj);
 
         DataBaseHelper.insertRestoran(ime, adresa,broj); 
 
