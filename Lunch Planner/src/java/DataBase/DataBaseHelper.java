@@ -34,18 +34,20 @@ public class DataBaseHelper {
             Statement s = conect.createStatement();
             rs = s.executeQuery(query);
             while (rs.next()) {
-                if(rs.getString(number)!=null)
-                lst.add(rs.getString(number));
-                else lst.add("");
+                if (rs.getString(number) != null) {
+                    lst.add(rs.getString(number));
+                } else {
+                    lst.add("");
+                }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             //throw new RuntimeException(e);
         } finally {
             try {
-                
-                    conect.close();
-                
+
+                conect.close();
+
             } catch (SQLException ex) {
                 Logger.getLogger(DataBaseHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -70,8 +72,9 @@ public class DataBaseHelper {
             //throw new RuntimeException(e);
         } finally {
             try {
-                if(conect!=null)
+                if (conect != null) {
                     conect.close();
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(DataBaseHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -139,7 +142,6 @@ public class DataBaseHelper {
         }
         return new String();
     }
-
 
     public static String getPreferencesHour(String user) {
         List<String> lst = (GetQuery("select * from preferences where Korisnik_User = '" + user + "'", 1));
@@ -221,8 +223,12 @@ public class DataBaseHelper {
     }
 
     public static void insertUser(String ime, String prezime, String user, String email, String password) {
-        if((ime == null) || (prezime == null) || (user == null) || (email == null) || (password == null)) return;
-        if(ime.isEmpty() || prezime.isEmpty() || user.isEmpty() || password.isEmpty()) return;
+        if ((ime == null) || (prezime == null) || (user == null) || (email == null) || (password == null)) {
+            return;
+        }
+        if (ime.isEmpty() || prezime.isEmpty() || user.isEmpty() || password.isEmpty()) {
+            return;
+        }
         StringBuilder sqlStr = new StringBuilder("INSERT INTO korisnik VALUES('");
         sqlStr.append(ime);
         sqlStr.append("', '");
@@ -242,11 +248,16 @@ public class DataBaseHelper {
     }
 
     public static void insertMeni(String Cena, String Restoran, String Stavka) {
-        if(Restoran == null || Cena == null || Stavka == null) return;
-        if(Restoran.isEmpty() || Stavka.isEmpty()) return;
+        if (Restoran == null || Cena == null || Stavka == null) {
+            return;
+        }
+        if (Restoran.isEmpty() || Stavka.isEmpty()) {
+            return;
+        }
         String str = getLunch(Stavka);
-        if(str==null || "".equals(str))
+        if (str == null || "".equals(str)) {
             insertStavkaMeni(Stavka);
+        }
         StringBuilder sqlStr = new StringBuilder("INSERT INTO meni (Cena,Restoran_Ime, StavkaMeni_Ime) VALUES('");
         sqlStr.append(Cena);
         sqlStr.append("', '");
@@ -258,15 +269,23 @@ public class DataBaseHelper {
     }
 
     public static void insertRestoran(String Ime, String Adresa, String Telefon) {
-        if(Ime == null || Adresa == null || Telefon == null) return;
-        if(Ime.isEmpty()) return;
+        if (Ime == null || Adresa == null || Telefon == null) {
+            return;
+        }
+        if (Ime.isEmpty()) {
+            return;
+        }
         ExecuteQuery("INSERT INTO restoran VALUES('" + Ime + "', '" + Adresa + "', '" + Telefon + "' );");
     }
 
     public static void insertStavkaMeni(String Ime) //throws SQLException
     {
-        if(Ime == null) return;
-        if(Ime.isEmpty()) return;
+        if (Ime == null) {
+            return;
+        }
+        if (Ime.isEmpty()) {
+            return;
+        }
         StringBuilder sqlStr = new StringBuilder("INSERT INTO stavkameni (Ime) VALUES('");
         sqlStr.append(Ime);
         sqlStr.append("' );");
@@ -274,7 +293,9 @@ public class DataBaseHelper {
     }
 
     public static void insertTekovnaGrupa(String Vreme, String User, String Restoran) {
-        if(Vreme.isEmpty() || User.isEmpty() || Restoran.isEmpty()) return;
+        if (Vreme.isEmpty() || User.isEmpty() || Restoran.isEmpty()) {
+            return;
+        }
         StringBuilder sqlStr = new StringBuilder("INSERT INTO tekovnagrupa (Vreme,Korisnik_USer,Restoran_Ime) VALUES('");
         sqlStr.append(Vreme);
         sqlStr.append("', '");
@@ -287,8 +308,12 @@ public class DataBaseHelper {
     //insert into stavkameni (Ime) VALUES ('Burek');
 
     public static void insertNaracka(String User, int ID_Grupa, String Stavka) {
-        if(User == null) return;
-        if(User.isEmpty()) return;
+        if (User == null) {
+            return;
+        }
+        if (User.isEmpty()) {
+            return;
+        }
         StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka (Korisnik_User, TekovnaGrupa_idTekovnaGrupa, stavkameni_Ime) VALUES('");
         sqlStr.append(User);
         sqlStr.append("', '");
@@ -300,8 +325,12 @@ public class DataBaseHelper {
     }
 
     public static void insertNaracka(String User, int ID_Grupa, String Stavka, String Komentar) {
-        if(User == null) return;
-        if(User.isEmpty()) return;
+        if (User == null) {
+            return;
+        }
+        if (User.isEmpty()) {
+            return;
+        }
         StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka (Komentar, Korisnik_User, TekovnaGrupa_idTekovnaGrupa, stavkameni_Ime) VALUES('");
         sqlStr.append(Komentar);
         sqlStr.append("', '");
@@ -332,8 +361,8 @@ public class DataBaseHelper {
             ExecuteQuery("UPDATE preferences SET StavkaMeni_Ime = '" + Stavka + "' WHERE Korisnik_User = '" + User + "';");
         }
     }
-    public static void updatePreferencesKomentar(String Komentar, String User)
-    {
+
+    public static void updatePreferencesKomentar(String Komentar, String User) {
         if (!Komentar.isEmpty() && !(User.isEmpty())) {
             ExecuteQuery("UPDATE preferences SET Komentar = '" + Komentar + "' WHERE Korisnik_User = '" + User + "';");
         }
@@ -345,14 +374,13 @@ public class DataBaseHelper {
         updatePreferencesVreme(Vreme, User);
         updatePreferencesKomentar(Komentar, User);
     }
-    
-    public static void deleteUser (String User)
-    {
-        String sqlStr = "DELETE FROM korisnik WHERE User='" + User +"'";
+
+    public static void deleteUser(String User) {
+        String sqlStr = "DELETE FROM korisnik WHERE User='" + User + "'";
         ExecuteQuery(User);
     }
-    public static void updateUser (String ime, String prezime, String user, String lozinka, String mail)
-    {
+
+    public static void updateUser(String ime, String prezime, String user, String lozinka, String mail) {
         StringBuilder sqlSqtr = new StringBuilder("UPDATE korisnik SET");
         sqlSqtr.append("Ime='").append(ime).append("', ");
         sqlSqtr.append("Prezime='").append(prezime).append("', ");
@@ -361,23 +389,23 @@ public class DataBaseHelper {
         sqlSqtr.append("WHERE User='").append(user).append("'");
         ExecuteQuery(sqlSqtr.toString());
     }
-    public static void deleteRestoran(String Ime)
-    {
-        String sqlStr = "DELETE FROM restoran WHERE Ime='" +Ime+"'";
+
+    public static void deleteRestoran(String Ime) {
+        String sqlStr = "DELETE FROM restoran WHERE Ime='" + Ime + "'";
         ExecuteQuery(sqlStr);
     }
-    public static void deleteMeni (String Restoran, String Stavka)
-    {
-        String sqlStr = "DELETE FROM Meni WHERE Restoran_ime='"+Restoran+"' And StavkaMeni_Ime = '" + Stavka +"'";
+
+    public static void deleteMeni(String Restoran, String Stavka) {
+        String sqlStr = "DELETE FROM Meni WHERE Restoran_ime='" + Restoran + "' And StavkaMeni_Ime = '" + Stavka + "'";
         ExecuteQuery(sqlStr);
     }
     //UPDATE dbsoftversko.naracka SET `stavkameni_Ime` = 'Sendvic', `Komentar` = 'So Kecap' WHERE `idNaracka` = 1;
-    public static void UpdateNaracka(int ID_Naracka, String Komentar, String Stavka)
-    {
+
+    public static void UpdateNaracka(int ID_Naracka, String Komentar, String Stavka) {
         ExecuteQuery("UPDATE naracka SET stavkameni_Ime = '" + Stavka + "' , Komentar = '" + Komentar + "' WHERE idNaracka = " + ID_Naracka);
     }
-    public static int getIDNaracka(String User, int ID_Grupa, String Stavka)
-    {
+
+    public static int getIDNaracka(String User, int ID_Grupa, String Stavka) {
         StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
         sqlStr.append(User);
         sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
@@ -387,19 +415,19 @@ public class DataBaseHelper {
         sqlStr.append("'");
         List<String> lst = GetQuery(sqlStr.toString(), 1);
         int ID;
-        if(!lst.isEmpty())
-        {
+        if (!lst.isEmpty()) {
             ID = Integer.parseInt(lst.get(0));
-        }else ID = -1;
+        } else {
+            ID = -1;
+        }
         return ID;
     }
-    public static void deleteNaracka(int ID_Naracka)
-    {
+
+    public static void deleteNaracka(int ID_Naracka) {
         ExecuteQuery("DELETE FROM naracka WHERE idNaracka = " + ID_Naracka);
     }
-    
-    public static void insertPokani(String User, int ID_Grupa)
-    {
+
+    public static void insertPokani(String User, int ID_Grupa) {
         StringBuilder sqlStr = new StringBuilder("INSERT INTO pokani VALUES('");
         sqlStr.append(User);
         sqlStr.append("', ");
@@ -407,9 +435,8 @@ public class DataBaseHelper {
         sqlStr.append(" );");
         ExecuteQuery(sqlStr.toString());
     }
-    
-    public static void deletePokani(String User, int ID_Grupa)
-    {
+
+    public static void deletePokani(String User, int ID_Grupa) {
         StringBuilder sqlStr = new StringBuilder("DELETE FROM pokani WHERE korisnik_USer = '");
         sqlStr.append(User);
         sqlStr.append("' And tekovnagrupa_idTekovnaGrupa = ");
@@ -417,9 +444,8 @@ public class DataBaseHelper {
         sqlStr.append(" );");
         ExecuteQuery(sqlStr.toString());
     }
-    
-    public static void insertPreferencesParticipant(String User, String participant)
-    {
+
+    public static void insertPreferencesParticipant(String User, String participant) {
         StringBuilder sqlStr = new StringBuilder("INSERT INTO korisnik_has_preferences VALUES('");
         sqlStr.append(participant);
         sqlStr.append("', '");
@@ -427,8 +453,8 @@ public class DataBaseHelper {
         sqlStr.append("' );");
         ExecuteQuery(sqlStr.toString());
     }
-    public static void deletePreferencesParticipant(String User, String participant)
-    {
+
+    public static void deletePreferencesParticipant(String User, String participant) {
         StringBuilder sqlStr = new StringBuilder("DELETE FROM korisnik_has_preferences WHERE korisnik_USer = '");
         sqlStr.append(participant);
         sqlStr.append("' And  preferences_Korisnik_User = '");
@@ -436,21 +462,20 @@ public class DataBaseHelper {
         sqlStr.append("' );");
         ExecuteQuery(sqlStr.toString());
     }
-    
-    public static void deleteTekovnaGrupa(int ID_Grupa)
-    {
+
+    public static void deleteTekovnaGrupa(int ID_Grupa) {
         ExecuteQuery("DELETE FROM tekovnagrupa where idTekovnaGrupa = " + ID_Grupa);
     }
-    public static void deleteAllGroups()
-    {
+
+    public static void deleteAllGroups() {
         ExecuteQuery("DELETE FROM tekovnagrupa");
     }
-    public static void deleteAllNaracki()
-    {
+
+    public static void deleteAllNaracki() {
         ExecuteQuery("DELETE FROM naracka");
     }
-    public static void insertArhiviraniGrupi(String Vreme, String User, String Restoran, String Stavka)
-    {
+
+    public static void insertArhiviraniGrupi(String Vreme, String User, String Restoran, String Stavka) {
         StringBuilder sqlStr = new StringBuilder("INSERT INTO arhiviranagrupa VALUES('");
         sqlStr.append(Vreme);
         sqlStr.append("', ");
@@ -462,11 +487,31 @@ public class DataBaseHelper {
         sqlStr.append(" );");
         ExecuteQuery(sqlStr.toString());
     }
-    public static void clearPreference(String what, String user)
-    {
-        if(what!=null && user!=null && !("".equals(what)) && !("".equals(user)))
-        {
-            String str = "UPDATE preferences SET " + what +" = null WHERE Korisnik_User = '" + user + "';";
+
+    public static void clearPreferenceRestorant(String user) {
+        if (user != null && !("".equals(user))) {
+            String str = "UPDATE preferences SET  Restoran_Ime = null WHERE Korisnik_User = '" + user + "';";
+            ExecuteQuery(str);
+        }
+    }
+
+    public static void clearPreferenceMeal(String user) {
+        if (user != null && !("".equals(user))) {
+            String str = "UPDATE preferences SET  stavkameni_Ime = null WHERE Korisnik_User = '" + user + "';";
+            ExecuteQuery(str);
+        }
+    }
+
+    public static void clearPreferenceTime(String user) {
+        if (user != null && !("".equals(user))) {
+            String str = "UPDATE preferences SET  Vreme = null WHERE Korisnik_User = '" + user + "';";
+            ExecuteQuery(str);
+        }
+    }
+
+    public static void clearPreferenceKomentar(String user) {
+        if (user != null && !("".equals(user))) {
+            String str = "UPDATE preferences SET  Komentar = null WHERE Korisnik_User = '" + user + "';";
             ExecuteQuery(str);
         }
     }

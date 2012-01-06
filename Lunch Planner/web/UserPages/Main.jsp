@@ -14,7 +14,8 @@
 
     </head>
     <body>
-        <h1>Hello World Main!</h1>
+        
+        <a href="../UserPages/Preferences.jsp"><h1>Hello World Main!</h1></a>
 
         <form method="POST" action="">
             <table>

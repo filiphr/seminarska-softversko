@@ -4,12 +4,15 @@
  */
 package Preferences;
 
+import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -68,7 +71,21 @@ public class Preferences extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String restorant = request.getParameter("ImeRestorant");
+        String stavka = request.getParameter("Meni");
+        String vreme = request.getParameter("Vreme");
+        String komentar = request.getParameter("Komentar");
+        String user=null;
+        HttpSession ses = request.getSession();
+        synchronized(ses)
+        {
+            user=(String) ses.getAttribute("username");
+        }
+        
+        DataBaseHelper.updatePreferences(user, vreme, restorant, stavka, komentar);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("Preferences.jsp");
+        rd.forward(request,response);
     }
 
     /** 
