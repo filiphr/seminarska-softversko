@@ -35,9 +35,9 @@ way to fit your requirements.
 #nav li ul.sub li a.fly
 {background:#50b5d0 url(arrow.gif) 80px 6px no-repeat;}
 #nav li:hover ul.sub li a:hover 
-{background:#3f96a9; color:#fff; border-color:#fff;}
+{background:#000; color:#fff; border-color:#fff;}
 #nav li:hover ul.sub li a.fly:hover
-{background:#3f96a9 url(arrow_over.gif) 80px 6px no-repeat; color:#fff;}
+{background:#000 url(arrow_over.gif) 80px 6px no-repeat; color:#fff;}
 
 #nav li b {display:block; font-size:11px; height:18px; width:88px; line-height:18px; margin-bottom:3px; text-indent:6px; color:#ff6; border-bottom:1px solid #ff6; cursor:default;}
 
