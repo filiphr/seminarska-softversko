@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Home
  */
-public class Participanti extends HttpServlet {
+public class ParticipantiDodadi extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.

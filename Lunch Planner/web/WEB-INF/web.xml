@@ -50,8 +50,8 @@
         <servlet-class>Preferences.Preferences</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Participanti</servlet-name>
-        <servlet-class>Preferences.Participanti</servlet-class>
+        <servlet-name>ParticipantiDodadi</servlet-name>
+        <servlet-class>Preferences.ParticipantiDodadi</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -94,7 +94,7 @@
         <url-pattern>/UserPages/Preferences.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Participanti</servlet-name>
+        <servlet-name>ParticipantiDodadi</servlet-name>
         <url-pattern>/UserPages/Participanti.do</url-pattern>
     </servlet-mapping>
     <session-config>

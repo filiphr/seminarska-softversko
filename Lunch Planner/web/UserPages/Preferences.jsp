@@ -14,7 +14,11 @@
         if (request.getParameter("resNamePrefItem") != null) {
             resNamePrefItem = request.getParameter("resNamePrefItem");
         }
-    %>
+        String userID = "mdocevski";
+        //synchronized (session) {
+        //   userID = (String) session.getAttribute("username");
+        //}
+%>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Кориснички преференци</title>
@@ -31,9 +35,9 @@
                     }
                 }
             }
-            function validateParticipantiForm()
+            function validateParticipantiDodadiForm()
             {
-                var x = document.forms["ParticipantiForm"]["Participanti"].value;
+                var x = document.forms["ParticipantiDodadiForm"]["ParticipantiDodadi"].value;
                 if(x==null)
                 {
                     alert("Изберете бар еден партиципант");
@@ -86,10 +90,13 @@
             </table>
         </form>
         <br/><br>
-        <form name="ParticipantiForm" onsubmit="return validateParticipantiForm()">
-            <table> 
-                <tr><th>Омилени партиципанти</th></tr>
-                <tr><td width="300px"> <select size="8" name="Participanti" multiple="multiple">
+
+        <table> 
+            <tr><th width="300px" colspan="2">Омилени партиципанти</th></tr>
+            <tr>
+                <td width="150px"> 
+                    <form name="ParticipantiDodadiForm" onsubmit="return validateParticipantiDodadiForm()">
+                        <select size="8" name="ParticipantiDodadi" multiple="multiple">
                             <% List<List<String>> lst = DataBaseHelper.getAllNamesSNamesUsersEmailsPass();
                                 for (int i = 0; i < lst.get(0).size(); i++) {
                                     String name = lst.get(0).get(i);
@@ -99,23 +106,33 @@
                             <option value="<%=user%>" ><%=name%> <%=sname%></option>
                             <%
                                 }
-                            %></select></td>
-                    <td><select size="8" disabled="disabled">
+                            %></select>
+                    </form>
+                </td>
+
+                <td withd="150px">
+                    <form name="ParticipantiOdzemiForm" onsubmit="return validateParticipantiOdzemiForm()">
+                        <select size="8" name="ParticipantiOdzemi" multiple="multiple">
                             <%
                                 //SMENI GO!
                                 List<String> lst2 = DataBaseHelper.getPreferencesParticipant("mdocevski");
                                 for (int i = 0; i < lst2.size(); i++) {
                                     String s = lst2.get(i);
                             %>
-                            <option><%=s%></option>
+                            <option value="<%=s%>"><%=DataBaseHelper.getUserIme(s)%> <%=DataBaseHelper.getUserPrezime(s)%></option>
                             <%
                                 }
                             %>
                         </select>
-                </tr>
-                <tr><td><input type="submit"/></td></tr>
-            </table>
-        </form>
+                    </form>
+                </td> 
+            </tr>
+            <tr>
+                <td><input type="button" onclick="submitDodadi()" value="Додади"/></td>
+                <td><input type="button" onclick="submitOdzemi()" value="Одземи"/></td>
+            </tr>
+        </table>
+
         <p><a href="../AdminPages/Azuriranje.jsp"><b>Назад</b></a></p>
     </body>
 </html>
