@@ -251,7 +251,7 @@ public class DataBaseHelper {
     public static void insertRestoran(String Ime, String Adresa, String Telefon) {
         if(Ime == null || Adresa == null || Telefon == null) return;
         if(Ime.isEmpty()) return;
-        ExecuteQuery("INSERT INTO restoran VALUES('" + Ime + "', '" + Adresa + "');");
+        ExecuteQuery("INSERT INTO restoran VALUES('" + Ime + "', '" + Adresa + "', '" + Telefon + "' );");
     }
 
     public static void insertStavkaMeni(String Ime) //throws SQLException
