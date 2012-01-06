@@ -69,7 +69,7 @@
                                         <tr>
                                             <td>                            
                                                 <select  name="Meni" size="3" onchange="formSubmit('Meni')">
-                                                    <option value="">-избери ставка-</option>
+                                                    <option value="" disabled="true">Клик за да изберете јадење</option>
                                                     <%
                                                         List<List<String>> lst1 = DataBaseHelper.getAllMenuItemsAndPrice("Enriko");
                                                         List<List<String>> lst2 = DataBaseHelper.getNameSNameAndLunch(5);
@@ -85,7 +85,7 @@
                                             </td>
                                             <td>
                                                 <select name="odbrani" size="3" onchange="formSubmit('odbrani')">
-                                                    <option value="">-избери ставка-</option>
+                                                    <option value="" disabled="true">Клик за да избришете ставка</option>
                                                     <%
                                                         List<String> Odbrani = (List<String>) session.getAttribute("Odbrani");
                                                         if (Odbrani == null) {
