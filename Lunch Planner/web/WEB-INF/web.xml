@@ -53,6 +53,10 @@
         <servlet-name>ParticipantiDodadi</servlet-name>
         <servlet-class>Preferences.ParticipantiDodadi</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ParticipantiOdzemi</servlet-name>
+        <servlet-class>Preferences.ParticipantiOdzemi</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -95,7 +99,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ParticipantiDodadi</servlet-name>
-        <url-pattern>/UserPages/Participanti.do</url-pattern>
+        <url-pattern>/UserPages/ParticipantiDodadi.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ParticipantiOdzemi</servlet-name>
+        <url-pattern>/UserPages/ParticipantiOdzemi.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
