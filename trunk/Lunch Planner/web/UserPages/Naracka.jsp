@@ -18,7 +18,7 @@
     <%
         String GroupID = request.getParameter("groupID");
         if (GroupID == null) {
-            GroupID = "";
+           // GroupID = "0";
         }
     %>
 
@@ -106,10 +106,16 @@
                                                                 Odbrani.remove(remove);
                                                             }   
                                                         }
-                                                        String prefMeal = DataBaseHelper.getPreferencesMeal((String)session.getAttribute("username"));
+                                                        String user=(String)session.getAttribute("username");
+                                                        String prefRest = DataBaseHelper.getPreferencesRestoran(user);
+                                                        if (prefRest!=null && prefRest.equals(DataBaseHelper.getRestaurantName(Integer.parseInt(GroupID)))){
+                                                            
+                                                        
+                                                        String prefMeal = DataBaseHelper.getPreferencesMeal(user);
                                                         if (prefMeal!=null && !Odbrani.contains(prefMeal)){
                                                             Odbrani.add(prefMeal);                                                                                                                     
                                                         }
+                                                                                                               }
                                                         session.setAttribute("Odbrani", Odbrani);
                                                         for (int i = 0; i < Odbrani.size(); i++) {
                                                             String s = Odbrani.get(i);
