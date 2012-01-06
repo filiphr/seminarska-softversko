@@ -370,14 +370,13 @@ public class DataBaseHelper {
 
     public static void updatePreferences(String User, String Vreme, String Restoran, String Stavka, String Komentar) {
         if (Restoran != null && Vreme != null && Stavka != null && Komentar != null && User != null) {
-            if (!Restoran.isEmpty() && !Vreme.isEmpty() && !Stavka.isEmpty() && !Komentar.isEmpty() && !User.isEmpty()) {
-                String str = "UPDATE preferences SET "
-                        + "Restoran_Ime = '" + Restoran
-                        + "' StavkaMeni_Ime = '" + Stavka
-                        + "' Vreme = '" + Vreme
-                        + "' WHERE Korisnik_User = '" + User + "';";
-                ExecuteQuery(str);
-            }
+            String str = "UPDATE preferences SET "
+                    + "Restoran_Ime = '" + Restoran
+                    + "' StavkaMeni_Ime = '" + Stavka
+                    + "' Vreme = '" + Vreme
+                    + "' WHERE Korisnik_User = '" + User + "';";
+            ExecuteQuery(str);
+
         }
     }
 
