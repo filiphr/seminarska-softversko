@@ -75,7 +75,7 @@ public class DeleteMenuItem extends HttpServlet {
             
             DataBaseHelper.deleteMeni(ime, meni);
             
-            RequestDispatcher rd = request.getRequestDispatcher("Azuriranje.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("AddRemoveItem.jsp");
             rd.forward(request, response);
     }
 
