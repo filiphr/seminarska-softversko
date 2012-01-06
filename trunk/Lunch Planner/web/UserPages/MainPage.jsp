@@ -46,7 +46,7 @@
         <table>
             <%
                 List<String> groups = DataBaseHelper.getAllGroups();
-                for (int i = 0; i < lst.size(); i++) {
+                for (int i = 0; i < groups.size(); i++) {
                     int ID_Group = Integer.parseInt(groups.get(i));
                     List<List<String>> Names = DataBaseHelper.getNameSNameAndLunch(ID_Group);
                     List<String> lst1 = DataBaseHelper.getRestoranAndVreme(ID_Group);
