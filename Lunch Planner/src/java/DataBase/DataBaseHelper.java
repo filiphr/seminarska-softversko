@@ -24,7 +24,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -59,7 +59,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         int number = 0;
         try {
@@ -101,15 +101,29 @@ public class DataBaseHelper {
         return false;
     }
 
-    public static List<String> GetAllGroups() {
+    public static List<String> getAllGroups() {
         List<String> lst = GetQuery("select * from tekovnagrupa", 1);
+        return lst;
+    }
+    
+    public static List<String> getRestoranAndVreme(int ID_Grupa)
+    {
+        StringBuilder sqlStr = new StringBuilder("select * from tekovnagrupa where idTekovnaGrupa = ");
+        sqlStr.append(ID_Grupa);
+        List<String> Vreme = GetQuery(sqlStr.toString(), 2);
+        List<String> Restoran = GetQuery(sqlStr.toString(), 4);
+        List<String> lst = new ArrayList<String>();
+        if(Restoran.isEmpty()) lst.add("");
+        else lst.add(Restoran.get(0));
+        if(Vreme.isEmpty()) lst.add("");
+        else lst.add(Vreme.get(0));
         return lst;
     }
 
     public static List<List<String>> getNameSNameAndLunch(int ID_Group) {
         List<List<String>> lst = new ArrayList<List<String>>();
-        List<String> users = GetQuery("select Korisnik_User from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = '" + ID_Group + "'", 0);
-        List<String> LucnhID = GetQuery("select StavkaMeni_Ime from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = '" + ID_Group + "'", 0);
+        List<String> users = GetQuery("select naracka.Korisnik_User from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = " + ID_Group, 1);
+        List<String> LucnhID = GetQuery("select StavkaMeni_Ime from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = " + ID_Group, 1);
         List<String> Ime = new ArrayList<String>();
         List<String> Prezime = new ArrayList<String>();
         List<String> Lucnh = new ArrayList<String>();
@@ -459,8 +473,17 @@ public class DataBaseHelper {
         sqlStr.append(" );");
         ExecuteQuery(sqlStr.toString());
     }
-
-    public static void deletePokani(String User, int ID_Grupa) {
+    
+    public static List<String> getAllPokani(String User)
+    {
+        if(User == null) return new ArrayList<String>();
+        if(User.isEmpty()) return new ArrayList<String>();
+        List<String> lst = GetQuery("select tekovnagrupa_idTekovnaGrupa from pokani where korisnik_User = '" + User + "'", 1);
+        return lst;
+    }
+    
+    public static void deletePokani(String User, int ID_Grupa)
+    {
         StringBuilder sqlStr = new StringBuilder("DELETE FROM pokani WHERE korisnik_USer = '");
         sqlStr.append(User);
         sqlStr.append("' And tekovnagrupa_idTekovnaGrupa = ");
