@@ -41,6 +41,9 @@
                 }%>
         </table>
         <table>
+            <tr>
+                <td>
+        <table>
             <%
                 List<String> groups = DataBaseHelper.getAllGroups();
                 for (int i = 0; i < lst.size(); i++) {
@@ -56,33 +59,25 @@
                         <li class="top"><a class="top_link"><span>Restoran: <%= Restoran%> Vreme: <%= Vreme%></span></a></li>        
                         <li class="top"><a id="participanti" class="top_link"><span class="down">Participanti</span></a>
                             <ul class="sub">
-                                <% for (int j = 0; j < Names.get(0).size(); j++) {
+                                <% for (int j = 0; j < Names.get(0).size() && j<5; j++) {
                                         String Name = Names.get(0).get(j);
                                         String SName = Names.get(1).get(j);
-                                        //String Lucnh = Names.get(2).get(j);
+                                        String Lucnh = Names.get(2).get(j);
 %>
-                                <li> <a> <%= Name%>  <%= SName%> </a></li>
+                                <li> <a> <%= Name%>  <%= SName%>  -  <%= Lucnh %> </a></li>
                                 <% }%>
                             </ul>
-                        <li class="top"><a  id="jadenja" class="top_link"><span class="down">Jadenja</span></a>
-                            <ul class="sub">
-                                <%for (int j = 0; j < Names.get(2).size(); j++) {
-                                        String Lucnh = Names.get(2).get(j);
-                                %>
-                                <li> <a> <%= Lucnh %> </a></li>
-                                                        <% }%>
-                            </ul>
-                            
-                        </li>
-
                     </ul>
                 </td>
             </tr>
-            <% for (int s = 0; s < 20; s++) {
+            <% for (int s = 0; s < Names.get(0).size() * 5 && s<25; s++) {
             %>
             <tr> <td> </td></tr>
             <%   }%>
             <% }%>
+        </table>
+                </td>
+            </tr>
         </table>
     </body>
 </html>
