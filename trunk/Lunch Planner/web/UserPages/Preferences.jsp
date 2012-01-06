@@ -4,21 +4,26 @@
     Author     : Home
 --%>
 
+<%@page import="com.sun.org.apache.regexp.internal.RESyntaxException"%>
 <%@page import="DataBase.DataBaseHelper"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <%
-        String resNamePrefItem = "";
-        if (request.getParameter("resNamePrefItem") != null) {
-            resNamePrefItem = request.getParameter("resNamePrefItem");
-        }
-        String userID = "mdocevski";
+    <%!        String userID = "mdocevski";
         //synchronized (session) {
         //   userID = (String) session.getAttribute("username");
         //}
-%>
+        String resNamePrefItem = DataBaseHelper.getPreferencesRestoran(userID);
+            
+    %>
+    <%
+    
+    if(resNamePrefItem==null) resNamePrefItem = "";
+        if (request.getParameter("resNamePrefItem") != null) {
+            resNamePrefItem = request.getParameter("resNamePrefItem");
+        }
+    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Кориснички преференци</title>
@@ -44,9 +49,20 @@
                     return false;
                 }
             }
+            function submitDodadi()
+            {
+                var myForm = document.forms["ParticipantiDodadiForm"];
+                myForm.submit();
+            }
+            function submitOdzemi()
+            {
+                var myForm = document.forms["ParticipantiOdzemiForm"];
+                myForm.submit();
+            }
         </script>
     </head>
     <body>
+
         <form action="" method="post">
             <table>
                 <tr><th colspan="2">Преферирани опции</th></tr>
@@ -69,7 +85,9 @@
                         </select></td></tr>
             </table>
         </form>
-        <form name="PreferenceForm" method="post" action="" onsubmit="return validatePreferenceForm()">
+
+
+        <form method="post" name="PreferenceForm" method="post" action="Preferences.do" onsubmit="return validatePreferenceForm()">
             <input type="hidden" name="ImeRestorant" value="<%=resNamePrefItem%>"/>
             <table>
                 <tr><td colspan="2" width="300px" ><select  name="Meni" size="1">
@@ -79,8 +97,16 @@
                                 for (int i = 0; i < lst4.get(0).size(); i++) {
                                     String s = lst4.get(0).get(i);
                             %>
-                            <option value="<%=s%>"><%=s%></option>
+                            <option value="<%=s%>"
+                                    <%
+                                        if (s.equals(DataBaseHelper.getPreferencesMeal(userID))) {
+                                            out.write("selected=\"true\"");
+                                        }
+                                    %>
+                                    > <%=s%></option>
                             <%
+
+
                                 }
                             %>
                         </select></td></tr>
@@ -95,7 +121,7 @@
             <tr><th width="300px" colspan="2">Омилени партиципанти</th></tr>
             <tr>
                 <td width="150px"> 
-                    <form name="ParticipantiDodadiForm" onsubmit="return validateParticipantiDodadiForm()">
+                    <form method="post" name="ParticipantiDodadiForm" action="ParticipantiDodadi.do" onsubmit="return validateParticipantiDodadiForm()">
                         <select size="8" name="ParticipantiDodadi" multiple="multiple">
                             <% List<List<String>> lst = DataBaseHelper.getAllNamesSNamesUsersEmailsPass();
                                 for (int i = 0; i < lst.get(0).size(); i++) {
@@ -111,7 +137,7 @@
                 </td>
 
                 <td withd="150px">
-                    <form name="ParticipantiOdzemiForm" onsubmit="return validateParticipantiOdzemiForm()">
+                    <form method="post" name="ParticipantiOdzemiForm" action="ParticipantiOdzemi.do" onsubmit="return validateParticipantiOdzemiForm()">
                         <select size="8" name="ParticipantiOdzemi" multiple="multiple">
                             <%
                                 //SMENI GO!
