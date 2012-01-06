@@ -369,7 +369,7 @@ public class DataBaseHelper {
     }
     public static int getIDNaracka(String User, int ID_Grupa, String Stavka)
     {
-        StringBuilder sqlStr = new StringBuilder("select idNaracka from naracke where Korisnik_User = '");
+        StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
         sqlStr.append(User);
         sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
         sqlStr.append(ID_Grupa);
@@ -452,5 +452,13 @@ public class DataBaseHelper {
         sqlStr.append(Stavka);
         sqlStr.append(" );");
         ExecuteQuery(sqlStr.toString());
+    }
+    public static void clearPreference(String what, String user)
+    {
+        if(what!=null && user!=null && !("".equals(what)) && !("".equals(user)))
+        {
+            String str = "UPDATE preferences SET " + what +" = null WHERE Korisnik_User = '" + user + "';";
+            ExecuteQuery(str);
+        }
     }
 }
