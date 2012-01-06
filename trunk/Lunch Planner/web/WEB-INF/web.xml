@@ -57,6 +57,10 @@
         <servlet-name>ParticipantiOdzemi</servlet-name>
         <servlet-class>Preferences.ParticipantiOdzemi</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Naracka</servlet-name>
+        <servlet-class>Servlets.Naracka</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -104,6 +108,10 @@
     <servlet-mapping>
         <servlet-name>ParticipantiOdzemi</servlet-name>
         <url-pattern>/UserPages/ParticipantiOdzemi.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Naracka</servlet-name>
+        <url-pattern>/UserPages/Naracka.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
