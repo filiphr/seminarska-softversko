@@ -73,8 +73,9 @@ public class AddRestaurant extends HttpServlet {
         
         String ime = request.getParameter("ImeDodadi");
         String adresa = request.getParameter("AdresaDodadi");
+        String telefon = request.getParameter("TelefonDodadi");
         
-        //DataBaseHelper.insertRestoran(ime, adresa); //Ke treba i broj za restoranot :)
+        DataBaseHelper.insertRestoran(ime, adresa,telefon); 
         
         RequestDispatcher rd = request.getRequestDispatcher("AddRemoveRestorant.jsp");
         rd.forward(request, response);
