@@ -7,6 +7,7 @@ package Preferences;
 import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -72,6 +73,8 @@ public class ClearPreference extends HttpServlet {
             DataBaseHelper.clearPreferenceRestorant(user);
         else if ("komentar".equals(what))
             DataBaseHelper.clearPreferenceKomentar(user);
+        RequestDispatcher rd= request.getRequestDispatcher("Preferences.jsp");
+        rd.forward(request, response);
     }
 
     /** 
