@@ -122,6 +122,15 @@ public class DataBaseHelper {
         lst.add(Lucnh);
         return lst;
     }
+    
+    public static  String getRestaurantName (int ID_Group){
+        List<String> restaurant=GetQuery("select Restoran_Ime from tekovnagrupa where idTekovnaGrupa='"+ID_Group+"'", 0);
+        if (!restaurant.isEmpty()){
+            return restaurant.get(0);
+        }
+        
+        return new String();
+    }
 
     public static String getLunch(String Stavka) {
         List<String> lst = (GetQuery("select Ime from stavkameni WHERE Ime = '" + Stavka + "'", 1));
