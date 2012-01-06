@@ -125,13 +125,13 @@ public class DataBaseHelper {
         lst.add(Lucnh);
         return lst;
     }
-    
-    public static  String getRestaurantName (int ID_Group){
-        List<String> restaurant=GetQuery("select Restoran_Ime from tekovnagrupa where idTekovnaGrupa='"+ID_Group+"'", 0);
-        if (!restaurant.isEmpty()){
+
+    public static String getRestaurantName(int ID_Group) {
+        List<String> restaurant = GetQuery("select Restoran_Ime from tekovnagrupa where idTekovnaGrupa='" + ID_Group + "'", 0);
+        if (!restaurant.isEmpty()) {
             return restaurant.get(0);
         }
-        
+
         return new String();
     }
 
@@ -369,10 +369,16 @@ public class DataBaseHelper {
     }
 
     public static void updatePreferences(String User, String Vreme, String Restoran, String Stavka, String Komentar) {
-        updatePreferencesRestoran(Restoran, User);
-        updatePreferencesStavka(Stavka, User);
-        updatePreferencesVreme(Vreme, User);
-        updatePreferencesKomentar(Komentar, User);
+        if (Restoran != null && Vreme != null && Stavka != null && Komentar != null && User != null) {
+            if (!Restoran.isEmpty() && !Vreme.isEmpty() && !Stavka.isEmpty() && !Komentar.isEmpty() && !User.isEmpty()) {
+                String str = "UPDATE preferences SET "
+                        + "Restoran_Ime = '" + Restoran
+                        + "' StavkaMeni_Ime = '" + Stavka
+                        + "' Vreme = '" + Vreme
+                        + "' WHERE Korisnik_User = '" + User + "';";
+                ExecuteQuery(str);
+            }
+        }
     }
 
     public static void deleteUser(String User) {
