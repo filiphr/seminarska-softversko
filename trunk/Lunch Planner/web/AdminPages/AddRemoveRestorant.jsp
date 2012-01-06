@@ -28,10 +28,16 @@
                     alert("Пополнете ја адресата");
                     return false;
                 }
+                x=document.forms["AddRestorantForm"]["TelefonDodadi"].value;
+                if (x==null || x=="")
+                {
+                    alert("Попонете го телефонот");
+                    return false;
+                }
             }
             function validateRemoveRestorantForm()
             {
-                var x=document.forms["RemoveRestorantForm"]["ImeIzberi"].value;
+                var x=document.forms["RemoveRestorantForm"]["ImeIzbrisi"].value;
                 if (x==null || x=="")
                 {
                     alert("Изберете ресторант");
@@ -43,17 +49,18 @@
     </head>
     <body>
         <div>
-            <form name="AddRestorantForm" method="POST" action="AddRestaurant.do" onsubmit="validateAddRestorantForm()">
+            <form name="AddRestorantForm" method="POST" action="AddRestaurant.do" onsubmit="return validateAddRestorantForm()">
                 <table>
                     <tr><th width="300px" colspan="2">Внесување на ресторант</th></tr>
                     <tr><td>Име</td><td><input type="text" name="ImeDodadi"/></td></tr>
                     <tr><td>Adresa</td><td><input type="text" name="AdresaDodadi"/></td></tr>
+                    <tr><td>Телефон</td><td><input type="text" name="TelefonDodadi"/></td></tr>
                     <tr><td colspan="2"><input type="submit" value="Додади"/></td></tr>
                 </table>
             </form>
         </div>
         <div>
-            <form name="RemoveRestorantForm" method="POST" action="RemoveRestorant.do">
+            <form name="RemoveRestorantForm" method="POST" action="RemoveRestorant.do" onsubmit="return validateRemoveRestorantForm()">
                 <table>
                     <tr><th width="300px">Бришење ресторант</th></tr>
                     <tr><td><select name="ImeIzbrisi" size="1">

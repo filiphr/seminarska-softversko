@@ -236,7 +236,7 @@ public class DataBaseHelper {
         if(Restoran == null || Cena == null || Stavka == null) return;
         if(Restoran.isEmpty() || Stavka.isEmpty()) return;
         String str = getLunch(Stavka);
-        if(str.isEmpty())
+        if(str==null || "".equals(str))
             insertStavkaMeni(Stavka);
         StringBuilder sqlStr = new StringBuilder("INSERT INTO meni (Cena,Restoran_Ime, StavkaMeni_Ime) VALUES('");
         sqlStr.append(Cena);
