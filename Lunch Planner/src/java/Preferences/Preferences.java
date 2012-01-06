@@ -81,8 +81,14 @@ public class Preferences extends HttpServlet {
         {
             user=(String) ses.getAttribute("username");
         }
-        
-        DataBaseHelper.updatePreferences(user, vreme, restorant, stavka, komentar);
+        if(restorant!=null)
+            DataBaseHelper.updatePreferencesRestoran(restorant, user);
+        if(stavka!=null)
+            DataBaseHelper.updatePreferencesStavka(stavka, user);
+        if(vreme!=null)
+            DataBaseHelper.updatePreferencesVreme(vreme, user);
+        if(komentar!=null)
+            DataBaseHelper.updatePreferencesKomentar(komentar, user);
         
         RequestDispatcher rd = request.getRequestDispatcher("Preferences.jsp");
         rd.forward(request,response);
