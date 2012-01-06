@@ -14,7 +14,7 @@
 
     </head>
     <body>
-        
+
         <a href="/Lunch_Planner/UserPages/Preferences.jsp"><h1>Hello World Main!</h1></a>
 
         <form method="POST" action="">
