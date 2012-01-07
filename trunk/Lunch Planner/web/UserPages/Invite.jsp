@@ -142,6 +142,7 @@
                                         </tr>
                                     </table>
                                 </form>
+                                                
                                 <form method="post" action="Pokani.do">
                                     <input type="hidden" name="groupID" value="<%=IDGroup%>"/>
                                     <table>
@@ -152,6 +153,7 @@
                                         </tr>
                                     </table>
                                 </form>
+                                    
                             </td>
                         </tr>
                     </table>

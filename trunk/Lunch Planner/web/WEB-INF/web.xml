@@ -102,6 +102,10 @@
         <url-pattern>/Popolni.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>CreateNastan</servlet-name>
+        <url-pattern>/UserPages/CreateNastan.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AddUser</servlet-name>
         <url-pattern>/AdminPages/AddUser.do</url-pattern>
     </servlet-mapping>

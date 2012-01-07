@@ -118,7 +118,7 @@
                     <td><a href="ClearPreference.do?what=komentar">Избриши</a></td>
                 </tr>
                 <tr>
-                    <td colspan="3"><input type="submit"/></td>
+                    <td colspan="3"><input value="Смени" type="submit"/></td>
                 </tr>
             </table>
         </form>

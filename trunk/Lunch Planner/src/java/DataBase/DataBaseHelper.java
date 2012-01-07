@@ -147,7 +147,7 @@ public class DataBaseHelper {
     }
 
     public static String getRestaurantName(int ID_Group) {
-        List<String> restaurant = GetQuery("select Restoran_Ime from tekovnagrupa where idTekovnaGrupa='" + ID_Group + "'", 0);
+        List<String> restaurant = GetQuery("select Restoran_Ime from tekovnagrupa where idTekovnaGrupa='" + ID_Group + "'", 1);
         if (!restaurant.isEmpty()) {
             return restaurant.get(0);
         }
@@ -486,6 +486,12 @@ public class DataBaseHelper {
         String str = "SELECT idTekovnaGrupa FROM tekovnagrupa WHERE Korisnik_User ='" + userID + "';";
         List<String> lst = GetQuery(str, 1);
         return Integer.parseInt(lst.get(0));
+    }
+
+    public static String getVremeFromGroup(int groupID) {
+        String str = "SELECT Vreme FROM tekovnagrupa WHERE idTekovnaGrupa='" + groupID + "';";
+        List<String> lst = GetQuery(str, 1);
+        return lst.get(0);
     }
 
     public static void deleteNaracka(int ID_Naracka) {
