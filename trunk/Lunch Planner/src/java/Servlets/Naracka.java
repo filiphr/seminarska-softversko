@@ -94,7 +94,7 @@ public class Naracka extends HttpServlet {
             }
             session.removeAttribute("Odbrani");
 
-            RequestDispatcher rd = request.getRequestDispatcher("Main.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
             rd.forward(request, response);
         }
     }
