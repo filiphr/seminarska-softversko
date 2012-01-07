@@ -1,4 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="DataBase.DataBaseHelper" %>
+<%
+    String userID = (String) request.getSession().getAttribute("username");
+    boolean hasCreated = DataBaseHelper.hasCreatedEvent(userID);
+    
+%>
 <link rel="stylesheet" type="text/css" href="/Lunch_Planner/CSS/HeaderCSS.css"/>
 <table id="header"> 
     <tr>
@@ -9,7 +15,7 @@
     </tr>
     <tr>
         <td>
-            <a id="whiteLink" href="/Lunch_Planner/Preferences.jsp">Преференци</a>
+            <a id="whiteLink" href="/Lunch_Planner/UserPages/Preferences.jsp">Преференци</a>
         </td>
     </tr>
     <tr>
