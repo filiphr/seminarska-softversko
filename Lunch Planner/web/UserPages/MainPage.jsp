@@ -36,9 +36,9 @@
             <tr><td><form action="Pokana.do" method="post">
                         Vie ste pokaneti vo restoran <%= Restoran%> vo <%= Vreme%> casot   
                         <% if (!Naracka) {%>
-                        <input type="submit" name="Potvrdi" value="Potvrdi"/>
+                        <input type="submit" name="Potvrda" value="Potvrdi"/>
                         <% }%>
-                        <input type="submit" name="Otkazi" value="Otkazi"/>
+                        <input type="submit" name="Potvrda" value="Otkazi"/>
                         <input type="hidden" name="ID_Grupa" value="<%=ID_Grupa%>"/>
                     </form>
                 </td>

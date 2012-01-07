@@ -596,4 +596,9 @@ public class DataBaseHelper {
         if(lst.isEmpty()) return new String();
         return lst.get(0);
     }
+    
+    public static void deleteAllPokani()
+    {
+        ExecuteQuery("DELETE FROM pokani");
+    }
 }

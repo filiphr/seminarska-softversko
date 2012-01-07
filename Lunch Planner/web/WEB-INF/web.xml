@@ -65,6 +65,10 @@
         <servlet-name>ClearPreference</servlet-name>
         <servlet-class>Preferences.ClearPreference</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Pokana</servlet-name>
+        <servlet-class>Servlets.Pokana</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -120,6 +124,10 @@
     <servlet-mapping>
         <servlet-name>ClearPreference</servlet-name>
         <url-pattern>/UserPages/ClearPreference.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Pokana</servlet-name>
+        <url-pattern>/UserPages/Pokana.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
