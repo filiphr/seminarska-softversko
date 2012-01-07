@@ -142,6 +142,7 @@ public class DataBaseHelper {
         lst.add(Ime);
         lst.add(Prezime);
         lst.add(Lucnh);
+        lst.add(users);
         return lst;
     }
 
