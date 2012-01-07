@@ -64,7 +64,7 @@
         </script>
     </head>
     <body>
-
+<jsp:include page="../header.jsp"/>
         <form id="usrUpdateForm" action="" method="post">
             <table>
                 <tr><td colspan="2"><select name="usrNameUpdate" size="1"  onchange="submit()" >

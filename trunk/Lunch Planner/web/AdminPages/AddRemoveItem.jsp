@@ -62,6 +62,7 @@
         </script>
     </head>
     <body>
+        <jsp:include page="../header.jsp"/>
         <div>
             <form name="AddMenuItemForm" method="POST" action="AddMenuItem.do" onsubmit="return validateAddMenuItemForm()">
                 <table>

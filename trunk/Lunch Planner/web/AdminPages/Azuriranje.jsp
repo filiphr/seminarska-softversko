@@ -24,7 +24,7 @@
     
     
     <body>
-        
+        <jsp:include page="../header.jsp"/>
         <p><a href="AddRemoveUser.jsp">Ажурирање на листа на корисници</a></p>
         <p><a href="UpdateUser.jsp">Промена на податоци на корисник</a></p>
         <p><a href="AddRemoveRestorant.jsp">Ажурирање на листа на ресторанти</a></p>

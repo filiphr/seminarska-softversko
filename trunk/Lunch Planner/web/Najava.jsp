@@ -10,9 +10,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Najava</title>
+        <link rel="stylesheet" type="text/css" href="/Lunch_Planner/CSS/HeaderCSS.css"/>
     </head>
     <body>
-        <h1>Hello Worldddd!</h1>
+        <table id="header"> 
+            <tr>
+                <td rowspan="3">
+                    <img src="/Lunch_Planner/nca-logo-home.GIF"/>
+                </td>
+            </tr>
+        </table>
         <form method="POST" action="LoginServlet.do">
             <table>
                 <tr class="header">

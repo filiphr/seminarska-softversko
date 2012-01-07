@@ -55,8 +55,7 @@
         </script>
     </head>
     <body>
-        <%=userID%>
-        <br/>
+        <jsp:include page="../header.jsp"/>
         <form method="post" name="PreferenceForm" action="Preferences.do" onsubmit="return validatePreferenceForm()">
             <table>
                 <tr>

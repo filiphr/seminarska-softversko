@@ -74,7 +74,7 @@
     </head>
     <body>
 
-
+<jsp:include page="../header.jsp"/>
         <div>
             <form name="AddUserForm" method="post" action="AddUser.do" onsubmit="return validateAddUserForm()">
                 <table>

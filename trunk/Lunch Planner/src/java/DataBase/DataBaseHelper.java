@@ -105,18 +105,23 @@ public class DataBaseHelper {
         List<String> lst = GetQuery("select * from tekovnagrupa", 1);
         return lst;
     }
-    
-    public static List<String> getRestoranAndVreme(int ID_Grupa)
-    {
+
+    public static List<String> getRestoranAndVreme(int ID_Grupa) {
         StringBuilder sqlStr = new StringBuilder("select * from tekovnagrupa where idTekovnaGrupa = ");
         sqlStr.append(ID_Grupa);
         List<String> Vreme = GetQuery(sqlStr.toString(), 2);
         List<String> Restoran = GetQuery(sqlStr.toString(), 4);
         List<String> lst = new ArrayList<String>();
-        if(Restoran.isEmpty()) lst.add("");
-        else lst.add(Restoran.get(0));
-        if(Vreme.isEmpty()) lst.add("");
-        else lst.add(Vreme.get(0));
+        if (Restoran.isEmpty()) {
+            lst.add("");
+        } else {
+            lst.add(Restoran.get(0));
+        }
+        if (Vreme.isEmpty()) {
+            lst.add("");
+        } else {
+            lst.add(Vreme.get(0));
+        }
         return lst;
     }
 
@@ -165,13 +170,14 @@ public class DataBaseHelper {
         return new String();
     }
 
-    public static String getPreferencesKomentar (String user) {
+    public static String getPreferencesKomentar(String user) {
         List<String> lst = (GetQuery("select Komentar from preferences where Korisnik_User = '" + user + "'", 1));
         if (!lst.isEmpty()) {
             return lst.get(0);
         }
         return new String();
     }
+
     public static List<String> getPreferencesParticipant(String user) {
         List<String> lst = GetQuery("select korisnik_User from korisnik_has_preferences where preferences_Korisnik_User = '" + user + "'", 1);
         return lst;
@@ -203,14 +209,15 @@ public class DataBaseHelper {
         return lst;
     }
 
-    public static List<String> getAllItems()
-    {
-        List<String> lst = GetQuery("SELECT * FROM stavkameni",1);
-        if(lst!=null)
+    public static List<String> getAllItems() {
+        List<String> lst = GetQuery("SELECT * FROM stavkameni", 1);
+        if (lst != null) {
             return lst;
-        else return new ArrayList<String>();
+        } else {
+            return new ArrayList<String>();
+        }
     }
-    
+
     public static List<List<String>> getAllMenuItemsAndPrice(String RestaurantName) {
         List<List<String>> lst = new ArrayList<List<String>>();
         lst.add(GetQuery("select Ime from meni,stavkameni where Ime = StavkaMeni_Ime And Restoran_Ime = '" + RestaurantName + "'", 1));
@@ -406,9 +413,7 @@ public class DataBaseHelper {
                     + "' WHERE Korisnik_User = '" + User + "';";
             ExecuteQuery(str);
 
-        }
-        else
-        {
+        } else {
             getAllUsernames();
         }
     }
@@ -442,7 +447,7 @@ public class DataBaseHelper {
     public static void UpdateNaracka(int ID_Naracka, String Komentar, String Stavka) {
         ExecuteQuery("UPDATE naracka SET stavkameni_Ime = '" + Stavka + "' , Komentar = '" + Komentar + "' WHERE idNaracka = " + ID_Naracka);
     }
-    
+
     public static int getIDNaracka(String User, int ID_Grupa) {
         StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
         sqlStr.append(User);
@@ -488,17 +493,19 @@ public class DataBaseHelper {
         sqlStr.append(" );");
         ExecuteQuery(sqlStr.toString());
     }
-    
-    public static List<String> getAllPokani(String User)
-    {
-        if(User == null) return new ArrayList<String>();
-        if(User.isEmpty()) return new ArrayList<String>();
+
+    public static List<String> getAllPokani(String User) {
+        if (User == null) {
+            return new ArrayList<String>();
+        }
+        if (User.isEmpty()) {
+            return new ArrayList<String>();
+        }
         List<String> lst = GetQuery("select tekovnagrupa_idTekovnaGrupa from pokani where korisnik_User = '" + User + "'", 1);
         return lst;
     }
-    
-    public static void deletePokani(String User, int ID_Grupa)
-    {
+
+    public static void deletePokani(String User, int ID_Grupa) {
         StringBuilder sqlStr = new StringBuilder("DELETE FROM pokani WHERE korisnik_USer = '");
         sqlStr.append(User);
         sqlStr.append("' And tekovnagrupa_idTekovnaGrupa = ");
@@ -576,44 +583,67 @@ public class DataBaseHelper {
             ExecuteQuery(str);
         }
     }
-    public static boolean IsNaracka(String user)
-    {
-        if(user == null) return false;
-        if(user.isEmpty()) return false;
+
+    public static boolean IsNaracka(String user) {
+        if (user == null) {
+            return false;
+        }
+        if (user.isEmpty()) {
+            return false;
+        }
         String str = "select Korisnik_User from naracka where Korisnik_User = '" + user + "'";
         List<String> lst = GetQuery(str, 1);
-        if(lst == null || lst.isEmpty()) return false;
+        if (lst == null || lst.isEmpty()) {
+            return false;
+        }
         return true;
-        
-        
+
+
     }
-    
-    public static int getGroupOdNaracka(String User)
-    {
+
+    public static int getGroupOdNaracka(String User) {
         List<String> lst = GetQuery("select TekovnaGrupa_idTekovnaGrupa from naracka where Korisnik_User = '" + User + "'", 1);
         return Integer.parseInt(lst.get(0));
     }
-    
-    public static String getRestoranAddress(String Restoran)
-    {
-        if(Restoran == null) return new String();
-        if(Restoran.isEmpty()) return new String();
+
+    public static String getRestoranAddress(String Restoran) {
+        if (Restoran == null) {
+            return new String();
+        }
+        if (Restoran.isEmpty()) {
+            return new String();
+        }
         List<String> lst = GetQuery("select Adresa from restoran where Ime = '" + Restoran + "'", 1);
-        if(lst.isEmpty()) return new String();
+        if (lst.isEmpty()) {
+            return new String();
+        }
         return lst.get(0);
     }
-    
-    public static String getRestoranTelefon(String Restoran)
-    {
-        if(Restoran == null) return new String();
-        if(Restoran.isEmpty()) return new String();
+
+    public static String getRestoranTelefon(String Restoran) {
+        if (Restoran == null) {
+            return new String();
+        }
+        if (Restoran.isEmpty()) {
+            return new String();
+        }
         List<String> lst = GetQuery("select Telefon from restoran where Ime = '" + Restoran + "'", 1);
-        if(lst.isEmpty()) return new String();
+        if (lst.isEmpty()) {
+            return new String();
+        }
         return lst.get(0);
     }
-    
-    public static void deleteAllPokani()
-    {
+
+    public static void deleteAllPokani() {
         ExecuteQuery("DELETE FROM pokani");
+    }
+
+    public static boolean hasCreatedEvent(String userID) {
+        List<String> lst = GetQuery("SELECT Korisnik_User FROM tekovnagrupa WHERE Korisnik_User = '" + userID + "';", 1);
+        if (lst == null || lst.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
