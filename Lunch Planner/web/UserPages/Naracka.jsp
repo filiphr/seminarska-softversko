@@ -16,10 +16,11 @@
 
     </head>
     <%
-        String GroupID = request.getParameter("groupID");
-        if (GroupID == null) {
-           // GroupID = "0";
+        Integer IDGroup = Integer.parseInt(request.getParameter("groupID"));
+        if (IDGroup == null) {
+            // GroupID = "0";
         }
+        Integer izmeni = Integer.parseInt(request.getParameter("Izmeni"));
     %>
 
 
@@ -71,13 +72,13 @@
                                                 <select  name="Meni" size="3" onchange="formSubmit('Meni')">
                                                     <option value="" disabled="true">Клик за да изберете јадење</option>
                                                     <%
-                                                        List<List<String>> lst1 = DataBaseHelper.getAllMenuItemsAndPrice("Enriko");
-                                                        List<List<String>> lst2 = DataBaseHelper.getNameSNameAndLunch(5);
+                                                        String restaurant = DataBaseHelper.getRestaurantName(IDGroup);
+                                                        List<List<String>> lst1 = DataBaseHelper.getAllMenuItemsAndPrice(restaurant);
                                                         for (int i = 0; i < lst1.get(0).size(); i++) {
-                                                            String s = lst1.get(0).get(i);
-                                                            String p = lst1.get(1).get(i);
+                                                            String stavkaIme = lst1.get(0).get(i);
+                                                            String stavkaCena = lst1.get(1).get(i);
                                                     %>
-                                                    <option value="<%=s%>"><%=s%> <%=p%> ден</option>
+                                                    <option value="<%=stavkaIme%>"><%=stavkaIme%> <%=stavkaCena%> ден</option>
                                                     <%
                                                         }
                                                     %>
@@ -92,30 +93,35 @@
                                                             Odbrani = new ArrayList<String>();
                                                         }
                                                         String odbrano = request.getParameter("Meni");
-                                                        String remove=request.getParameter("odbrani");
-                                                        
-                                                        String pom=request.getParameter("source");
+                                                        String remove = request.getParameter("odbrani");
+
+                                                        String pom = request.getParameter("source");
 
                                                         if ("Meni".equals(pom)) {
                                                             if (odbrano != null) {
                                                                 Odbrani.add(odbrano);
-                                                                
+
                                                             }
-                                                        } else if ("odbrani".equals(pom)){
-                                                            if (remove!=null){
+                                                        } else if ("odbrani".equals(pom)) {
+                                                            if (remove != null) {
                                                                 Odbrani.remove(remove);
-                                                            }   
+                                                            }
                                                         }
-                                                        String user=(String)session.getAttribute("username");
-                                                        String prefRest = DataBaseHelper.getPreferencesRestoran(user);
-                                                        if (prefRest!=null && prefRest.equals(DataBaseHelper.getRestaurantName(Integer.parseInt(GroupID)))){
-                                                            
-                                                        
-                                                        String prefMeal = DataBaseHelper.getPreferencesMeal(user);
-                                                        if (prefMeal!=null && !Odbrani.contains(prefMeal)){
-                                                            Odbrani.add(prefMeal);                                                                                                                     
+                                                        String user = (String) session.getAttribute("username");
+                                                        if (izmeni == 1) {
+                                                            List<String> lst3 = DataBaseHelper.getLunch(user, IDGroup);
+                                                            for (int i = 0; i < lst3.size(); i++) {
+                                                                Odbrani.add(lst3.get(i));
+                                                            }
                                                         }
-                                                                                                               }
+                                                        String prefRestaurant = DataBaseHelper.getPreferencesRestoran(user);
+                                                        if (prefRestaurant != null && prefRestaurant.equals(DataBaseHelper.getRestaurantName(IDGroup))) {
+                                                            String prefMeal = DataBaseHelper.getPreferencesMeal(user);
+                                                            if (prefMeal != null && !Odbrani.contains(prefMeal)) {
+                                                                Odbrani.add(prefMeal);
+                                                            }
+                                                        }
+
                                                         session.setAttribute("Odbrani", Odbrani);
                                                         for (int i = 0; i < Odbrani.size(); i++) {
                                                             String s = Odbrani.get(i);
@@ -130,7 +136,7 @@
                                     </table>
                                 </form>
                                 <form method="post" action="Naracka.do">
-                                    <input type="hidden" name="groupID" value="<%=GroupID%>"/>
+                                    <input type="hidden" name="groupID" value="<%=IDGroup%>"/>
                                     <table>
                                         <tr>
                                             <td>
