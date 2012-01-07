@@ -33,7 +33,7 @@
                 myForm.submit();
             }            
         </script>
-        <h1>Hello World Naracka!</h1>
+        <jsp:include page="../header.jsp"/>
 
         <table>
             <tr class="header">

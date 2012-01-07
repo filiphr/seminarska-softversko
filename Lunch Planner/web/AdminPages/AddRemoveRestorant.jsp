@@ -48,6 +48,7 @@
         </script>
     </head>
     <body>
+        <jsp:include page="../header.jsp"/>
         <div>
             <form name="AddRestorantForm" method="POST" action="AddRestaurant.do" onsubmit="return validateAddRestorantForm()">
                 <table>
