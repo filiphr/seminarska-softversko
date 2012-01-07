@@ -702,14 +702,11 @@ public class DataBaseHelper {
         if(User == null) return new ArrayList<List<String>>();
         if(User.isEmpty()) return new ArrayList<List<String>>();
         List<List<String>> lst = new ArrayList<List<String>>();
-        for(int i = 1; i<=4; i++)
+        for(int i = 1; i<=3; i++)
         {
-            if(i!=2)
-            {
                 List<String> tmp = GetQuery("SELECT Vreme, Restoran_Ime, stavkameni_Ime FROM arhiviranagrupa where Korisnik_user = '" + User + "' ORDER BY Vreme", i);
                 if(tmp == null || tmp.isEmpty()) return new ArrayList<List<String>>();
                 lst.add(tmp);
-            }
         }
         return lst;
     }
