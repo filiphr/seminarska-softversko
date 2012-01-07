@@ -67,7 +67,19 @@
     </servlet>
     <servlet>
         <servlet-name>Pokana</servlet-name>
-        <servlet-class>Servlets.Pokana</servlet-class>
+        <servlet-class>MainPage.Pokana</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Izmeni</servlet-name>
+        <servlet-class>MainPage.Izmeni</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Izlezi</servlet-name>
+        <servlet-class>MainPage.Izlezi</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Join</servlet-name>
+        <servlet-class>MainPage.Join</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -128,6 +140,18 @@
     <servlet-mapping>
         <servlet-name>Pokana</servlet-name>
         <url-pattern>/UserPages/Pokana.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Izmeni</servlet-name>
+        <url-pattern>/UserPages/Izmeni.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Izlezi</servlet-name>
+        <url-pattern>/UserPages/Izlezi.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Join</servlet-name>
+        <url-pattern>/UserPages/Join.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

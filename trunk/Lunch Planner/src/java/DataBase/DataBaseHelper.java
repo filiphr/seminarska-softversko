@@ -442,6 +442,21 @@ public class DataBaseHelper {
     public static void UpdateNaracka(int ID_Naracka, String Komentar, String Stavka) {
         ExecuteQuery("UPDATE naracka SET stavkameni_Ime = '" + Stavka + "' , Komentar = '" + Komentar + "' WHERE idNaracka = " + ID_Naracka);
     }
+    
+    public static int getIDNaracka(String User, int ID_Grupa) {
+        StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
+        sqlStr.append(User);
+        sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
+        sqlStr.append(ID_Grupa);
+        List<String> lst = GetQuery(sqlStr.toString(), 1);
+        int ID;
+        if (!lst.isEmpty()) {
+            ID = Integer.parseInt(lst.get(0));
+        } else {
+            ID = -1;
+        }
+        return ID;
+    }
 
     public static int getIDNaracka(String User, int ID_Grupa, String Stavka) {
         StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
