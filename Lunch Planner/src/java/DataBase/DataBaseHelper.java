@@ -572,4 +572,10 @@ public class DataBaseHelper {
         
         
     }
+    
+    public static int getGroupOdNaracka(String User)
+    {
+        List<String> lst = GetQuery("select TekovnaGrupa_idTekovnaGrupa from naracka where Korisnik_User = '" + User + "'", 1);
+        return Integer.parseInt(lst.get(0));
+    }
 }
