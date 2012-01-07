@@ -659,4 +659,35 @@ public class DataBaseHelper {
             return true;
         }
     }
+    
+    public static List<String> getParticipantBezJadenje()
+    {
+        List<String> Users = getAllUsernames();
+        List<String> UsersSoJadenja = GetQuery("(select distinct(Korisnik_User) from naracka)", 1);
+        if(UsersSoJadenja == null) return Users;
+        if(UsersSoJadenja.isEmpty()) return Users;
+        for(int i = 0; i<UsersSoJadenja.size(); i++)
+        {
+            for(int j = 0; j<Users.size(); j++)
+            {
+                if(Users.get(j).equals(UsersSoJadenja.get(i)))
+                {
+                    Users.remove(j);
+                    break;
+                }
+            }
+        }
+        return Users;
+    }
+    public static List<String> getStavkiZaNaracka(String User, int Grupa)
+    {
+        StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
+        sqlStr.append(User);
+        sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
+        sqlStr.append(Grupa);
+        List<String> lst = GetQuery(sqlStr.toString(), 1);
+        if(lst == null) return new ArrayList<String>();
+        if(lst.isEmpty()) return new ArrayList<String>();
+        return lst;
+    }
 }
