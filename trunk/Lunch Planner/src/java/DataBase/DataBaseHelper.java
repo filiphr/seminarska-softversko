@@ -506,7 +506,7 @@ public class DataBaseHelper {
         sqlStr.append(participant);
         sqlStr.append("' And  preferences_Korisnik_User = '");
         sqlStr.append(User);
-        sqlStr.append("' );");
+        sqlStr.append("';");
         ExecuteQuery(sqlStr.toString());
     }
 

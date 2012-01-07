@@ -59,9 +59,12 @@
         <br/>
         <form method="post" name="PreferenceForm" action="Preferences.do" onsubmit="return validatePreferenceForm()">
             <table>
-                <tr><th colspan="2">Преферирани опции</th></tr>
-                <tr><td colspan="2" width="300px">
-                        <select name="ImeRestorant" size="1" onchange="submit()">
+                <tr>
+                    <th colspan="3">Преферирани опции</th>
+                </tr>
+                <tr>
+                    <td colspan="2" width="300px">
+                        <select name="ImeRestorant" size="1">
                             <option value="">-избери ресторант-</option>
                             <%
                                 List<String> lst3 = DataBaseHelper.getAllRestaurantNames();
@@ -76,8 +79,13 @@
                             <%
                                 }
                             %>
-                        </select><a href="ClearPreference.do?what=restorant">Избриши</a></td></tr>
-                <tr><td colspan="2" width="300px" ><select  name="Meni" size="1">
+                        </select>
+                    </td>
+                    <td><a href="ClearPreference.do?what=restorant">Избриши</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2" width="300px" >
+                        <select  name="Meni" size="1">
                             <option value="">-избери ставка-</option>
                             <%
                                 List<String> lst4 = DataBaseHelper.getAllItems();
@@ -96,13 +104,27 @@
 
                                 }
                             %>
-                        </select><a href="ClearPreference.do?what=stavka">Избриши</a></td></tr>
-                <tr><td>Време:</td><td><input type="text" value="<%= DataBaseHelper.getPreferencesHour(userID)%>" name="Vreme"/><a href="ClearPreference.do?what=vreme">Избриши</a></td></tr>
-                <tr><td>Коментар:</td><td><input type="text" value="<%= DataBaseHelper.getPreferencesKomentar(userID)%>" name="Komentar"/><a href="ClearPreference.do?what=komentar">Избриши</a></tr>
-                <tr><td colspan="2"><input type="submit"/></td></tr>
+                        </select>
+                    </td>
+                        <td><a href="ClearPreference.do?what=stavka">Избриши</a></td>
+                </tr>
+                <tr>
+                    <td>Време:</td>
+                    <td><input type="text" value="<%= DataBaseHelper.getPreferencesHour(userID)%>" name="Vreme"/></td>
+                    <td><a href="ClearPreference.do?what=vreme">Избриши</a></td>
+                </tr>
+                <tr>
+                    <td>Коментар:</td>
+                    <td><input type="text" value="<%= DataBaseHelper.getPreferencesKomentar(userID)%>" name="Komentar"/></td>
+                    <td><a href="ClearPreference.do?what=komentar">Избриши</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><input type="submit"/></td>
+                </tr>
             </table>
         </form>
-        <br/><br>
+                    
+        <br/><br/>
 
         <table> 
             <tr><th width="300px" colspan="2">Омилени партиципанти</th></tr>
