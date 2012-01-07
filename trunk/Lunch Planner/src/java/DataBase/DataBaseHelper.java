@@ -261,7 +261,13 @@ public class DataBaseHelper {
         }
         return new String();
     }
-
+    
+    public static List<List<String>> getUserArhivirani(String username)
+    {
+        //OVAA IGOR
+        return new ArrayList<List<String>>();
+    }
+    
     public static void insertUser(String ime, String prezime, String user, String email, String password) {
         if ((ime == null) || (prezime == null) || (user == null) || (email == null) || (password == null)) {
             return;
