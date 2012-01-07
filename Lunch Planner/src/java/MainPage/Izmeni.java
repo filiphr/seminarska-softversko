@@ -2,12 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package MainPage;
 
-import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author user
  */
-public class Pokana extends HttpServlet {
+public class Izmeni extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +32,10 @@ public class Pokana extends HttpServlet {
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Pokana</title>");  
+            out.println("<title>Servlet Izmeni</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Pokana at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet Izmeni at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
              */
@@ -71,20 +69,8 @@ public class Pokana extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        String User = (String)request.getSession().getAttribute("username");
         int ID_Grupa = Integer.parseInt(request.getParameter("ID_Grupa"));
-        String Button = request.getParameter("Potvrda");
-        if(Button != null && Button.equals("Otkazi"))
-        {
-            DataBaseHelper.deletePokani(User, ID_Grupa);
-            //RequestDispatcher d = request.getRequestDispatcher("MainPage.jsp");
-            //d.forward(request, response);
-            response.sendRedirect("MainPage.jsp");
-        }else
-        {
-            DataBaseHelper.deleteAllPokani();
-            response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0");
-        }
+        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=1");
     }
 
     /** 
