@@ -4,6 +4,7 @@
  */
 package Preferences;
 
+import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -69,8 +71,21 @@ public class ParticipantiOdzemi extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String[] lst = request.getParameterValues("ParticipantiOdzemi");
+        HttpSession ses = request.getSession();
+        String user = null;
+        synchronized (ses) {
+            user = (String) ses.getAttribute("username");
+        }
+        if (lst != null) {
+            for (int i = 0; i < lst.length; i++) {
+                DataBaseHelper.deletePreferencesParticipant(user, lst[i]);
+                
+            }
+        }
         RequestDispatcher rd = request.getRequestDispatcher("Preferences.jsp");
         rd.forward(request, response);
+        
     }
 
     /** 
