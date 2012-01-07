@@ -24,7 +24,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -59,7 +59,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         int number = 0;
         try {
@@ -415,7 +415,7 @@ public class DataBaseHelper {
 
     public static void deleteUser(String User) {
         String sqlStr = "DELETE FROM korisnik WHERE User='" + User + "'";
-        ExecuteQuery(User);
+        ExecuteQuery(sqlStr);
     }
 
     public static void updateUser(String ime, String prezime, String user, String lozinka, String mail) {
@@ -488,7 +488,6 @@ public class DataBaseHelper {
         sqlStr.append(User);
         sqlStr.append("' And tekovnagrupa_idTekovnaGrupa = ");
         sqlStr.append(ID_Grupa);
-        sqlStr.append(" );");
         ExecuteQuery(sqlStr.toString());
     }
 
@@ -506,7 +505,7 @@ public class DataBaseHelper {
         sqlStr.append(participant);
         sqlStr.append("' And  preferences_Korisnik_User = '");
         sqlStr.append(User);
-        sqlStr.append("';");
+        sqlStr.append("'");
         ExecuteQuery(sqlStr.toString());
     }
 
@@ -561,5 +560,16 @@ public class DataBaseHelper {
             String str = "UPDATE preferences SET  Komentar = null WHERE Korisnik_User = '" + user + "';";
             ExecuteQuery(str);
         }
+    }
+    public static boolean IsNaracka(String user)
+    {
+        if(user == null) return false;
+        if(user.isEmpty()) return false;
+        String str = "select Korisnik_User from naracka where Korisnik_User = '" + user + "'";
+        List<String> lst = GetQuery(str, 1);
+        if(lst == null || lst.isEmpty()) return false;
+        return true;
+        
+        
     }
 }

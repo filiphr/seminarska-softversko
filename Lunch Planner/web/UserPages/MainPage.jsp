@@ -31,7 +31,9 @@
             %>
             <tr><td><form action="Naracka.do" method="post">
                         Vie ste pokaneti vo restoran <%= Restoran%> vo <%= Vreme%> casot   
+                        <% if(!(DataBaseHelper.IsNaracka(User)))  {%>
                         <input type="submit" name="Potvrdi" value="Potvrdi"/>
+                        <% } %>
                         <input type="submit" name="Otkazi" value="Otkazi"/>
                         <input type="hidden" name="ID_Grupa" value="<%= ID_Grupa%>"/>
                     </form>
