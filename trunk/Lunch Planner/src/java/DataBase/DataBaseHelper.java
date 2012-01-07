@@ -578,4 +578,22 @@ public class DataBaseHelper {
         List<String> lst = GetQuery("select TekovnaGrupa_idTekovnaGrupa from naracka where Korisnik_User = '" + User + "'", 1);
         return Integer.parseInt(lst.get(0));
     }
+    
+    public static String getRestoranAddress(String Restoran)
+    {
+        if(Restoran == null) return new String();
+        if(Restoran.isEmpty()) return new String();
+        List<String> lst = GetQuery("select Adresa from restoran where Ime = '" + Restoran + "'", 1);
+        if(lst.isEmpty()) return new String();
+        return lst.get(0);
+    }
+    
+    public static String getRestoranTelefon(String Restoran)
+    {
+        if(Restoran == null) return new String();
+        if(Restoran.isEmpty()) return new String();
+        List<String> lst = GetQuery("select Telefon from restoran where Ime = '" + Restoran + "'", 1);
+        if(lst.isEmpty()) return new String();
+        return lst.get(0);
+    }
 }
