@@ -14,16 +14,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" type="text/css" href="../MainPage/pro_dropdown_3.css" />
-        <style type="text/css">
-            table{
-                background-image: none;
-                border-style: none;
-                border-color: white;
-            }
-            a{
-
-            }
-        </style>
         <script src="../MainPage/stuHover.js" type="text/javascript"></script>
     </head>
     <body>
