@@ -56,6 +56,8 @@ public class Popolni extends HttpServlet {
          DataBaseHelper.insertUser("marko","docevski","mdocevski","mdocevski@gmail.com ","marko");
          DataBaseHelper.insertUser("igor","sudijovski","isudijovski","isudijovski@gmail.com ","igor");
          DataBaseHelper.insertUser("filip","hrisafov","fhrisafov","fhrisafov@gmail.com ","filip");
+         DataBaseHelper.insertUser("Gorgi", "Madzarov", "gmadzarov", "asdfa@asdfa.sad", "gorgi");
+         DataBaseHelper.insertAdministrator("isudijovski");
          DataBaseHelper.insertRestoran("Enriko", "Leptokarija", "076512354");
          DataBaseHelper.insertRestoran("Vegera", "Karpos 3", "076512354");
          DataBaseHelper.insertRestoran("Staro Bure", "Leptokarija", "076512354");
@@ -78,6 +80,15 @@ public class Popolni extends HttpServlet {
          DataBaseHelper.insertNaracka("fhrisafov", 1, "Pica", "Bez Kecap");
          DataBaseHelper.insertNaracka("isudijovski", 1, "Lazanji");
          DataBaseHelper.insertNaracka("mdocevski", 2, "Burek");
+         DataBaseHelper.insertArhiviraniGrupi("2012-01-05", "isudijovski", "Enriko", "Pica");
+         DataBaseHelper.insertArhiviraniGrupi("2012-01-06", "isudijovski", "Vegera", "Burek");
+         DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "isudijovski", "Enriko", "Pica");
+         DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "mdocevski", "Enriko", "Pica");
+         DataBaseHelper.insertNotofication("Grupata blablablabla", "isudijovski");
+         DataBaseHelper.insertNotofication("Grupata docevski blablablabla", "mdocevski");
+         DataBaseHelper.insertNotofication("Grupata docevski blablablabla", "gmadzarov");
+         DataBaseHelper.insertPokani("gmadzarov", 1);
+         DataBaseHelper.insertPokani("gmadzarov", 2);
         response.sendRedirect("Najava.jsp");
     }
 
