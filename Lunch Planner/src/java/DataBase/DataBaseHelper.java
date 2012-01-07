@@ -503,9 +503,9 @@ public class DataBaseHelper {
 
     public static void deletePreferencesParticipant(String User, String participant) {
         StringBuilder sqlStr = new StringBuilder("DELETE FROM korisnik_has_preferences WHERE korisnik_User = '");
-        sqlStr.append(User);
-        sqlStr.append("' And  preferences_Korisnik_User = '");
         sqlStr.append(participant);
+        sqlStr.append("' And  preferences_Korisnik_User = '");
+        sqlStr.append(User);
         sqlStr.append("' );");
         ExecuteQuery(sqlStr.toString());
     }
