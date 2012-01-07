@@ -1,0 +1,11 @@
+table{
+    width: 80%;
+    border-style: outset;
+    border-color: whitesmoke;
+    background-repeat: repeat;
+    background-image: url("/Lunch_Planner/grey_bar.jpg");
+}
+a{
+    color: whitesmoke;
+    text-decoration: none;
+}

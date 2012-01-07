@@ -66,6 +66,10 @@
         <servlet-class>Preferences.ClearPreference</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>Servlets.Logout</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Pokana</servlet-name>
         <servlet-class>MainPage.Pokana</servlet-class>
     </servlet>
@@ -136,6 +140,10 @@
     <servlet-mapping>
         <servlet-name>ClearPreference</servlet-name>
         <url-pattern>/UserPages/ClearPreference.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Pokana</servlet-name>
