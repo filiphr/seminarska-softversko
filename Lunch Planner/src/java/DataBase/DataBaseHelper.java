@@ -566,15 +566,15 @@ public class DataBaseHelper {
     }
 
     public static void insertArhiviraniGrupi(String Vreme, String User, String Restoran, String Stavka) {
-        StringBuilder sqlStr = new StringBuilder("INSERT INTO arhiviranagrupa VALUES('");
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO arhiviranagrupa (Vreme, Korisnik_User, Restoran, StavkaMeni) VALUES('");
         sqlStr.append(Vreme);
-        sqlStr.append("', ");
+        sqlStr.append("', '");
         sqlStr.append(User);
-        sqlStr.append("', ");
+        sqlStr.append("', '");
         sqlStr.append(Restoran);
-        sqlStr.append("', ");
+        sqlStr.append("', '");
         sqlStr.append(Stavka);
-        sqlStr.append(" );");
+        sqlStr.append("' );");
         ExecuteQuery(sqlStr.toString());
     }
 
@@ -708,6 +708,46 @@ public class DataBaseHelper {
                 if(tmp == null || tmp.isEmpty()) return new ArrayList<List<String>>();
                 lst.add(tmp);
         }
+        return lst;
+    }
+    
+    public static void insertAdministrator(String User)
+    {
+        if(User == null) return;
+        if(User.isEmpty()) return;
+        ExecuteQuery("INSERT INTO administrator VALUES('" + User + "');");
+    }
+    
+    public static boolean isAdministrator(String User)
+    {
+        if(User == null) return false;
+        if(User.isEmpty()) return false;
+        List<String> lst = GetQuery("select * from administrator where korisnik_User = '" + User + "'", 1);
+        if(lst == null || lst.isEmpty()) return false;
+        return true;
+    }
+    
+    public static void deleteAdministrator(String User)
+    {
+        if(User == null) return;
+        if(User.isEmpty()) return;
+        ExecuteQuery("DELETE FROM administrator where korisnik_User = '" + User + "'");
+    }
+    public static void insertNotofication(String Notification, String User)
+    {
+        if(Notification == null || User == null || Notification.isEmpty() || User.isEmpty()) return;
+        ExecuteQuery("INSERT INTO notification (Notification, korisnik_User) VALUES('" + Notification + "', '" + User + "');");
+    }
+    public static void deleteNotification(String User)
+    {
+        if(User == null || User.isEmpty()) return;
+        ExecuteQuery("DELETE FROM notification where korisnik_User = '" + User + "'");
+    }
+    public static List<String> getNotification(String User)
+    {
+        if(User == null || User.isEmpty()) return new ArrayList<String>();
+        List<String> lst = GetQuery("select * from notification where korisnik_User = '" + User + "'", 3);
+        if(lst == null || lst.isEmpty()) return new ArrayList<String>();
         return lst;
     }
 }
