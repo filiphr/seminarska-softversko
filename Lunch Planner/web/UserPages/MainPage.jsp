@@ -17,6 +17,7 @@
         <script src="../MainPage/stuHover.js" type="text/javascript"></script>
     </head>
     <body>
+        <a href="Preferences.jsp">PREFERENCI</a>
         <table>
             <%
                 String User = (String) request.getSession().getAttribute("username");

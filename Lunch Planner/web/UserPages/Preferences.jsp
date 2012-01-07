@@ -115,9 +115,12 @@
                                     String name = lst.get(0).get(i);
                                     String sname = lst.get(1).get(i);
                                     String user = lst.get(2).get(i);
+                                    if (!user.equals(userID)) {
                             %>
+
                             <option value="<%=user%>" ><%=name%> <%=sname%></option>
                             <%
+                                    }
                                 }
                             %></select>
                     </form>
@@ -145,6 +148,6 @@
             </tr>
         </table>
 
-        <p><a href="../AdminPages/Azuriranje.jsp"><b>Назад</b></a></p>
+        <p><a href="MainPage.jsp"><b>Назад</b></a></p>
     </body>
 </html>

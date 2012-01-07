@@ -24,7 +24,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "";
+        String pass = "admin";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -59,7 +59,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "";
+        String pass = "admin";
         Connection conect = null;
         int number = 0;
         try {
@@ -502,10 +502,10 @@ public class DataBaseHelper {
     }
 
     public static void deletePreferencesParticipant(String User, String participant) {
-        StringBuilder sqlStr = new StringBuilder("DELETE FROM korisnik_has_preferences WHERE korisnik_USer = '");
-        sqlStr.append(participant);
-        sqlStr.append("' And  preferences_Korisnik_User = '");
+        StringBuilder sqlStr = new StringBuilder("DELETE FROM korisnik_has_preferences WHERE korisnik_User = '");
         sqlStr.append(User);
+        sqlStr.append("' And  preferences_Korisnik_User = '");
+        sqlStr.append(participant);
         sqlStr.append("' );");
         ExecuteQuery(sqlStr.toString());
     }
