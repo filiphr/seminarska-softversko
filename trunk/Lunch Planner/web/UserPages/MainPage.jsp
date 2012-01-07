@@ -14,7 +14,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" type="text/css" href="../MainPage/pro_dropdown_3.css" />
+        <style type="text/css">
+            table{
+                background-image: none;
+                border-style: none;
+                border-color: white;
+            }
+            a{
 
+            }
+        </style>
         <script src="../MainPage/stuHover.js" type="text/javascript"></script>
     </head>
     <body>
@@ -24,7 +33,9 @@
                 String User = (String) request.getSession().getAttribute("username");
                 boolean Naracka = DataBaseHelper.IsNaracka(User);
                 int Grupa = 0;
-                if(Naracka) Grupa = DataBaseHelper.getGroupOdNaracka(User);
+                if (Naracka) {
+                    Grupa = DataBaseHelper.getGroupOdNaracka(User);
+                }
                 List<String> lst = DataBaseHelper.getAllPokani(User);
                 if (lst != null) {
                     for (int i = 0; i < lst.size(); i++) {
@@ -52,7 +63,7 @@
                 <td>
                     <table>
                         <%
-                                if(Grupa != 0) {
+                            if (Grupa != 0) {
                                 List<List<String>> Namestmp = DataBaseHelper.getNameSNameAndLunch(Grupa);
                                 List<String> lst1tmp = DataBaseHelper.getRestoranAndVreme(Grupa);
                                 String Restorantmp = lst1tmp.get(0);
@@ -99,11 +110,11 @@
                             List<String> groups = DataBaseHelper.getAllGroups();
                             for (int i = 0; i < groups.size(); i++) {
                                 int ID_Group = Integer.parseInt(groups.get(i));
-                                if(ID_Group != Grupa) {
-                                List<List<String>> Names = DataBaseHelper.getNameSNameAndLunch(ID_Group);
-                                List<String> lst1 = DataBaseHelper.getRestoranAndVreme(ID_Group);
-                                String Restoran = lst1.get(0);
-                                String Vreme = lst1.get(1);
+                                if (ID_Group != Grupa) {
+                                    List<List<String>> Names = DataBaseHelper.getNameSNameAndLunch(ID_Group);
+                                    List<String> lst1 = DataBaseHelper.getRestoranAndVreme(ID_Group);
+                                    String Restoran = lst1.get(0);
+                                    String Vreme = lst1.get(1);
 
                         %>
                         <tr><td>
@@ -142,7 +153,7 @@
                                 </form>
                             </td>
                             <% }
-    } else {%>
+                            } else {%>
                             <td>
                                 <form action="Join.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=ID_Group%>"/>
@@ -156,7 +167,8 @@
                         %>
                         <tr> <td> </td></tr>
                         <%   }%>
-                        <% } }%>
+                        <% }
+                            }%>
                     </table>
                 </td>
                 <td>

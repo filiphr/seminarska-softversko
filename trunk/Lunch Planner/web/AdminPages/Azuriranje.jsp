@@ -15,7 +15,7 @@
         <title>Ажурирање на податоци</title>
         <style type="text/css">
             a {
-                font-size: larger;
+                font-size: medium;
                 text-decoration: none;
                 color: black;
             }
