@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package Invite;
 
 import DataBase.DataBaseHelper;
 import java.io.IOException;
@@ -15,12 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
  *
  * @author Filip
  */
-public class Naracka extends HttpServlet {
+public class PokaniServlet extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +36,10 @@ public class Naracka extends HttpServlet {
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Naracka</title>");  
+            out.println("<title>Servlet PokaniServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Naracka at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet PokaniServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
              */
@@ -74,28 +73,22 @@ public class Naracka extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        List<String> Odbrani = (List<String>) session.getAttribute("Odbrani");
-        if (Odbrani == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("Naracka.jsp");
+        String grID = request.getParameter("groupID");
+        int IDGroup = Integer.parseInt(grID);
+        List<String> Pokaneti = (List<String>) session.getAttribute("pokaneti");
+        if (Pokaneti == null) {
+            RequestDispatcher rd = request.getRequestDispatcher("Invite.jsp?groupID=" + IDGroup);
             rd.forward(request, response);
         } else {
-            String user = (String) session.getAttribute("username");
-            int IDGroup = Integer.parseInt(request.getParameter("gourpID"));
-            String komentar = request.getParameter("komentar");
-            if (komentar == null) {
-                for (int i = 0; i < Odbrani.size(); i++) {
-                    DataBaseHelper.insertNaracka(user, IDGroup, Odbrani.get(i));
-                }
-            } else {
-                for (int i = 0; i < Odbrani.size(); i++) {
-                    DataBaseHelper.insertNaracka(user, IDGroup, Odbrani.get(i), komentar);
-                }
+            String username = (String) session.getAttribute("username");
+            for (int i = 0; i < Pokaneti.size(); i++) {
+                DataBaseHelper.insertPokani(Pokaneti.get(i), IDGroup);
             }
-            session.removeAttribute("Odbrani");
-
-            RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
-            rd.forward(request, response);
         }
+        session.removeAttribute("pokaneti");
+
+        RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
+        rd.forward(request, response);
     }
 
     /** 

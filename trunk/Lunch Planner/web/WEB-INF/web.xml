@@ -85,6 +85,10 @@
         <servlet-name>Join</servlet-name>
         <servlet-class>MainPage.Join</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PokaniServlet</servlet-name>
+        <servlet-class>Invite.PokaniServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -160,6 +164,10 @@
     <servlet-mapping>
         <servlet-name>Join</servlet-name>
         <url-pattern>/UserPages/Join.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PokaniServlet</servlet-name>
+        <url-pattern>/UserPages/Pokani.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
