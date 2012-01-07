@@ -107,7 +107,7 @@ public class AuthorizeFilter implements Filter {
         HttpSession session = httpRequest.getSession();
         String user = (String) session.getAttribute("username");
         if (user == null) {
-            //RequestDispatcher rd = httpRequest.getRequestDispatcher("Najava.jsp");
+            //RequestDispatcher rd = httpRequest.getRequestDispatcher("../Najava.jsp");
             //rd.forward(request, response);
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.sendRedirect("../Najava.jsp");

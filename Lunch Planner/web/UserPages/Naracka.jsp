@@ -109,7 +109,7 @@
                                                         }
                                                         String user = (String) session.getAttribute("username");
                                                         if (izmeni == 1) {
-                                                            List<String> lst3 = DataBaseHelper.getLunch(user, IDGroup);
+                                                            List<String> lst3 = DataBaseHelper.getStavkiZaNaracka(user, IDGroup);
                                                             for (int i = 0; i < lst3.size(); i++) {
                                                                 Odbrani.add(lst3.get(i));
                                                             }
