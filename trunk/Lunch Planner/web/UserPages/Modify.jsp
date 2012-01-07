@@ -1,6 +1,6 @@
 <%-- 
-    Document   : CreateModify
-    Created on : Jan 7, 2012, 2:19:56 PM
+    Document   : Modify
+    Created on : Jan 7, 2012, 5:56:10 PM
     Author     : Home
 --%>
 
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:include page="../header.jsp"/>
+        <h1>Hello World!</h1>
     </body>
 </html>

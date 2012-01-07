@@ -481,6 +481,12 @@ public class DataBaseHelper {
         return ID;
     }
 
+    public static int getGroupIDFromCreator(String userID) {
+        String str = "SELECT idTekovnaGrupa FROM tekovnagrupa WHERE Korisnik_User ='" + userID + "';";
+        List<String> lst = GetQuery(str, 1);
+        return Integer.parseInt(lst.get(0));
+    }
+
     public static void deleteNaracka(int ID_Naracka) {
         ExecuteQuery("DELETE FROM naracka WHERE idNaracka = " + ID_Naracka);
     }

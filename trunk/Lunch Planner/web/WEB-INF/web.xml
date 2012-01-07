@@ -86,6 +86,10 @@
         <servlet-class>MainPage.Join</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateNastan</servlet-name>
+        <servlet-class>Group.CreateNastan</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>PokaniServlet</servlet-name>
         <servlet-class>Invite.PokaniServlet</servlet-class>
     </servlet>

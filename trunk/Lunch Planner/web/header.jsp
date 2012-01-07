@@ -6,10 +6,10 @@
     String createdLink = "";
     String createdText = "";
     if (hasCreated) {
-        createdLink = "/Lunch_Planner/UserPages/CreateModify.jsp?what=modify";
+        createdLink = "/Lunch_Planner/UserPages/Modify.jsp";
         createdText = "Измени настан";
     } else {
-        createdLink = "/Lunch_Planner/UserPages/CreateModify.jsp?what=create";
+        createdLink = "/Lunch_Planner/UserPages/Create.jsp";
         createdText = "Креирај настан";
     }
     String preferenceLink = "";
