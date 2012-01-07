@@ -24,7 +24,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -59,7 +59,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         int number = 0;
         try {
@@ -137,7 +137,7 @@ public class DataBaseHelper {
             Prezime.add(getUserPrezime(users.get(i)));
         }
         for (int i = 0; i < LucnhID.size(); i++) {
-            Lucnh.add(getLunch(LucnhID.get(i)));
+            Lucnh.add(IsInMeni((LucnhID.get(i))));
         }
         lst.add(Ime);
         lst.add(Prezime);
@@ -155,12 +155,15 @@ public class DataBaseHelper {
         return new String();
     }
 
-    public static String getLunch(String Stavka) {
-        List<String> lst = (GetQuery("select Ime from stavkameni WHERE Ime = '" + Stavka + "'", 1));
-        if (!lst.isEmpty()) {
-            return lst.get(0);
-        }
-        return new String();
+    public static List<String> getLunch(String User, int Grupa) {
+        StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
+        sqlStr.append(User);
+        sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
+        sqlStr.append(Grupa);
+        List<String> lst = GetQuery(sqlStr.toString(), 1);
+        if(lst == null) return new ArrayList<String>();
+        if(lst.isEmpty()) return new ArrayList<String>();
+        return lst;
     }
 
     public static String getPreferencesHour(String user) {
@@ -291,7 +294,7 @@ public class DataBaseHelper {
         if (Restoran.isEmpty() || Stavka.isEmpty()) {
             return;
         }
-        String str = getLunch(Stavka);
+        String str = IsInMeni(Stavka);
         if (str == null || "".equals(str)) {
             insertStavkaMeni(Stavka);
         }
@@ -679,15 +682,12 @@ public class DataBaseHelper {
         }
         return Users;
     }
-    public static List<String> getStavkiZaNaracka(String User, int Grupa)
+    public static String IsInMeni(String Stavka)
     {
-        StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
-        sqlStr.append(User);
-        sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
-        sqlStr.append(Grupa);
-        List<String> lst = GetQuery(sqlStr.toString(), 1);
-        if(lst == null) return new ArrayList<String>();
-        if(lst.isEmpty()) return new ArrayList<String>();
-        return lst;
+        List<String> lst = (GetQuery("select Ime from stavkameni WHERE Ime = '" + Stavka + "'", 1));
+        if (!lst.isEmpty()) {
+            return lst.get(0);
+        }
+        return new String();
     }
 }
