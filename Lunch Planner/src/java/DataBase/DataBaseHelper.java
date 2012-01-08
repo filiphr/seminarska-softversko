@@ -24,7 +24,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -45,7 +45,7 @@ public class DataBaseHelper {
             //throw new RuntimeException(e);
         } finally {
             try {
-
+                if(conect != null)
                 conect.close();
 
             } catch (SQLException ex) {
@@ -59,7 +59,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         int number = 0;
         try {
@@ -874,5 +874,12 @@ public class DataBaseHelper {
         List<String> lst = GetQuery("select * from naracka where Naracal_User = '" + User + "'", 3);
         if(lst == null || lst.isEmpty()) return new ArrayList<String>();
         return lst;
+    }
+    
+    public static String getGroupCreator(int ID)
+    {
+        List<String> lst = GetQuery("select * from tekovnagrupa where idTekovnaGrupa = " + ID, 3);
+        if(lst == null || lst.isEmpty()) return new String();
+        return lst.get(0);
     }
 }
