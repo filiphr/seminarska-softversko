@@ -98,7 +98,7 @@
                                                             int group = Integer.parseInt(AllGroups.get(i));
                                                             List<String> UsersInGroup = DataBaseHelper.getUserByGroup(group);
                                                             for (int j = 0; j < UsersInGroup.size(); j++) {
-                                                                String tmpUserInGroup = UsersInGroup.get(i);
+                                                                String tmpUserInGroup = UsersInGroup.get(j);
                                                                 if (UsersNoOrder.contains(tmpUserInGroup)) {
                                                                     //remove user from AllUsers if he is already member of some group
                                                                     UsersNoOrder.remove(tmpUserInGroup);
