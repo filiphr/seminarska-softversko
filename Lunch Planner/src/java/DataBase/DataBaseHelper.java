@@ -124,6 +124,35 @@ public class DataBaseHelper {
         }
         return lst;
     }
+    public static List<String> getUserByGroup(int Group)
+    {
+        List<String> users = GetQuery("select naracka.Korisnik_User from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = " + Group, 1);
+        if(users == null || users.isEmpty()) return new ArrayList<String>();
+        return users;
+    }
+    
+    public static List<List<String>> getNameSNameLunchAndKoments(int ID_Group) {
+        List<List<String>> lst = new ArrayList<List<String>>();
+        List<String> users = GetQuery("select * from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = " + ID_Group, 7);
+        List<String> LucnhID = GetQuery("select * from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = " + ID_Group, 9);
+        List<String> Komentar = GetQuery("select * from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = " + ID_Group, 6);
+        List<String> Ime = new ArrayList<String>();
+        List<String> Prezime = new ArrayList<String>();
+        List<String> Lucnh = new ArrayList<String>();
+        for (int i = 0; i < users.size(); i++) {
+            Ime.add(getUserIme(users.get(i)));
+            Prezime.add(getUserPrezime(users.get(i)));
+        }
+        for (int i = 0; i < LucnhID.size(); i++) {
+            Lucnh.add(IsInMeni((LucnhID.get(i))));
+        }        
+        lst.add(Ime);
+        lst.add(Prezime);
+        lst.add(Lucnh);
+        lst.add(Komentar);
+        lst.add(users);
+        return lst;
+    }
 
     public static List<List<String>> getNameSNameAndLunch(int ID_Group) {
         List<List<String>> lst = new ArrayList<List<String>>();
@@ -494,6 +523,7 @@ public class DataBaseHelper {
     public static int getGroupIDFromCreator(String userID) {
         String str = "SELECT idTekovnaGrupa FROM tekovnagrupa WHERE Korisnik_User ='" + userID + "';";
         List<String> lst = GetQuery(str, 1);
+        if(lst == null || lst.isEmpty()) return -1;
         return Integer.parseInt(lst.get(0));
     }
 
@@ -746,8 +776,12 @@ public class DataBaseHelper {
     public static List<String> getNotification(String User)
     {
         if(User == null || User.isEmpty()) return new ArrayList<String>();
-        List<String> lst = GetQuery("select * from notification where korisnik_User = '" + User + "'", 3);
+        List<String> lst = GetQuery("select * from notification where korisnik_User = '" + User + "'", 2);
         if(lst == null || lst.isEmpty()) return new ArrayList<String>();
         return lst;
+    }
+    public static void deleteGroup(int ID_Group)
+    {
+        ExecuteQuery("DELETE FROM tekovnagrupa where idTekovnaGrupa = " + ID_Group);
     }
 }

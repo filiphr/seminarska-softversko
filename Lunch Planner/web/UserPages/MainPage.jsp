@@ -15,11 +15,19 @@
         <title>JSP Page</title>
         <link rel="stylesheet" type="text/css" href="../MainPage/pro_dropdown_3.css" />
         <script src="../MainPage/stuHover.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function Potvrda()
+            {
+                
+               return confirm("Dali sakate da ja izbrisite grupata");
+            };
+        </script>
     </head>
     <body>
         <jsp:include page="../header.jsp"/>
         <table>
             <%
+                String nesto = (String)request.getParameter("notification");
                 String User = (String) request.getSession().getAttribute("username");
                 boolean Naracka = DataBaseHelper.IsNaracka(User);
                 int Grupa = 0;
@@ -33,7 +41,12 @@
                         List<String> lst1 = DataBaseHelper.getRestoranAndVreme(ID_Grupa);
                         String Restoran = lst1.get(0);
                         String Vreme = lst1.get(1);
+                        if (i == 0) {
             %>
+            <tr>
+                <td> <b> Pokani za pridruzuvanje vo grupa </b> </td>
+            </tr>
+            <% }%>
             <tr><td><form action="Pokana.do" method="post">
                         Vie ste pokaneti vo restoran <%= Restoran%> vo <%= Vreme%> casot   
                         <% if (!Naracka) {%>
@@ -45,10 +58,63 @@
                 </td>
             </tr>
             <% }
-
-                }%>
+                }
+                List<String> Notification = DataBaseHelper.getNotification(User);
+                for (int i = 0; i < Notification.size(); i++) {
+                    if (i == 0) {
+            %>
+            <tr>
+                <td><b>Izvestuvanja!!</b></td>
+            </tr>    
+            <% }%>
+            <tr>
+                <td>
+                    <%= Notification.get(i)%>
+                </td>
+            </tr>
+            <% if (i == Notification.size() - 1) {
+            %>
+            <tr>
+                <td>
+                    <form action="IzbrisiNotification.do" method="get">
+                        <input type="submit" value="Izbrisi Izvestuvanja"/>
+                    </form>
+                </td>
+            </tr>
+            <%} }
+                        int UserGroup = DataBaseHelper.getGroupIDFromCreator(User);
+                        if(UserGroup != -1)
+                  {
+                            List<String> UserRestoran = DataBaseHelper.getRestoranAndVreme(UserGroup);
+            %>
+            <tr>
+                <td>
+            Vie imate organizirano jadenje vo <b><%= UserRestoran.get(0) %></b> vo <b><%= UserRestoran.get(1) %> </b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="ListanjeNaracki.jsp" method="post">
+                        <input type="hidden" name="IDGroup" value="<%=UserGroup%>"/>
+                        <input type="submit" value="Izlistaj naracki vo grupata"/>
+                    </form>
+                </td>
+                <td>
+                    <form id="IzbrisiForm" action="IzbrisiGroup.do" method="post" onsubmit="return Potvrda()">
+                        <input type="hidden" name="IDGroup" value="<%=UserGroup%>"/>                        
+                        <input type="submit" name="izbrisi" value="Izbrisi grupa"/>
+                        <b> Vnesete Pricina: </b><INPUT TYPE=TEXT NAME="t1"/>
+                    </form>
+                </td>
+            </tr>
+            <% } %>
         </table>
         <table>
+            <tr>
+                <td>
+                    <b> Kreirani Grupi </b>
+                </td>
+            </tr>
             <tr>
                 <td>
                     <table>
@@ -83,12 +149,12 @@
                             </td>
                             <td><form action="Izmeni.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
-                                    <input type="submit" name="Izmeni" value="Izmeni"/>
+                                    <input type="submit" name="Izmeni" value="Izmeni Naracka"/>
                                 </form></td>
                             <td>
                                 <form action="Izlezi.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
-                                    <input type="submit" name="Izlezi" value="Izlezi"/>
+                                    <input type="submit" name="Izlezi" value="Izlezi od grupata"/>
                                 </form>
                             </td>
                         </tr>
