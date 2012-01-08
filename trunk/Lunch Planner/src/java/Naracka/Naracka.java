@@ -115,7 +115,8 @@ public class Naracka extends HttpServlet {
             //Redirecto to MainPage.jsp
             //RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
            // rd.forward(request, response);
-            response.sendRedirect("MainPage.jsp");
+            //response.sendRedirect("MainPage.jsp");
+            response.sendRedirect("Naracka.jsp?groupID="+ IDGroup+"&Izmeni=0&join=false");
         }
     }
 
