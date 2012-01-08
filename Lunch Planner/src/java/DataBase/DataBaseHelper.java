@@ -464,7 +464,7 @@ public class DataBaseHelper {
     }
 
     public static void updateUser(String ime, String prezime, String user, String lozinka, String mail) {
-        StringBuilder sqlSqtr = new StringBuilder("UPDATE korisnik SET");
+        StringBuilder sqlSqtr = new StringBuilder("UPDATE korisnik SET ");
         sqlSqtr.append("Ime='").append(ime).append("', ");
         sqlSqtr.append("Prezime='").append(prezime).append("', ");
         sqlSqtr.append("Email='").append(mail).append("', ");
