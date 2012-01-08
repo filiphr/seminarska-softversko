@@ -67,6 +67,15 @@
                 }
             }
             
+            function ValidateIzbrisi(){
+                var x= document.forms["naracka"]["Naracuvac"].value;
+                if(x==null || x=="")
+                {
+                    alert("Изберете за кој сакате да избришете нарачка");
+                    return false;   
+                }
+            }
+            
             function goToMain()
             {
                  window.location="MainPage.jsp";
@@ -250,7 +259,7 @@
                                         %>
                                         <tr>
                                             <td>
-                                                <input type="submit" value="Naracaj"/>
+                                                <input type="submit" name="Naracaj" value="Naracaj"/>
                                             </td>
                                             <td>
                                                 <input type="button" value="Врати се назад" onclick="goToMain()"/>
@@ -258,6 +267,13 @@
                                         </tr>
                                     </table>
                                 </form>
+                                        <% if("false".equals(join)) { %>
+                                        <form action="IzbrisiNaracka.do" method="post" onsubmit="return ValidateIzbrisi()">
+                                            <input type="hidden" name="Naracuvac" value="<%=OrderUser%>"/>
+                                            <input type="hidden" name="IDGrupa" value="<%=IDGroup%>"/>
+                                            <input type="submit" value="Izbrisi Naracka"/>
+                                        </form>
+                                                <% } %>
                             </td>
                         </tr>
                     </table>

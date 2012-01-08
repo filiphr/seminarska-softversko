@@ -141,6 +141,10 @@
         <servlet-name>NarackaZaDrug</servlet-name>
         <servlet-class>MainPage.NarackaZaDrug</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>IzbrisiNaracka</servlet-name>
+        <servlet-class>Naracka.IzbrisiNaracka</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -236,6 +240,10 @@
     <servlet-mapping>
         <servlet-name>NarackaZaDrug</servlet-name>
         <url-pattern>/UserPages/NarackaZaDrug.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IzbrisiNaracka</servlet-name>
+        <url-pattern>/UserPages/IzbrisiNaracka.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
