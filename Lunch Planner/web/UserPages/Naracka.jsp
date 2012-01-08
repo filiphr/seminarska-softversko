@@ -214,7 +214,7 @@
                                                 Коментар: <input type="text" name="komentar" value="<%=komentar%>"/>
                                             </td>
                                             <td>
-                                                <input type="submit" value="Naracaj"/>
+                                                <input type="submit" value="Naracaj" onsubmit=""/>
                                             </td>
                                         </tr>
                                     </table>
