@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Glavna Strana</title>
         <link rel="stylesheet" type="text/css" href="../MainPage/pro_dropdown_3.css" />
         <script src="../MainPage/stuHover.js" type="text/javascript"></script>
         <script type="text/javascript">
