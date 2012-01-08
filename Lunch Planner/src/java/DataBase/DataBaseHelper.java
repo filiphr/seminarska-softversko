@@ -24,7 +24,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "";
+        String pass = "admin";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -59,7 +59,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "";
+        String pass = "admin";
         Connection conect = null;
         int number = 0;
         try {
@@ -124,13 +124,15 @@ public class DataBaseHelper {
         }
         return lst;
     }
-    public static List<String> getUserByGroup(int Group)
-    {
+
+    public static List<String> getUserByGroup(int Group) {
         List<String> users = GetQuery("select naracka.Korisnik_User from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = " + Group, 1);
-        if(users == null || users.isEmpty()) return new ArrayList<String>();
+        if (users == null || users.isEmpty()) {
+            return new ArrayList<String>();
+        }
         return users;
     }
-    
+
     public static List<List<String>> getNameSNameLunchAndKoments(int ID_Group) {
         List<List<String>> lst = new ArrayList<List<String>>();
         List<String> users = GetQuery("select * from tekovnagrupa,naracka where idTekovnaGrupa = TekovnaGrupa_idTekovnaGrupa And idTekovnaGrupa = " + ID_Group, 7);
@@ -145,7 +147,7 @@ public class DataBaseHelper {
         }
         for (int i = 0; i < LucnhID.size(); i++) {
             Lucnh.add(IsInMeni((LucnhID.get(i))));
-        }        
+        }
         lst.add(Ime);
         lst.add(Prezime);
         lst.add(Lucnh);
@@ -184,14 +186,19 @@ public class DataBaseHelper {
         return new String();
     }
 
+    //Filip go ima smeneto bidejki mi treba imeto na stavkata ne id-to
     public static List<String> getLunch(String User, int Grupa) {
-        StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
+        StringBuilder sqlStr = new StringBuilder("select stavkameni_Ime from naracka where Korisnik_User = '");
         sqlStr.append(User);
         sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
         sqlStr.append(Grupa);
         List<String> lst = GetQuery(sqlStr.toString(), 1);
-        if(lst == null) return new ArrayList<String>();
-        if(lst.isEmpty()) return new ArrayList<String>();
+        if (lst == null) {
+            return new ArrayList<String>();
+        }
+        if (lst.isEmpty()) {
+            return new ArrayList<String>();
+        }
         return lst;
     }
 
@@ -290,13 +297,12 @@ public class DataBaseHelper {
         }
         return new String();
     }
-    
-    public static List<List<String>> getUserArhivirani(String username)
-    {
+
+    public static List<List<String>> getUserArhivirani(String username) {
         //OVAA IGOR
         return new ArrayList<List<String>>();
     }
-    
+
     public static void insertUser(String ime, String prezime, String user, String email, String password) {
         if ((ime == null) || (prezime == null) || (user == null) || (email == null) || (password == null)) {
             return;
@@ -502,6 +508,40 @@ public class DataBaseHelper {
         return ID;
     }
 
+    //Filip ja ima napisano go zema komentarot koj user-ot go ostavil za svojata naracka vo soodvetnata grupa
+    public static String getKomentar(String User, int ID_Grupa) {
+        StringBuilder sqlStr = new StringBuilder("select Komentar from naracka where Korisnik_User = '");
+        sqlStr.append(User);
+        sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
+        sqlStr.append(ID_Grupa);
+        List<String> lst = GetQuery(sqlStr.toString(), 1);
+        String Komentar;
+        if (!lst.isEmpty()) {
+            Komentar = lst.get(0);
+        } else {
+            Komentar = new String();
+        }
+        return Komentar;
+    }
+
+    //Filip go ima napisano ova. gi vrakja site ID koi nekoj korisnik gi napravil vo opredelena grupa
+    public static List<Integer> getIDNaracka2(String User, int ID_Grupa) {
+        StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
+        sqlStr.append(User);
+        sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
+        sqlStr.append(ID_Grupa);
+        List<String> lst = GetQuery(sqlStr.toString(), 1);
+        List<Integer> ID = new ArrayList<Integer>();
+        if (!lst.isEmpty()) {
+            for (int i = 0; i < lst.size(); i++) {
+                String number = lst.get(i);
+                ID.add(Integer.parseInt(number));
+            }
+        }
+
+        return ID;
+    }
+
     public static int getIDNaracka(String User, int ID_Grupa, String Stavka) {
         StringBuilder sqlStr = new StringBuilder("select idNaracka from naracka where Korisnik_User = '");
         sqlStr.append(User);
@@ -523,7 +563,9 @@ public class DataBaseHelper {
     public static int getGroupIDFromCreator(String userID) {
         String str = "SELECT idTekovnaGrupa FROM tekovnagrupa WHERE Korisnik_User ='" + userID + "';";
         List<String> lst = GetQuery(str, 1);
-        if(lst == null || lst.isEmpty()) return -1;
+        if (lst == null || lst.isEmpty()) {
+            return -1;
+        }
         return Integer.parseInt(lst.get(0));
     }
 
@@ -698,19 +740,19 @@ public class DataBaseHelper {
             return true;
         }
     }
-    
-    public static List<String> getParticipantBezJadenje()
-    {
+
+    public static List<String> getParticipantBezJadenje() {
         List<String> Users = getAllUsernames();
         List<String> UsersSoJadenja = GetQuery("(select distinct(Korisnik_User) from naracka)", 1);
-        if(UsersSoJadenja == null) return Users;
-        if(UsersSoJadenja.isEmpty()) return Users;
-        for(int i = 0; i<UsersSoJadenja.size(); i++)
-        {
-            for(int j = 0; j<Users.size(); j++)
-            {
-                if(Users.get(j).equals(UsersSoJadenja.get(i)))
-                {
+        if (UsersSoJadenja == null) {
+            return Users;
+        }
+        if (UsersSoJadenja.isEmpty()) {
+            return Users;
+        }
+        for (int i = 0; i < UsersSoJadenja.size(); i++) {
+            for (int j = 0; j < Users.size(); j++) {
+                if (Users.get(j).equals(UsersSoJadenja.get(i))) {
                     Users.remove(j);
                     break;
                 }
@@ -718,70 +760,93 @@ public class DataBaseHelper {
         }
         return Users;
     }
-    public static String IsInMeni(String Stavka)
-    {
+
+    public static String IsInMeni(String Stavka) {
         List<String> lst = (GetQuery("select Ime from stavkameni WHERE Ime = '" + Stavka + "'", 1));
         if (!lst.isEmpty()) {
             return lst.get(0);
         }
         return new String();
     }
-    
-    public static List<List<String>> getVremeRestoranStavkaOdArhivirani(String User)
-    {
-        if(User == null) return new ArrayList<List<String>>();
-        if(User.isEmpty()) return new ArrayList<List<String>>();
+
+    public static List<List<String>> getVremeRestoranStavkaOdArhivirani(String User) {
+        if (User == null) {
+            return new ArrayList<List<String>>();
+        }
+        if (User.isEmpty()) {
+            return new ArrayList<List<String>>();
+        }
         List<List<String>> lst = new ArrayList<List<String>>();
-        for(int i = 1; i<=3; i++)
-        {
-                List<String> tmp = GetQuery("SELECT Vreme, Restoran_Ime, stavkameni_Ime FROM arhiviranagrupa where Korisnik_user = '" + User + "' ORDER BY Vreme", i);
-                if(tmp == null || tmp.isEmpty()) return new ArrayList<List<String>>();
-                lst.add(tmp);
+        for (int i = 1; i <= 3; i++) {
+            List<String> tmp = GetQuery("SELECT Vreme, Restoran_Ime, stavkameni_Ime FROM arhiviranagrupa where Korisnik_user = '" + User + "' ORDER BY Vreme", i);
+            if (tmp == null || tmp.isEmpty()) {
+                return new ArrayList<List<String>>();
+            }
+            lst.add(tmp);
         }
         return lst;
     }
-    
-    public static void insertAdministrator(String User)
-    {
-        if(User == null) return;
-        if(User.isEmpty()) return;
+
+    public static void insertAdministrator(String User) {
+        if (User == null) {
+            return;
+        }
+        if (User.isEmpty()) {
+            return;
+        }
         ExecuteQuery("INSERT INTO administrator VALUES('" + User + "');");
     }
-    
-    public static boolean isAdministrator(String User)
-    {
-        if(User == null) return false;
-        if(User.isEmpty()) return false;
+
+    public static boolean isAdministrator(String User) {
+        if (User == null) {
+            return false;
+        }
+        if (User.isEmpty()) {
+            return false;
+        }
         List<String> lst = GetQuery("select * from administrator where korisnik_User = '" + User + "'", 1);
-        if(lst == null || lst.isEmpty()) return false;
+        if (lst == null || lst.isEmpty()) {
+            return false;
+        }
         return true;
     }
-    
-    public static void deleteAdministrator(String User)
-    {
-        if(User == null) return;
-        if(User.isEmpty()) return;
+
+    public static void deleteAdministrator(String User) {
+        if (User == null) {
+            return;
+        }
+        if (User.isEmpty()) {
+            return;
+        }
         ExecuteQuery("DELETE FROM administrator where korisnik_User = '" + User + "'");
     }
-    public static void insertNotofication(String Notification, String User)
-    {
-        if(Notification == null || User == null || Notification.isEmpty() || User.isEmpty()) return;
+
+    public static void insertNotofication(String Notification, String User) {
+        if (Notification == null || User == null || Notification.isEmpty() || User.isEmpty()) {
+            return;
+        }
         ExecuteQuery("INSERT INTO notification (Notification, korisnik_User) VALUES('" + Notification + "', '" + User + "');");
     }
-    public static void deleteNotification(String User)
-    {
-        if(User == null || User.isEmpty()) return;
+
+    public static void deleteNotification(String User) {
+        if (User == null || User.isEmpty()) {
+            return;
+        }
         ExecuteQuery("DELETE FROM notification where korisnik_User = '" + User + "'");
     }
-    public static List<String> getNotification(String User)
-    {
-        if(User == null || User.isEmpty()) return new ArrayList<String>();
+
+    public static List<String> getNotification(String User) {
+        if (User == null || User.isEmpty()) {
+            return new ArrayList<String>();
+        }
         List<String> lst = GetQuery("select * from notification where korisnik_User = '" + User + "'", 2);
-        if(lst == null || lst.isEmpty()) return new ArrayList<String>();
+        if (lst == null || lst.isEmpty()) {
+            return new ArrayList<String>();
+        }
         return lst;
     }
-    public static void deleteGroup(int ID_Group)
-    {
+
+    public static void deleteGroup(int ID_Group) {
         ExecuteQuery("DELETE FROM tekovnagrupa where idTekovnaGrupa = " + ID_Group);
     }
 }

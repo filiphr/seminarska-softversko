@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
  *
  * @author Filip
@@ -80,8 +79,15 @@ public class Naracka extends HttpServlet {
             rd.forward(request, response);
         } else {
             String user = (String) session.getAttribute("username");
-            int IDGroup = Integer.parseInt(request.getParameter("gourpID"));
+            int IDGroup = Integer.parseInt(request.getParameter("groupID"));
             String komentar = request.getParameter("komentar");
+            List<Integer> ID = DataBaseHelper.getIDNaracka2(user, IDGroup);
+            if (!ID.isEmpty()){
+                for (int i = 0; i < ID.size(); i++) {
+                    Integer tmp = ID.get(i);
+                    DataBaseHelper.deleteNaracka(tmp);
+                }
+            }
             if (komentar == null) {
                 for (int i = 0; i < Odbrani.size(); i++) {
                     DataBaseHelper.insertNaracka(user, IDGroup, Odbrani.get(i));
