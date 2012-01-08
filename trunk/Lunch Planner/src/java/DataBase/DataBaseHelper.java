@@ -405,14 +405,14 @@ public class DataBaseHelper {
         ExecuteQuery(sqlStr.toString());
     }
 
-    public static void insertNaracka(String User, int ID_Grupa, String Stavka, String Komentar) {
+    public static void insertNaracka(String User, int ID_Grupa, String Stavka, String Komentar,String Naracal) {
         if (User == null) {
             return;
         }
         if (User.isEmpty()) {
             return;
         }
-        StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka (Komentar, Korisnik_User, TekovnaGrupa_idTekovnaGrupa, stavkameni_Ime) VALUES('");
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO naracka (Komentar, Korisnik_User, TekovnaGrupa_idTekovnaGrupa, stavkameni_Ime,Naracal_User) VALUES('");
         sqlStr.append(Komentar);
         sqlStr.append("', '");
         sqlStr.append(User);
@@ -420,6 +420,8 @@ public class DataBaseHelper {
         sqlStr.append(ID_Grupa);
         sqlStr.append("', '");
         sqlStr.append(Stavka);
+        sqlStr.append("', '");
+        sqlStr.append(Naracal);
         sqlStr.append("' );");
         ExecuteQuery(sqlStr.toString());
     }
@@ -864,7 +866,13 @@ public class DataBaseHelper {
             return new String();
         }
         return ID.get(0);
-
-
+    }
+    
+    public static List<String> getNarackiByNaracatel(String User)
+    {
+        if(User == null || User.isEmpty()) return new ArrayList<String>();
+        List<String> lst = GetQuery("select * from naracka where Naracal_User = '" + User + "'", 3);
+        if(lst == null || lst.isEmpty()) return new ArrayList<String>();
+        return lst;
     }
 }
