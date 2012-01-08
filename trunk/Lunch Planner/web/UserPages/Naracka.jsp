@@ -4,6 +4,7 @@
     Author     : Filip
 --%>
 
+<%@page import="sun.security.krb5.internal.KDCOptions"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="DataBase.DataBaseHelper"%>
 <%@page import="java.util.List"%>
@@ -21,6 +22,10 @@
             // GroupID = "0";
         }
         Integer izmeni = Integer.parseInt(request.getParameter("Izmeni"));
+        String komentar = (String)request.getParameter("Komentar");
+        if (komentar == null) {
+            komentar = new String();
+        }
     %>
 
 
@@ -113,6 +118,9 @@
                                                             for (int i = 0; i < lst3.size(); i++) {
                                                                 Odbrani.add(lst3.get(i));
                                                             }
+                                                            komentar = DataBaseHelper.getKomentar(user, IDGroup);
+                                                            session.setAttribute("Odbrani", Odbrani);
+                                                            response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&Izmeni=0&Komentar="+komentar);
                                                         }
                                                         String prefRestaurant = DataBaseHelper.getPreferencesRestoran(user);
                                                         if (prefRestaurant != null && prefRestaurant.equals(DataBaseHelper.getRestaurantName(IDGroup))) {
@@ -140,7 +148,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                Коментар: <input type="text" name="komentar"/>
+                                                Коментар: <input type="text" name="komentar" value="<%=komentar%>"/>
                                             </td>
                                             <td>
                                                 <input type="submit" value="Naracaj"/>
@@ -161,4 +169,5 @@
         </table>
 
     </body>
+
 </html>
