@@ -57,7 +57,8 @@ public class DeleteUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        response.sendRedirect("AddRemoveUser.jsp");
     }
 
     /** 
@@ -75,8 +76,10 @@ public class DeleteUser extends HttpServlet {
         
         DataBaseHelper.deleteUser(username);
         
-        RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
-        rd.forward(request, response);
+        response.sendRedirect("AddRemoveUser.jsp");
+        
+        /*RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
+        rd.forward(request, response);*/
              
     }
 

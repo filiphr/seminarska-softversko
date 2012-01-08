@@ -5,6 +5,7 @@
 package Admin;
 
 import DataBase.DataBaseHelper;
+import com.sun.xml.internal.ws.client.SenderException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -57,7 +58,7 @@ public class RemoveRestorant extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("AddRemoveRestorant.jsp");
     }
 
     /** 
@@ -74,8 +75,11 @@ public class RemoveRestorant extends HttpServlet {
         String ime = request.getParameter("ImeIzbrisi");
         DataBaseHelper.deleteRestoran(ime);
         
+        response.sendRedirect("AddRemoveRestorant.jsp");
+        
+        /*
         RequestDispatcher rd = request.getRequestDispatcher("AddRemoveRestorant.jsp");
-        rd.forward(request, response);
+        rd.forward(request, response);*/
 
     }
     @Override

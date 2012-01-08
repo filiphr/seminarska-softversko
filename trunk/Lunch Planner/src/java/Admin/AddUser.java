@@ -57,7 +57,8 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        response.sendRedirect("AddRemoveUser.jsp");
     }
 
     /** 
@@ -80,8 +81,11 @@ public class AddUser extends HttpServlet {
         DataBaseHelper.insertUser(ime, prezime, username, mail, lozinka);
         if(admin!=null)
             DataBaseHelper.insertAdministrator(username);
-        RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
-        rd.forward(request, response);
+        
+        response.sendRedirect("AddRemoveUser.jsp");
+        
+        /*RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
+        rd.forward(request, response);*/
     }
 
     /** 
