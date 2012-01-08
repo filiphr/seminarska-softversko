@@ -82,12 +82,8 @@
                                                     <option value="" disabled="disabled">Изберете во кое име сакате да нарачате</option>
                                                     <%
                                                         //Users without order
-                                                        List<String> UsersNoOrder;
+                                                        List<String> UsersNoOrder=new ArrayList<String>();
 
-                                                        //Get all the active groups in the Databae
-                                                        List<String> AllGroups = DataBaseHelper.getAllGroups();
-
-                                                        UsersNoOrder = new ArrayList<String>();
 
                                                         if ("false".equals(join)) {
                                                             //Find the users that are not in a group
@@ -174,6 +170,9 @@
 
                                                         //If you want to modify your order get the parameters and update your old order
                                                         if (izmeni == 1) {
+                                                            //Initialize new pending order to avoid duplicates
+                                                            Odbrani=new ArrayList<String>();
+                                                            
                                                             //Get the items you have ordered
                                                             List<String> lst3 = DataBaseHelper.getLunch(username, IDGroup);
                                                             for (int i = 0; i < lst3.size(); i++) {
@@ -182,9 +181,6 @@
                                                             }
                                                             //Get the comment
                                                             komentar = DataBaseHelper.getKomentar(username, IDGroup);
-
-                                                            //Remove Odbrani from your session in order to avoid duplicates
-                                                            session.removeAttribute("Odbrani");
 
                                                             //Add the pending order in your session if it is not already there 
                                                             session.setAttribute("Odbrani", Odbrani);
