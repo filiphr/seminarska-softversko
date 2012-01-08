@@ -6,6 +6,7 @@ package MainPage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -70,7 +71,9 @@ public class Join extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         int ID_Grupa = Integer.parseInt(request.getParameter("ID_Grupa"));
-        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0");
+        //RequestDispatcher r = request.getRequestDispatcher("/UserPages/Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0");
+        //r.forward(request, response);
+        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0&join=true");
     }
 
     /** 

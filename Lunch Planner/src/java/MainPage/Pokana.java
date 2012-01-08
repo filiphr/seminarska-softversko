@@ -83,7 +83,7 @@ public class Pokana extends HttpServlet {
         }else
         {
             DataBaseHelper.deleteAllPokani();
-            response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0");
+            response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0&join=true");
         }
     }
 

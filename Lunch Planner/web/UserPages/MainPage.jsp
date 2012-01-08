@@ -56,6 +56,7 @@
                         <input type="submit" name="Potvrda" value="Potvrdi"/>
                         <% }%>
                         <input type="submit" name="Potvrda" value="Otkazi"/>
+                        <input type="hidden" name="listaj" value="0"/>
                         <input type="hidden" name="ID_Grupa" value="<%=ID_Grupa%>"/>
                     </form>
                 </td>
@@ -80,6 +81,7 @@
             <tr>
                 <td>
                     <form action="IzbrisiNotification.do" method="get">
+                        <input type="hidden" name="listaj" value="0"/>
                         <input type="submit" value="Izbrisi Izvestuvanja"/>
                     </form>
                 </td>
@@ -98,13 +100,15 @@
             <tr>
                 <td>
                     <form action="ListanjeNaracki.jsp" method="post">
-                        <input type="hidden" name="IDGroup" value="<%=UserGroup%>"/>
+                        <input type="hidden" name="groupID" value="<%=UserGroup%>"/>
+                        <input type="hidden" name="listaj" value="0"/>
                         <input type="submit" value="Izlistaj naracki vo grupata"/>
                     </form>
                 </td>
                 <td>
                     <form id="IzbrisiForm" action="IzbrisiGroup.do" method="post" onsubmit="return Potvrda()">
-                        <input type="hidden" name="IDGroup" value="<%=UserGroup%>"/>                        
+                        <input type="hidden" name="groupID" value="<%=UserGroup%>"/>
+                        <input type="hidden" name="listaj" value="0"/>
                         <input type="submit" name="izbrisi" value="Izbrisi grupa"/>
                         <b> Vnesete Pricina: </b><INPUT TYPE=TEXT NAME="t1"/>
                     </form>
@@ -146,19 +150,29 @@
                             </td>
                             <td>
                                 <form name="Listanje" action="" method="post">
-                                    <input type="hidden" name="IDGrupa" value="<%=Grupa%>"/>
+                                    <input type="hidden" name="groupID" value="<%=Grupa%>"/>
+                                    <input type="hidden" name="listaj" value="1"/>
                                     <input type="submit" name="Izlistaj" value="Izlistaj"/>
                                 </form>
                             </td>
                             <%  if(Naracka) { %>
                             <td><form action="Izmeni.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
+                                    <input type="hidden" name="listaj" value="0"/>
                                     <input type="submit" name="Izmeni" value="Izmeni Naracka"/>
                                 </form></td>
+                                <td>
+                                    <form action="NarackaZaDrug.do" method="post">
+                                        <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
+                                        <input type="hidden" name="listaj" value="0"/>
+                                        <input type="submit" value="Naracaj Za Drug"/>
+                                    </form>
+                                </td>
                                 <% if(UserGroup == -1) { %>
                             <td>
                                 <form action="Izlezi.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
+                                    <input type="hidden" name="listaj" value="0"/>
                                     <input type="submit" name="Izlezi" value="Izlezi od grupata"/>
                                 </form>
                             </td>
@@ -166,6 +180,7 @@
                             <td>
                                 <form action="Join.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
+                                    <input type="hidden" name="listaj" value="0"/>
                                     <input type="submit" name="Join" value="Join"/>
                                 </form>
                             </td>
@@ -201,7 +216,8 @@
                             </td>
                             <td>
                                 <form name="Listanje" action="" method="post">
-                                    <input type="hidden" name="IDGrupa" value="<%=ID_Group%>"/>
+                                    <input type="hidden" name="groupID" value="<%=ID_Group%>"/>
+                                    <input type="hidden" name="listaj" value="1"/>
                                     <input type="submit" name="Izlistaj" value="Izlistaj"/>
                                 </form>
                             </td>
@@ -210,6 +226,7 @@
                             <td>
                                 <form action="Join.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=ID_Group%>"/>
+                                    <input type="hidden" name="listaj" value="0"/>
                                     <input type="submit" name="Join" value="Join"/>
                                 </form>
                             </td>
@@ -225,51 +242,12 @@
                     </table>
                 </td>
                 <td>
-                    <table>
-                        <%
-                            String str = request.getParameter("IDGrupa");
-                            if (str != null) {
-                                int g = Integer.parseInt(str);
-                                List<List<String>> Names = DataBaseHelper.getNameSNameAndLunch(g);
-                                List<String> lst1 = DataBaseHelper.getRestoranAndVreme(g);
-                                String Restoran = lst1.get(0);
-                                String Vreme = lst1.get(1);
-                                String Adresa = DataBaseHelper.getRestoranAddress(Restoran);
-                                String Telefon = DataBaseHelper.getRestoranTelefon(Restoran);
-                                for (int i = 0; i < Names.get(0).size(); i++) {
-                                    String Name = Names.get(0).get(i);
-                                    String SName = Names.get(1).get(i);
-                                    String Lucnh = Names.get(2).get(i);
-                                    if (i == 0) {
-                        %>
-                        <tr>
-                            <td><b> Restoran: </b></td> 
-                            <td> <%=Restoran%> </td>
-                        </tr>
-                        <tr>
-                            <td><b> Vreme: </b></td>
-                            <td> <%=Vreme%> </td>
-                        </tr>
-                        <tr>
-                            <td><b> Adresa: </b></td>
-                            <td> <%=Adresa%> </td>
-                        </tr>
-                        <tr>
-                            <td><b> Telefon: </b></td>
-                            <td> <%=Telefon%> </td>
-                        </tr>
-                        <tr>
-                            <td><b>Ime i Prezime     </b></td>
-                            <td><b>     Jadenje</b></td>
-                        </tr>
-                        <% }%>
-                        <tr>
-                            <td> <%=Name%>  <%= SName%>     </td>
-                            <td>      <%=Lucnh%></td>
-                        </tr>
-                        <% }
-                            }%>
-                    </table>
+                    <% String str = (String)request.getParameter("listaj");
+                    if(str!=null && str.equals("1"))
+                                               {
+                    %>
+                    <jsp:include page="ListaParticipanti.jsp"/>
+                    <% } %>
                 </td>
             </tr>            
         </table>
