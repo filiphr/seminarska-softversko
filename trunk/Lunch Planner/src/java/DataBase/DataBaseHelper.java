@@ -871,7 +871,7 @@ public class DataBaseHelper {
     public static List<String> getNarackiByNaracatel(String User)
     {
         if(User == null || User.isEmpty()) return new ArrayList<String>();
-        List<String> lst = GetQuery("select * from naracka where Naracal_User = '" + User + "'", 3);
+        List<String> lst = GetQuery("select distinct(Korisnik_User) from naracka where Naracal_User = '" + User + "'", 1);
         if(lst == null || lst.isEmpty()) return new ArrayList<String>();
         return lst;
     }
