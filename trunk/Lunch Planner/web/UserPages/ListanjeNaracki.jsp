@@ -15,17 +15,6 @@
     </head>
     <body>
         <jsp:include page="../header.jsp"/>
-        <table>
-        <%
-        String user = (String)request.getSession().getAttribute("username");
-        String Ime = DataBaseHelper.getUserIme(user);
-        String Prezime = DataBaseHelper.getUserPrezime(user);
-        %>
-        <tr>
-            <td><b>Kreator: </b></td>
-            <td> <%=Ime%> <%=Prezime%> </td>
-        </tr>
-        </table>
             <jsp:include page="ListaParticipanti.jsp"/>
         <a href="MainPage.jsp">Nazad</a>
     </body>
