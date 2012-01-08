@@ -45,8 +45,8 @@ public class DataBaseHelper {
             //throw new RuntimeException(e);
         } finally {
             try {
-                if(conect != null)
-                conect.close();
+                if(conect != null){
+                conect.close();}
 
             } catch (SQLException ex) {
                 Logger.getLogger(DataBaseHelper.class.getName()).log(Level.SEVERE, null, ex);
