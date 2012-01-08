@@ -151,6 +151,7 @@
                                     <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
                                     <input type="submit" name="Izmeni" value="Izmeni Naracka"/>
                                 </form></td>
+                                <% if(UserGroup == -1) { %>
                             <td>
                                 <form action="Izlezi.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
@@ -158,7 +159,7 @@
                                 </form>
                             </td>
                         </tr>
-                        <% for (int s = 0; s < Namestmp.get(0).size() * 5 && s < 25; s++) {
+                        <% }for (int s = 0; s < Namestmp.get(0).size() * 5 && s < 25; s++) {
                         %>
                         <tr> <td> </td></tr>
                         <%   }%>
@@ -195,21 +196,7 @@
                                 </form>
                             </td>
                             <%
-                                if (Naracka) {
-                                    if (Grupa == ID_Group) {
-                            %>
-                            <td><form action="Izmeni.do" method="post">
-                                    <input type="hidden" name="ID_Grupa" value="<%=ID_Group%>"/>
-                                    <input type="submit" name="Izmeni" value="Izmeni"/>
-                                </form></td>
-                            <td>
-                                <form action="Izlezi.do" method="post">
-                                    <input type="hidden" name="ID_Grupa" value="<%=ID_Group%>"/>
-                                    <input type="submit" name="Izlezi" value="Izlezi"/>
-                                </form>
-                            </td>
-                            <% }
-                            } else {%>
+                                if (!Naracka) {%>
                             <td>
                                 <form action="Join.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=ID_Group%>"/>
