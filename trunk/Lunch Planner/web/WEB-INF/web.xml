@@ -93,6 +93,14 @@
         <servlet-name>PokaniServlet</servlet-name>
         <servlet-class>Invite.PokaniServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>IzbrisiGroup</servlet-name>
+        <servlet-class>MainPage.IzbrisiGroup</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IzbrisiNotification</servlet-name>
+        <servlet-class>MainPage.IzbrisiNotification</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -176,6 +184,14 @@
     <servlet-mapping>
         <servlet-name>PokaniServlet</servlet-name>
         <url-pattern>/UserPages/Pokani.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IzbrisiGroup</servlet-name>
+        <url-pattern>/UserPages/IzbrisiGroup.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IzbrisiNotification</servlet-name>
+        <url-pattern>/UserPages/IzbrisiNotification.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
