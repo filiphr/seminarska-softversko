@@ -3,9 +3,10 @@
 <%
     String userID = (String) request.getSession().getAttribute("username");
     boolean hasCreated = DataBaseHelper.hasCreatedEvent(userID);
+    boolean hasOrdered = DataBaseHelper.IsNaracka(userID);
     String createdLink = "";
     String createdText = "";
-    if (!hasCreated) {
+    if (!hasCreated && !hasOrdered) {
         createdLink = "/Lunch_Planner/UserPages/Create.jsp";
         createdText = "Креирај настан";
     }
