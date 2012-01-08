@@ -6,6 +6,7 @@
 
 <%@page import="DataBase.DataBaseHelper"%>
 <%@page import="java.util.List"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <table>
     <%
         String IDGroup2 = request.getParameter("groupID");
@@ -26,24 +27,24 @@
                 if (i == 0) {
     %>
     <tr>
-        <td><b> Restoran: </b></td> 
+        <td><b> Ресторан: </b></td> 
         <td> <%=Restoran%> </td>
     </tr>
     <tr>
-        <td><b> Vreme: </b></td>
+        <td><b> Време </b></td>
         <td> <%=Vreme%> </td>
     </tr>
     <tr>
-        <td><b> Adresa: </b></td>
+        <td><b> Адреса: </b></td>
         <td> <%=Adresa%> </td>
     </tr>
     <tr>
-        <td><b> Telefon: </b></td>
+        <td><b> Телефон: </b></td>
         <td> <%=Telefon%> </td>
     </tr>
     <tr>
-        <td><b>Ime i Prezime     </b></td>
-        <td><b>     Jadenje</b></td>
+        <td><b>Име и презиме    </b></td>
+        <td><b>     Јадење</b></td>
     </tr>
     <% }%>
     <tr>
