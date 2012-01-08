@@ -844,4 +844,15 @@ public class DataBaseHelper {
     public static void deleteGroup(int ID_Group) {
         ExecuteQuery("DELETE FROM tekovnagrupa where idTekovnaGrupa = " + ID_Group);
     }
+    
+    public static String getIDGrupa(String Restoran, String Vreme)
+    {
+        if(Restoran == null || Vreme == null || Restoran.isEmpty() || Vreme.isEmpty()) return new String();
+        List<String> ID = GetQuery("select * from tekovnagrupa where Vreme = '" + Vreme + "' And Restoran_Ime = '" + Restoran + "'",1);
+
+        if(ID.isEmpty()) return new String();
+        return ID.get(0);
+        
+        
+    }
 }
