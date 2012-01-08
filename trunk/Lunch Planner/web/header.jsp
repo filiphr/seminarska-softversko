@@ -23,7 +23,7 @@
     String administratorLink = "";
     String administratorText = "";
 
-    boolean administrator = true;
+    boolean administrator = DataBaseHelper.isAdministrator(userID);
     if (administrator) {
         administratorLink="/Lunch_Planner/AdminPages/Azuriranje.jsp";
         administratorText="Администрација на апликацијата";

@@ -12,6 +12,7 @@
     <%
         String userID = (String) request.getSession().getAttribute("username");
         String restorantCompare = DataBaseHelper.getPreferencesRestoran(userID);
+        List<String> lst1 = DataBaseHelper.getPreferencesParticipant(userID);
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -75,7 +76,13 @@
                                 String s = lst.get(i);
                                 if (!s.equals(userID)) {
                         %>
-                        <option value="<%=s%>"><%=DataBaseHelper.getUserIme(s)%> <%= DataBaseHelper.getUserPrezime(s)%></option>
+                        <option value="<%=s%>"
+                                <%
+                                    if (lst1.contains(s)) {
+                                        out.write("selected=\"true\"");
+                                    }
+                                %>
+                                ><%=DataBaseHelper.getUserIme(s)%> <%= DataBaseHelper.getUserPrezime(s)%></option>
                         <%
                                 }
                             }
