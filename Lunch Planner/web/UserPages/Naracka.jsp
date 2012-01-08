@@ -52,11 +52,11 @@
             }            
         </script>
 
-
+<jsp:include page="../header.jsp"/>
         <table>
             <tr class="header">
                 <td>
-                    <jsp:include page="../header.jsp"/>
+                    
                 </td>
             </tr>
             <tr class="menu" >
