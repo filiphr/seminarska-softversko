@@ -75,10 +75,13 @@ public class IzbrisiGroup extends HttpServlet {
         String inf = (String)request.getParameter("t1");
         int Group = Integer.parseInt(request.getParameter("IDGroup"));
         List<String> resVreme = DataBaseHelper.getRestoranAndVreme(Group);
-        String str = "Grupata vo " + resVreme.get(0) + " vo " + resVreme.get(1) + " kreirana od " + DataBaseHelper.getUserIme(User) + " " + DataBaseHelper.getUserPrezime(User)+ ", Pricina : ";
+        String str = "Grupata vo " + resVreme.get(0) + " vo " + resVreme.get(1) + " kreirana od " + DataBaseHelper.getUserIme(User) + " " + DataBaseHelper.getUserPrezime(User)+ " e izbrisana, Pricina : ";
         List<String> Users = DataBaseHelper.getUserByGroup(Group);
         for(int i = 0; i<Users.size(); i++)
+        {
+            if(!(Users.get(i).equals(User)))
             DataBaseHelper.insertNotofication(str + inf, Users.get(i));
+        }
         DataBaseHelper.deleteGroup(Group);
         response.sendRedirect("MainPage.jsp");
     }
