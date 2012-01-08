@@ -66,6 +66,11 @@
                     return false;   
                 }
             }
+            
+            function goToMain()
+            {
+                 window.location="MainPage.jsp";
+            }
         </script>
 
         <jsp:include page="../header.jsp"/>
@@ -98,21 +103,27 @@
                                                     <option value="" disabled="disabled">Изберете во кое име сакате да нарачате</option>
                                                     <%
                                                         //Users without order
-                                                        List<String> UsersNoOrder = new ArrayList<String>();
+                                                        List<String> UsersNoOrderOrUpdate = new ArrayList<String>();
 
 
                                                         if ("false".equals(join)) {
                                                             //Find the users that are not in a group
-                                                            UsersNoOrder = DataBaseHelper.getParticipantBezJadenje();
+                                                            UsersNoOrderOrUpdate = new ArrayList<String>();
+                                                            List<String> Naracatel=DataBaseHelper.getNarackiByNaracatel(username);
+                                                            for (int i=0; i<Naracatel.size(); i++){
+                                                                String tmp=Naracatel.get(i);
+                                                                UsersNoOrderOrUpdate.add(tmp);
+                                                            }
+                                                           UsersNoOrderOrUpdate.addAll(DataBaseHelper.getParticipantBezJadenje());
 
-                                                            UsersNoOrder.remove(username);
+                                                            UsersNoOrderOrUpdate.remove(username);
                                                         } else if ("true".equals(join)) {
-                                                            UsersNoOrder.add(username);
+                                                            UsersNoOrderOrUpdate.add(username);
                                                         }
 
                                                         //Show the users that are not in a group
-                                                        for (int i = 0; i < UsersNoOrder.size(); i++) {
-                                                            String tmpUsername = UsersNoOrder.get(i);
+                                                        for (int i = 0; i < UsersNoOrderOrUpdate.size(); i++) {
+                                                            String tmpUsername = UsersNoOrderOrUpdate.get(i);
                                                             String tmpName = DataBaseHelper.getUserIme(tmpUsername);
                                                             String tmpLastName = DataBaseHelper.getUserPrezime(tmpUsername);
 
@@ -220,17 +231,29 @@
                                         </tr>
                                     </table>
                                 </form>
-                                                <form method="post" action="Naracka.do" onsubmit="return Validate()">
+                                <form method="post" action="Naracka.do" onsubmit="return Validate()">
                                     <input type="hidden" name="groupID" value="<%=IDGroup%>"/>
                                     <input type="hidden" name="OrderUser" value="<%=OrderUser%>"/>
 
-                                    <table>
+                                    <table>                                       
+                                            <%
+                                                for (int i = 0; i < Odbrani.size(); i++) {
+                                                    String s = Odbrani.get(i);
+                                            %>
+                                            <tr>
+                                                <td>
+                                                   Коментар за <%=s%>: <input type="text" name="Komentar<%=i%>"/>
+                                                </td>
+                                            </tr>
+                                        <%
+                                            }
+                                        %>
                                         <tr>
                                             <td>
-                                                Коментар: <input type="text" name="komentar" value="<%=komentar%>"/>
+                                                <input type="submit" value="Naracaj"/>
                                             </td>
                                             <td>
-                                                <input type="submit" value="Naracaj" onsubmit=""/>
+                                                <input type="button" value="Врати се назад" onclick="goToMain()"/>
                                             </td>
                                         </tr>
                                     </table>

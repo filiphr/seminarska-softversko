@@ -108,7 +108,7 @@ public class CreateFilter implements Filter {
        if(DataBaseHelper.hasCreatedEvent(user) || DataBaseHelper.IsNaracka(user))
            res.sendRedirect("MainPage.jsp");
            
-       }
+
        chain.doFilter(request, response);
     }
 
