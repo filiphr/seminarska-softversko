@@ -5,10 +5,7 @@
     boolean hasCreated = DataBaseHelper.hasCreatedEvent(userID);
     String createdLink = "";
     String createdText = "";
-    if (hasCreated) {
-        createdLink = "/Lunch_Planner/UserPages/Modify.jsp";
-        createdText = "Измени настан";
-    } else {
+    if (!hasCreated) {
         createdLink = "/Lunch_Planner/UserPages/Create.jsp";
         createdText = "Креирај настан";
     }
@@ -57,6 +54,7 @@
             <a id="whiteLink" href="<%= createdLink%>"><%= createdText%></a>
         </td>
         <td>
+            <a id="whiteLink" href="/Lunch_Planner/UserPages/Statistika.jsp">Корисничка историја</a>
         </td>
     </tr>
 </table>

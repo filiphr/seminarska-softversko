@@ -84,7 +84,11 @@ public class CreateNastan extends HttpServlet {
         {
             DataBaseHelper.insertTekovnaGrupa(vreme, user, restorant);
         }
-        RequestDispatcher rd = request.getRequestDispatcher("Create.jsp");
+        String[] pokani = request.getParameterValues("Pokani");
+        int id = DataBaseHelper.getGroupIDFromCreator(user);
+        for(int i =0; i<pokani.length; i++)
+            DataBaseHelper.insertPokani(pokani[i], id);
+        RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
         rd.forward(request, response);
     }
 
