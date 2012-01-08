@@ -28,10 +28,10 @@
         if (OrderUser == null) {
             OrderUser = username;
         }
-        
+
         //if join=true the username joins the group, he cannot make order for different person
-        String join=request.getParameter("join");
-        
+        String join = request.getParameter("join");
+
         //izmeni=1 -user edits his order, izmeni=0 users creates order
         Integer izmeni = Integer.parseInt(request.getParameter("Izmeni"));
         String komentar = (String) request.getParameter("Komentar");
@@ -51,7 +51,7 @@
                 myForm.submit();
             }            
         </script>
-        
+
 
         <table>
             <tr class="header">
@@ -81,34 +81,23 @@
                                                 <select  name="Naracuvac" size="3" onchange="formSubmit('Naracuvac')">
                                                     <option value="" disabled="disabled">Изберете во кое име сакате да нарачате</option>
                                                     <%
-                                                        //Get all the users in the database
-                                                        List<String> AllUsers = DataBaseHelper.getAllUsernames();
-
                                                         //Users without order
                                                         List<String> UsersNoOrder;
+
                                                         //Get all the active groups in the Databae
                                                         List<String> AllGroups = DataBaseHelper.getAllGroups();
-                                                        
-                                                        //
-                                                        if (!"true".equals(join)) {
-                                                            UsersNoOrder = AllUsers;
-                                                            //Find the users that are in some group
-                                                            for (int i = 0; i < AllGroups.size(); i++) {
-                                                                int group = Integer.parseInt(AllGroups.get(i));
-                                                                List<String> UsersInGroup = DataBaseHelper.getUserByGroup(group);
-                                                                for (int j = 0; j < UsersInGroup.size(); j++) {
-                                                                    String tmpUserInGroup = UsersInGroup.get(j);
-                                                                    if (UsersNoOrder.contains(tmpUserInGroup) && !username.equals(tmpUserInGroup)) {
-                                                                        //remove user from AllUsers if he is already member of some group
-                                                                        UsersNoOrder.remove(tmpUserInGroup);
-                                                                    }
-                                                                }
-                                                            }
-                                                        } else {
-                                                            //You cannot order for someone else if you are joining
-                                                            UsersNoOrder= new ArrayList<String>();
+
+                                                        UsersNoOrder = new ArrayList<String>();
+
+                                                        if ("false".equals(join)) {
+                                                            //Find the users that are not in a group
+                                                            UsersNoOrder = DataBaseHelper.getParticipantBezJadenje();
+
+                                                            UsersNoOrder.remove(username);
+                                                        } else if ("true".equals(join)) {
                                                             UsersNoOrder.add(username);
                                                         }
+
                                                         //Show the users that are not in a group
                                                         for (int i = 0; i < UsersNoOrder.size(); i++) {
                                                             String tmpUsername = UsersNoOrder.get(i);
@@ -144,7 +133,7 @@
                                                 <select name="odbrani" size="3" onchange="formSubmit('odbrani')">
                                                     <option value="" disabled="disabled">Клик за да избришете ставка</option>
                                                     <%
-                                                    //Get the pending order items from the session
+                                                        //Get the pending order items from the session
                                                         List<String> Odbrani = (List<String>) session.getAttribute("Odbrani");
                                                         if (Odbrani == null) {
                                                             Odbrani = new ArrayList<String>();
@@ -193,15 +182,15 @@
                                                             }
                                                             //Get the comment
                                                             komentar = DataBaseHelper.getKomentar(username, IDGroup);
-                                                            
+
                                                             //Remove Odbrani from your session in order to avoid duplicates
                                                             session.removeAttribute("Odbrani");
-                                                            
+
                                                             //Add the pending order in your session if it is not already there 
                                                             session.setAttribute("Odbrani", Odbrani);
-                                                            
+
                                                             //Redirect to make new order
-                                                            response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&Izmeni=0&Komentar=" + komentar);
+                                                            response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&Izmeni=0&Komentar=" + komentar + "&join=true");
                                                         }
 
 
