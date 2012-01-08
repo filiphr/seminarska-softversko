@@ -28,6 +28,10 @@
         if (OrderUser == null) {
             OrderUser = username;
         }
+        
+        //if join=true the username joins the group, he cannot make order for different person
+        String join=request.getParameter("join");
+        
         //izmeni=1 -user edits his order, izmeni=0 users creates order
         Integer izmeni = Integer.parseInt(request.getParameter("Izmeni"));
         String komentar = (String) request.getParameter("Komentar");
@@ -47,12 +51,12 @@
                 myForm.submit();
             }            
         </script>
-        <jsp:include page="../header.jsp"/>
+        
 
         <table>
             <tr class="header">
                 <td>
-
+                    <jsp:include page="../header.jsp"/>
                 </td>
             </tr>
             <tr class="menu" >
@@ -66,15 +70,7 @@
                     <table border="2">
                         <tr>
                             <td>
-                                Koj restoran, koe vreme, koi ucestvuvaat
-                            </td>
-                            <td>
-                                Formata za naracka
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                listata so ucesnici
+                                <jsp:include page="ListaParticipanti.jsp"/>
                             </td>
                             <td>          
                                 <form method="POST" name="naracka" id="naracka" action="">
@@ -87,23 +83,29 @@
                                                     <%
                                                         //Get all the users in the database
                                                         List<String> AllUsers = DataBaseHelper.getAllUsernames();
-                                                        
+
                                                         //Users without order
-                                                        List<String> UsersNoOrder = AllUsers;
+                                                        List<String> UsersNoOrder;
                                                         //Get all the active groups in the Databae
                                                         List<String> AllGroups = DataBaseHelper.getAllGroups();
 
-                                                        //Find the users that are in some group
-                                                        for (int i = 0; i < AllGroups.size(); i++) {
-                                                            int group = Integer.parseInt(AllGroups.get(i));
-                                                            List<String> UsersInGroup = DataBaseHelper.getUserByGroup(group);
-                                                            for (int j = 0; j < UsersInGroup.size(); j++) {
-                                                                String tmpUserInGroup = UsersInGroup.get(j);
-                                                                if (UsersNoOrder.contains(tmpUserInGroup) && !username.equals(tmpUserInGroup)) {
-                                                                    //remove user from AllUsers if he is already member of some group
-                                                                    UsersNoOrder.remove(tmpUserInGroup);
+                                                        if (!"true".equals(join)) {
+                                                            UsersNoOrder = AllUsers;
+                                                            //Find the users that are in some group
+                                                            for (int i = 0; i < AllGroups.size(); i++) {
+                                                                int group = Integer.parseInt(AllGroups.get(i));
+                                                                List<String> UsersInGroup = DataBaseHelper.getUserByGroup(group);
+                                                                for (int j = 0; j < UsersInGroup.size(); j++) {
+                                                                    String tmpUserInGroup = UsersInGroup.get(j);
+                                                                    if (UsersNoOrder.contains(tmpUserInGroup) && !username.equals(tmpUserInGroup)) {
+                                                                        //remove user from AllUsers if he is already member of some group
+                                                                        UsersNoOrder.remove(tmpUserInGroup);
+                                                                    }
                                                                 }
                                                             }
+                                                        } else {
+                                                            UsersNoOrder= new ArrayList<String>();
+                                                            UsersNoOrder.add(username);
                                                         }
                                                         //Show the users that are not in a group
                                                         for (int i = 0; i < UsersNoOrder.size(); i++) {
@@ -200,6 +202,7 @@
                                 <form method="post" action="Naracka.do">
                                     <input type="hidden" name="groupID" value="<%=IDGroup%>"/>
                                     <input type="hidden" name="OrderUser" value="<%=OrderUser%>"/>
+
                                     <table>
                                         <tr>
                                             <td>
