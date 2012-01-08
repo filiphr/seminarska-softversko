@@ -74,7 +74,7 @@ public class Naracka extends HttpServlet {
             throws ServletException, IOException {
         //Get the session
         HttpSession session = request.getSession();
-        
+
         //Get the pending order
         List<String> Odbrani = (List<String>) session.getAttribute("Odbrani");
         if (Odbrani == null) {
@@ -84,17 +84,20 @@ public class Naracka extends HttpServlet {
         } else {
             //Get the user for whom the order is being made
             String user = (String) request.getParameter("OrderUser");
-            
+
+            //Get the user from the session
+            String UserOrdering = (String) session.getAttribute("username");
+
             //Get the groupID
             int IDGroup = Integer.parseInt(request.getParameter("groupID"));
-            
+
             //Get the comment
             String komentar = request.getParameter("komentar");
-            
+
             //Get the ID for the orders that the user has done in the group with new orders
             List<Integer> ID = DataBaseHelper.getIDNaracka2(user, IDGroup);
             //If there are orders we need do delete them in order to avoid dulicates
-            if (!ID.isEmpty()){
+            if (!ID.isEmpty()) {
                 for (int i = 0; i < ID.size(); i++) {
                     Integer tmp = ID.get(i);
                     DataBaseHelper.deleteNaracka(tmp);
@@ -102,21 +105,29 @@ public class Naracka extends HttpServlet {
             }
             if (komentar == null) {
                 //If there is no comment create an empty one
-                komentar=new String();
-            } 
-            
+                komentar = new String();
+            }
+
             //Add the pending orders in the database
             for (int i = 0; i < Odbrani.size(); i++) {
-                    DataBaseHelper.insertNaracka(user, IDGroup, Odbrani.get(i), komentar);
-                }
+                String kom = request.getParameter("Komentar" + i);
+                DataBaseHelper.insertNaracka(user, IDGroup, Odbrani.get(i), kom, UserOrdering);
+
+            }
             //Remove the pending order from the session
             session.removeAttribute("Odbrani");
 
             //Redirecto to MainPage.jsp
             //RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
-           // rd.forward(request, response);
+            // rd.forward(request, response);
             //response.sendRedirect("MainPage.jsp");
-            response.sendRedirect("Naracka.jsp?groupID="+ IDGroup+"&Izmeni=0&join=false");
+
+            if (!user.equals(UserOrdering)) {
+                response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&Izmeni=0&join=false");
+            }else{
+                response.sendRedirect("MainPage.jsp");
+            }
+                
         }
     }
 
