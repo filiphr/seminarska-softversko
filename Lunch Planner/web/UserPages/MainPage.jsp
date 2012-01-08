@@ -165,7 +165,7 @@
                                     <form action="NarackaZaDrug.do" method="post">
                                         <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
                                         <input type="hidden" name="listaj" value="0"/>
-                                        <input type="submit" value="Naracaj Za Drug"/>
+                                        <input type="submit" value="Naracaj/Izmeni Za Drug"/>
                                     </form>
                                 </td>
                                 <% if(UserGroup == -1) { %>
