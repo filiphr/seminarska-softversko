@@ -49,14 +49,30 @@
                 var myForm=document.getElementById("naracka");
                 myForm.elements["source"].value=source;
                 myForm.submit();
-            }            
+            }
+
+            function Validate(){
+                var x= document.forms["naracka"]["Naracuvac"].value;
+                if(x==null || x=="")
+                {
+                    alert("Изберете за кој сакате да нарачате");
+                    return false;   
+                }
+                var y= document.naracka.odbrani.length
+
+                if(y==1)
+                {
+                    alert("Изберете јадење");
+                    return false;   
+                }
+            }
         </script>
 
-<jsp:include page="../header.jsp"/>
+        <jsp:include page="../header.jsp"/>
         <table>
             <tr class="header">
                 <td>
-                    
+
                 </td>
             </tr>
             <tr class="menu" >
@@ -82,7 +98,7 @@
                                                     <option value="" disabled="disabled">Изберете во кое име сакате да нарачате</option>
                                                     <%
                                                         //Users without order
-                                                        List<String> UsersNoOrder=new ArrayList<String>();
+                                                        List<String> UsersNoOrder = new ArrayList<String>();
 
 
                                                         if ("false".equals(join)) {
@@ -171,8 +187,8 @@
                                                         //If you want to modify your order get the parameters and update your old order
                                                         if (izmeni == 1) {
                                                             //Initialize new pending order to avoid duplicates
-                                                            Odbrani=new ArrayList<String>();
-                                                            
+                                                            Odbrani = new ArrayList<String>();
+
                                                             //Get the items you have ordered
                                                             List<String> lst3 = DataBaseHelper.getLunch(username, IDGroup);
                                                             for (int i = 0; i < lst3.size(); i++) {
@@ -204,7 +220,7 @@
                                         </tr>
                                     </table>
                                 </form>
-                                <form method="post" action="Naracka.do">
+                                                <form method="post" action="Naracka.do" onsubmit="return Validate()">
                                     <input type="hidden" name="groupID" value="<%=IDGroup%>"/>
                                     <input type="hidden" name="OrderUser" value="<%=OrderUser%>"/>
 
