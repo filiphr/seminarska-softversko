@@ -77,9 +77,9 @@ public class Popolni extends HttpServlet {
          DataBaseHelper.insertMeni("250", "Staro Bure", "Pileski prsti");
          DataBaseHelper.insertTekovnaGrupa("12:00:00", "isudijovski", "Enriko");
          DataBaseHelper.insertTekovnaGrupa("11:30:00", "mdocevski", "Vegera");
-         DataBaseHelper.insertNaracka("fhrisafov", 1, "Pica", "Bez Kecap");
-         DataBaseHelper.insertNaracka("isudijovski", 1, "Lazanji");
-         DataBaseHelper.insertNaracka("mdocevski", 2, "Burek");
+         DataBaseHelper.insertNaracka("fhrisafov", 1, "Pica", "Bez Kecap", "fhrisafov");
+         DataBaseHelper.insertNaracka("isudijovski", 1, "Lazanji","", "isudijovski");
+         DataBaseHelper.insertNaracka("mdocevski", 2, "Burek","","mdocevski");
          DataBaseHelper.insertArhiviraniGrupi("2012-01-05", "isudijovski", "Enriko", "Pica");
          DataBaseHelper.insertArhiviraniGrupi("2012-01-06", "isudijovski", "Vegera", "Burek");
          DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "isudijovski", "Enriko", "Pica");
