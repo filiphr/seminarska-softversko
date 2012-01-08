@@ -8,6 +8,15 @@
         <filter-name>RememberFilter</filter-name>
         <filter-class>Filters.LoginFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>HasNarackaFilter</filter-name>
+        <filter-class>Filters.HasNarackaFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HasNarackaFilter</filter-name>
+        <url-pattern>/UserPages/Naracka.jsp</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>RememberFilter</filter-name>
         <url-pattern>/Najava.jsp</url-pattern>
@@ -214,7 +223,7 @@
         <session-timeout>
             30
         </session-timeout>
-    </session-config>    
+    </session-config>
     <welcome-file-list>
         <welcome-file>Najava.jsp</welcome-file>
     </welcome-file-list>

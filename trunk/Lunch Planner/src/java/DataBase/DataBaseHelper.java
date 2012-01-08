@@ -692,7 +692,11 @@ public class DataBaseHelper {
 
     public static int getGroupOdNaracka(String User) {
         List<String> lst = GetQuery("select TekovnaGrupa_idTekovnaGrupa from naracka where Korisnik_User = '" + User + "'", 1);
-        return Integer.parseInt(lst.get(0));
+        if (lst.isEmpty()) {
+            return -1;
+        } else {
+            return Integer.parseInt(lst.get(0));
+        }
     }
 
     public static String getRestoranAddress(String Restoran) {
@@ -844,15 +848,18 @@ public class DataBaseHelper {
     public static void deleteGroup(int ID_Group) {
         ExecuteQuery("DELETE FROM tekovnagrupa where idTekovnaGrupa = " + ID_Group);
     }
-    
-    public static String getIDGrupa(String Restoran, String Vreme)
-    {
-        if(Restoran == null || Vreme == null || Restoran.isEmpty() || Vreme.isEmpty()) return new String();
-        List<String> ID = GetQuery("select * from tekovnagrupa where Vreme = '" + Vreme + "' And Restoran_Ime = '" + Restoran + "'",1);
 
-        if(ID.isEmpty()) return new String();
+    public static String getIDGrupa(String Restoran, String Vreme) {
+        if (Restoran == null || Vreme == null || Restoran.isEmpty() || Vreme.isEmpty()) {
+            return new String();
+        }
+        List<String> ID = GetQuery("select * from tekovnagrupa where Vreme = '" + Vreme + "' And Restoran_Ime = '" + Restoran + "'", 1);
+
+        if (ID.isEmpty()) {
+            return new String();
+        }
         return ID.get(0);
-        
-        
+
+
     }
 }
