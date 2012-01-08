@@ -7,6 +7,7 @@ package Group;
 import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -86,6 +87,13 @@ public class CreateNastan extends HttpServlet {
         String vreme = request.getParameter("Vreme");
 
         if (user != null && restorant != null && vreme != null) {
+            String str = DataBaseHelper.getIDGrupa(restorant, vreme);
+            if(!str.isEmpty())
+            {
+                DataBaseHelper.insertPokani(user, Integer.parseInt(str));
+                response.sendRedirect("MainPage.jsp");
+                return;
+            }
             DataBaseHelper.insertTekovnaGrupa(vreme, user, restorant);
         }
         String[] pokani = request.getParameterValues("Pokani");
@@ -95,7 +103,7 @@ public class CreateNastan extends HttpServlet {
                 DataBaseHelper.insertPokani(pokani[i], id);
             }
         }
-        response.sendRedirect("Naracka.jsp?groupID=" + id + "&Izmeni=0&create=true");
+        response.sendRedirect("Naracka.jsp?groupID=" + id + "&Izmeni=0");
 
         /*RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
         rd.forward(request, response);*/
