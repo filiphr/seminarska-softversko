@@ -57,7 +57,7 @@ public class AddMenuItem extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("AddRemoveItem.jsp");
     }
 
     /** 
@@ -76,8 +76,10 @@ public class AddMenuItem extends HttpServlet {
             
             DataBaseHelper.insertMeni(cenaStavka, imeRes, imeStavka);
             
-            RequestDispatcher rd = request.getRequestDispatcher("AddRemoveItem.jsp");
-            rd.forward(request, response);
+            response.sendRedirect("AddRemoveItem.jsp");
+            
+            /*RequestDispatcher rd = request.getRequestDispatcher("AddRemoveItem.jsp");
+            rd.forward(request, response);*/
     }
 
     /** 

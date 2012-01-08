@@ -58,8 +58,11 @@ public class CreateNastan extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("Create.jsp");
-        rd.forward(request, response);
+
+        response.sendRedirect("Create.jsp");
+
+        /*RequestDispatcher rd = request.getRequestDispatcher("Create.jsp");
+        rd.forward(request, response);*/
     }
 
     /** 
@@ -76,20 +79,23 @@ public class CreateNastan extends HttpServlet {
         String vreme = request.getParameter("Vreme");
         HttpSession ses = request.getSession();
         String user = null;
-        synchronized (ses)
-        {
+        synchronized (ses) {
             user = (String) ses.getAttribute("username");
         }
-        if(user!=null && restorant!=null && vreme!=null)
-        {
+        if (user != null && restorant != null && vreme != null) {
             DataBaseHelper.insertTekovnaGrupa(vreme, user, restorant);
         }
         String[] pokani = request.getParameterValues("Pokani");
         int id = DataBaseHelper.getGroupIDFromCreator(user);
-        for(int i =0; i<pokani.length; i++)
-            DataBaseHelper.insertPokani(pokani[i], id);
-        RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
-        rd.forward(request, response);
+        if (pokani != null) {
+            for (int i = 0; i < pokani.length; i++) {
+                DataBaseHelper.insertPokani(pokani[i], id);
+            }
+        }
+        response.sendRedirect("Naracka.jsp?groupID=" + id + "&Izmeni=0&create=true");
+
+        /*RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
+        rd.forward(request, response);*/
     }
 
     /** 

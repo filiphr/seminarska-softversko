@@ -57,7 +57,7 @@ public class UpdateUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //response.sendRedirect("UpdateUser.jsp");
     }
 
     /** 
@@ -70,7 +70,7 @@ public class UpdateUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String username = request.getParameter("Username");
         String ime = request.getParameter("Ime");
         String prezime = request.getParameter("Prezime");
@@ -78,20 +78,20 @@ public class UpdateUser extends HttpServlet {
         String mail = request.getParameter("email");
         String admin = request.getParameter("Administrator");
         boolean adm = DataBaseHelper.isAdministrator(username);
-        
-        DataBaseHelper.updateUser(ime, prezime, username, lozinka, mail);
-        
-        if( admin==null && adm)
-        {
-            DataBaseHelper.deleteAdministrator(username);
+        if (username != null && ime != null && prezime != null && lozinka != null && mail != null) {
+            DataBaseHelper.updateUser(ime, prezime, username, lozinka, mail);
+
+            if (admin == null && adm) {
+                DataBaseHelper.deleteAdministrator(username);
+            }
+            if (admin != null && !adm) {
+                DataBaseHelper.insertAdministrator(username);
+            }
         }
-        if( admin!=null && !adm)
-        {
-            DataBaseHelper.insertAdministrator(username);
-        }
-        
-        RequestDispatcher rd = request.getRequestDispatcher("UpdateUser.jsp");
-        rd.forward(request, response);
+        response.sendRedirect("UpdateUser.jsp");
+
+//        RequestDispatcher rd = request.getRequestDispatcher("UpdateUser.jsp");
+//        rd.forward(request, response);
     }
 
     /** 
