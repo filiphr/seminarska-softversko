@@ -17,12 +17,20 @@
 
     </head>
     <%
+        //get the Group ID for the order
         Integer IDGroup = Integer.parseInt(request.getParameter("groupID"));
-        if (IDGroup == null) {
-            // GroupID = "0";
+
+        //Get the currently user in the session
+        String username = (String) session.getAttribute("username");
+
+        //User za kogo se pravi naracka, default e aktivniot user
+        String OrderUser = request.getParameter("Naracuvac");
+        if (OrderUser == null) {
+            OrderUser = username;
         }
+        //izmeni=1 -user edits his order, izmeni=0 users creates order
         Integer izmeni = Integer.parseInt(request.getParameter("Izmeni"));
-        String komentar = (String)request.getParameter("Komentar");
+        String komentar = (String) request.getParameter("Komentar");
         if (komentar == null) {
             komentar = new String();
         }
@@ -74,14 +82,53 @@
                                     <table>
                                         <tr>
                                             <td>                            
-                                                <select  name="Meni" size="3" onchange="formSubmit('Meni')">
-                                                    <option value="" disabled="true">Клик за да изберете јадење</option>
+                                                <select  name="Naracuvac" size="3" onchange="formSubmit('Naracuvac')">
+                                                    <option value="" disabled="disabled">Изберете во кое име сакате да нарачате</option>
                                                     <%
+                                                        //Get all the users in the database
+                                                        List<String> AllUsers = DataBaseHelper.getAllUsernames();
+                                                        
+                                                        //Users without order
+                                                        List<String> UsersNoOrder = AllUsers;
+                                                        //Get all the active groups in the Databae
+                                                        List<String> AllGroups = DataBaseHelper.getAllGroups();
+
+                                                        //Find the users that are in some group
+                                                        for (int i = 0; i < AllGroups.size(); i++) {
+                                                            int group = Integer.parseInt(AllGroups.get(i));
+                                                            List<String> UsersInGroup = DataBaseHelper.getUserByGroup(group);
+                                                            for (int j = 0; j < UsersInGroup.size(); j++) {
+                                                                String tmpUserInGroup = UsersInGroup.get(i);
+                                                                if (UsersNoOrder.contains(tmpUserInGroup)) {
+                                                                    //remove user from AllUsers if he is already member of some group
+                                                                    UsersNoOrder.remove(tmpUserInGroup);
+                                                                }
+                                                            }
+                                                        }
+                                                        //Show the users that are not in a group
+                                                        for (int i = 0; i < UsersNoOrder.size(); i++) {
+                                                            String tmpUsername = UsersNoOrder.get(i);
+                                                            String tmpName = DataBaseHelper.getUserIme(tmpUsername);
+                                                            String tmpLastName = DataBaseHelper.getUserPrezime(tmpUsername);
+
+                                                    %>
+                                                    <option value="<%=tmpUsername%>" <% if (tmpUsername.equals(OrderUser)) {%> selected="selected" <%}%>><%=tmpName%> <%=tmpLastName%></option>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </select>
+                                            </td>
+                                            <td>                            
+                                                <select  name="Meni" size="3" onchange="formSubmit('Meni')">
+                                                    <option value="" disabled="disabled">Клик за да изберете јадење</option>
+                                                    <%
+                                                        //Get the restaurant for the group with id=IDGroup(this group)
                                                         String restaurant = DataBaseHelper.getRestaurantName(IDGroup);
-                                                        List<List<String>> lst1 = DataBaseHelper.getAllMenuItemsAndPrice(restaurant);
-                                                        for (int i = 0; i < lst1.get(0).size(); i++) {
-                                                            String stavkaIme = lst1.get(0).get(i);
-                                                            String stavkaCena = lst1.get(1).get(i);
+                                                        //get the menu items and prices for the restaurant
+                                                        List<List<String>> ItemsPrice = DataBaseHelper.getAllMenuItemsAndPrice(restaurant);
+                                                        for (int i = 0; i < ItemsPrice.get(0).size(); i++) {
+                                                            String stavkaIme = ItemsPrice.get(0).get(i);
+                                                            String stavkaCena = ItemsPrice.get(1).get(i);
                                                     %>
                                                     <option value="<%=stavkaIme%>"><%=stavkaIme%> <%=stavkaCena%> ден</option>
                                                     <%
@@ -91,12 +138,24 @@
                                             </td>
                                             <td>
                                                 <select name="odbrani" size="3" onchange="formSubmit('odbrani')">
-                                                    <option value="" disabled="true">Клик за да избришете ставка</option>
+                                                    <option value="" disabled="disabled">Клик за да избришете ставка</option>
                                                     <%
                                                         List<String> Odbrani = (List<String>) session.getAttribute("Odbrani");
                                                         if (Odbrani == null) {
                                                             Odbrani = new ArrayList<String>();
                                                         }
+
+                                                        if (username.equals(OrderUser)) {
+                                                            //get all the items in the restaurant for this group
+                                                            List<String> ItemsInRestaurant = ItemsPrice.get(0);
+                                                            //get the prefered meal
+                                                            String prefMeal = DataBaseHelper.getPreferencesMeal(username);
+                                                            //check whethee there is a prefered meal and it exists in the current restaurant
+                                                            if (prefMeal != null && ItemsInRestaurant.contains(prefMeal) && !Odbrani.contains(prefMeal)) {
+                                                                Odbrani.add(prefMeal);
+                                                            }
+                                                        }
+
                                                         String odbrano = request.getParameter("Meni");
                                                         String remove = request.getParameter("odbrani");
 
@@ -112,23 +171,18 @@
                                                                 Odbrani.remove(remove);
                                                             }
                                                         }
-                                                        String user = (String) session.getAttribute("username");
+
                                                         if (izmeni == 1) {
-                                                            List<String> lst3 = DataBaseHelper.getLunch(user, IDGroup);
+                                                            List<String> lst3 = DataBaseHelper.getLunch(username, IDGroup);
                                                             for (int i = 0; i < lst3.size(); i++) {
                                                                 Odbrani.add(lst3.get(i));
                                                             }
-                                                            komentar = DataBaseHelper.getKomentar(user, IDGroup);
+                                                            komentar = DataBaseHelper.getKomentar(username, IDGroup);
                                                             session.setAttribute("Odbrani", Odbrani);
-                                                            response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&Izmeni=0&Komentar="+komentar);
+                                                            response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&Izmeni=0&Komentar=" + komentar);
                                                         }
-                                                        String prefRestaurant = DataBaseHelper.getPreferencesRestoran(user);
-                                                        if (prefRestaurant != null && prefRestaurant.equals(DataBaseHelper.getRestaurantName(IDGroup))) {
-                                                            String prefMeal = DataBaseHelper.getPreferencesMeal(user);
-                                                            if (prefMeal != null && !Odbrani.contains(prefMeal)) {
-                                                                Odbrani.add(prefMeal);
-                                                            }
-                                                        }
+
+
 
                                                         session.setAttribute("Odbrani", Odbrani);
                                                         for (int i = 0; i < Odbrani.size(); i++) {
@@ -145,6 +199,7 @@
                                 </form>
                                 <form method="post" action="Naracka.do">
                                     <input type="hidden" name="groupID" value="<%=IDGroup%>"/>
+                                    <input type="hidden" name="OrderUser" value="<%=OrderUser%>"/>
                                     <table>
                                         <tr>
                                             <td>

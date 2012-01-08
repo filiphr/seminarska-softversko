@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package Naracka;
 
 import DataBase.DataBaseHelper;
 import java.io.IOException;
@@ -78,7 +78,7 @@ public class Naracka extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Naracka.jsp");
             rd.forward(request, response);
         } else {
-            String user = (String) session.getAttribute("username");
+            String user = (String) request.getParameter("OrderUser");
             int IDGroup = Integer.parseInt(request.getParameter("groupID"));
             String komentar = request.getParameter("komentar");
             List<Integer> ID = DataBaseHelper.getIDNaracka2(user, IDGroup);
