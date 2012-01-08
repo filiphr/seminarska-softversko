@@ -75,7 +75,11 @@ public class AddUser extends HttpServlet {
         String prezime = request.getParameter("Prezime");
         String lozinka = request.getParameter("Lozinka");
         String mail = request.getParameter("email");
-        DataBaseHelper.insertUser(ime, prezime, username, mail, mail);
+        String admin = request.getParameter("Administrator");
+        
+        DataBaseHelper.insertUser(ime, prezime, username, mail, lozinka);
+        if(admin!=null)
+            DataBaseHelper.insertAdministrator(username);
         RequestDispatcher rd = request.getRequestDispatcher("AddRemoveUser.jsp");
         rd.forward(request, response);
     }

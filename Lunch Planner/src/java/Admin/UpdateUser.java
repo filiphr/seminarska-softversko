@@ -76,8 +76,19 @@ public class UpdateUser extends HttpServlet {
         String prezime = request.getParameter("Prezime");
         String lozinka = request.getParameter("Lozinka");
         String mail = request.getParameter("email");
+        String admin = request.getParameter("Administrator");
+        boolean adm = DataBaseHelper.isAdministrator(username);
         
         DataBaseHelper.updateUser(ime, prezime, username, lozinka, mail);
+        
+        if( admin==null && adm)
+        {
+            DataBaseHelper.deleteAdministrator(username);
+        }
+        if( admin!=null && !adm)
+        {
+            DataBaseHelper.insertAdministrator(username);
+        }
         
         RequestDispatcher rd = request.getRequestDispatcher("UpdateUser.jsp");
         rd.forward(request, response);
