@@ -10,13 +10,13 @@
 <table>
     <%
         String IDGroup2 = request.getParameter("groupID");
-        String u = (String)request.getSession().getAttribute("username");
-        String ImeCreator = DataBaseHelper.getUserIme(u);
-        String PrezimeCreator = DataBaseHelper.getUserPrezime(u);
         //get the Group ID for the order
        // Integer IDGroup = Integer.parseInt(request.getParameter("groupID"));
         if (IDGroup2 != null) {
             int g = Integer.parseInt(IDGroup2);
+            String u = DataBaseHelper.getGroupCreator(g);
+            String ImeCreator = DataBaseHelper.getUserIme(u);
+            String PrezimeCreator = DataBaseHelper.getUserPrezime(u);
             List<List<String>> Names = DataBaseHelper.getNameSNameAndLunch(g);
             List<String> lst1 = DataBaseHelper.getRestoranAndVreme(g);
             String Restoran = lst1.get(0);
