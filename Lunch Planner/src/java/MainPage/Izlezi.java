@@ -7,6 +7,7 @@ package MainPage;
 import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -72,8 +73,9 @@ public class Izlezi extends HttpServlet {
         //processRequest(request, response);
         String User = (String)request.getSession().getAttribute("username");
         int ID_Grupa = Integer.parseInt(request.getParameter("ID_Grupa"));
-        int ID_Naracka = DataBaseHelper.getIDNaracka(User, ID_Grupa);
-        DataBaseHelper.deleteNaracka(ID_Naracka);
+        List<Integer> ID_Naracka = DataBaseHelper.getIDNaracka2(User, ID_Grupa);
+        for(int i = 0; i<ID_Naracka.size(); i++)
+        DataBaseHelper.deleteNaracka(ID_Naracka.get(i));
         response.sendRedirect("MainPage.jsp");
     }
 
