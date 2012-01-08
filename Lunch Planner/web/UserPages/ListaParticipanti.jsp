@@ -10,6 +10,9 @@
 <table>
     <%
         String IDGroup2 = request.getParameter("groupID");
+        String u = (String)request.getSession().getAttribute("username");
+        String ImeCreator = DataBaseHelper.getUserIme(u);
+        String PrezimeCreator = DataBaseHelper.getUserPrezime(u);
         //get the Group ID for the order
        // Integer IDGroup = Integer.parseInt(request.getParameter("groupID"));
         if (IDGroup2 != null) {
@@ -27,7 +30,11 @@
                 if (i == 0) {
     %>
     <tr>
-        <td><b> Ресторан: </b></td> 
+            <td><b>Kreator: </b></td>
+            <td> <%=ImeCreator%> <%=PrezimeCreator%> </td>
+    </tr>
+    <tr>
+        <td><b> Restoran: </b></td> 
         <td> <%=Restoran%> </td>
     </tr>
     <tr>

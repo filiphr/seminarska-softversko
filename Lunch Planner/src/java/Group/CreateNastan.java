@@ -103,7 +103,7 @@ public class CreateNastan extends HttpServlet {
                 DataBaseHelper.insertPokani(pokani[i], id);
             }
         }
-        response.sendRedirect("Naracka.jsp?groupID=" + id + "&Izmeni=0");
+        response.sendRedirect("Naracka.jsp?groupID=" + id + "&Izmeni=0&join=true");
 
         /*RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
         rd.forward(request, response);*/

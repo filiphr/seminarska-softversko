@@ -12,6 +12,24 @@
         <filter-name>HasNarackaFilter</filter-name>
         <filter-class>Filters.HasNarackaFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>AdministratorFilter</filter-name>
+        <filter-class>Filters.AdministratorFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>CreateFilter</filter-name>
+        <filter-class>Filters.CreateFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CreateFilter</filter-name>
+        <url-pattern>/UserPages/Create.jsp</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdministratorFilter</filter-name>
+        <url-pattern>/AdminPages/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>HasNarackaFilter</filter-name>
         <url-pattern>/UserPages/Naracka.jsp</url-pattern>

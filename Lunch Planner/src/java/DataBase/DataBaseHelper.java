@@ -24,7 +24,7 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -59,20 +59,25 @@ public class DataBaseHelper {
         String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String pass = "admin";
+        String pass = "";
         Connection conect = null;
         int number = 0;
         try {
             Class.forName(driver).newInstance();
             conect = DriverManager.getConnection(dbUrl, user, pass);
+            conect.setAutoCommit(false);
             Statement s = conect.createStatement();
             number = s.executeUpdate(Query);
+            conect.commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            
+            try{conect.rollback();}catch(SQLException sql) {System.out.println(e.getMessage());}
             //throw new RuntimeException(e);
         } finally {
             try {
                 if (conect != null) {
+                    conect.setAutoCommit(true);
                     conect.close();
                 }
             } catch (SQLException ex) {
