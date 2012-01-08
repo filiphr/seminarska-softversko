@@ -10,7 +10,9 @@
 <!DOCTYPE html>
 <html>
 
-    <% String usrNameUpdate = "";
+    <%
+        String userID = (String) session.getAttribute("username");
+        String usrNameUpdate = "";
         if (request.getParameter("usrNameUpdate") != null) {
             usrNameUpdate = request.getParameter("usrNameUpdate");
         }
@@ -64,7 +66,7 @@
         </script>
     </head>
     <body>
-<jsp:include page="../header.jsp"/>
+        <jsp:include page="../header.jsp"/>
         <form id="usrUpdateForm" action="" method="post">
             <table>
                 <tr><td colspan="2"><select name="usrNameUpdate" size="1"  onchange="submit()" >
@@ -96,6 +98,12 @@
                 <tr><td>Лозинка</td>
                     <td><input type="text" name="Lozinka" value="<%=DataBaseHelper.getUserLozinka(usrNameUpdate)%>"/></td></tr>
                 <tr><td>e-mail</td><td><input type="text" name="email" value="<%=DataBaseHelper.getUserEmail(usrNameUpdate)%>"/></td></tr>
+                        <% if (!usrNameUpdate.equals(userID)) {%>
+                <tr><td>Администраторски привилегии</td><td><input type="checkbox" name="Administrator" 
+                                                                   <% if (DataBaseHelper.isAdministrator(usrNameUpdate)) {
+                                                                           out.write("checked");
+                                                                       }%>/></td></tr>
+                        <%}%>
                 <tr><td colspan="2"><input type="submit" value="Промени"/></td></tr>
             </table>
         </form>

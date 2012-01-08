@@ -9,7 +9,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <% String usrNameDelete = "";
+    <%  String userID = (String) session.getAttribute("username");
+        String usrNameDelete = "";
         if (request.getParameter("usrNameDelete") != null) {
             usrNameDelete = request.getParameter("usrNameDelete");
         }
@@ -74,7 +75,7 @@
     </head>
     <body>
 
-<jsp:include page="../header.jsp"/>
+        <jsp:include page="../header.jsp"/>
         <div>
             <form name="AddUserForm" method="post" action="AddUser.do" onsubmit="return validateAddUserForm()">
                 <table>
@@ -84,6 +85,7 @@
                     <tr><td>Презиме</td><td><input type="text" name="Prezime"/></td></tr>
                     <tr><td>Лозинка</td><td><input type="text" name="Lozinka"/></td></tr>
                     <tr><td>e-mail</td><td><input type="text" name="email"/></td></tr>
+                    <tr><td>Администраторски привилегии</td><td><input type="checkbox" value="Administrator" name="Administrator"/></td></tr>
                     <tr><td colspan="2"><input type="submit" value="Додади"/></td></tr>
                 </table>
             </form>
@@ -100,6 +102,7 @@
                                     List<String> iminja2 = DataBaseHelper.getAllUsernames();
                                     for (int i = 0; i < iminja2.size(); i++) {
                                         String s = iminja2.get(i);
+                                        if (!s.equals(userID)) {
                                 %>
                                 <option value="<%=s%>"
                                         <% if (s.equals(usrNameDelete)) {
@@ -107,6 +110,7 @@
                                             }%>
                                         ><%=s%></option>
                                 <%
+                                        }
                                     }
                                 %>
                             </select></td></tr>
