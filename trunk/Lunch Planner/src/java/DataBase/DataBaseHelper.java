@@ -773,7 +773,7 @@ public class DataBaseHelper {
         }
         List<List<String>> lst = new ArrayList<List<String>>();
         for (int i = 1; i <= 3; i++) {
-            List<String> tmp = GetQuery("SELECT Vreme, Restoran_Ime, stavkameni_Ime FROM arhiviranagrupa where Korisnik_user = '" + User + "' ORDER BY Vreme", i);
+            List<String> tmp = GetQuery("SELECT Vreme, Restoran, StavkaMeni FROM arhiviranagrupa where Korisnik_user = '" + User + "' ORDER BY Vreme", i);
             if (tmp == null || tmp.isEmpty()) {
                 return new ArrayList<List<String>>();
             }

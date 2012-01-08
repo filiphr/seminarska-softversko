@@ -26,6 +26,7 @@
             </tr>
             <%
                 List<List<String>> lst = DataBaseHelper.getVremeRestoranStavkaOdArhivirani(userID);
+                if(!lst.isEmpty()){
                 for (int i = (lst.get(0).size() - 1); i >= 0 && i > (lst.get(0).size() - 20) ; i--) {
                     String vreme = lst.get(0).get(i);
                     String restorant = lst.get(1).get(i);
@@ -43,7 +44,7 @@
                 </td>
             </tr>
             <%
-                }
+                } }
             %>
         </table>
     </body>
