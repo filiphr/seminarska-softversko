@@ -39,6 +39,10 @@
                     return false;
                 }  
             }
+            function goToMain()
+            {
+                window.location="MainPage.jsp"
+            }
         </script>
     </head>
     <body>
@@ -98,8 +102,11 @@
                     </td>
                 </tr>
                 <tr allign="bottom" >
-                    <td colspan="2" >
+                    <td>
                         <input type="submit" value="Креирај"/>
+                    </td>
+                    <td>
+                        <input type="button" onclick="goToMain()" value="Откажи"/>
                     </td>
                 </tr>
 

@@ -75,13 +75,16 @@ public class CreateNastan extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String restorant = request.getParameter("ImeRestorant");
-        String vreme = request.getParameter("Vreme");
         HttpSession ses = request.getSession();
         String user = null;
         synchronized (ses) {
             user = (String) ses.getAttribute("username");
         }
+        if(DataBaseHelper.hasCreatedEvent(user))
+            response.sendRedirect("MainPage.jsp");
+        String restorant = request.getParameter("ImeRestorant");
+        String vreme = request.getParameter("Vreme");
+
         if (user != null && restorant != null && vreme != null) {
             DataBaseHelper.insertTekovnaGrupa(vreme, user, restorant);
         }
