@@ -4,10 +4,8 @@
  */
 package MainPage;
 
-import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author user
  */
-public class IzbrisiGroup extends HttpServlet {
+public class NarackaZaDrug extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +32,10 @@ public class IzbrisiGroup extends HttpServlet {
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet IzbrisiGroup</title>");  
+            out.println("<title>Servlet NarackaZaDrug</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet IzbrisiGroup at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet NarackaZaDrug at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
              */
@@ -57,7 +55,9 @@ public class IzbrisiGroup extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        int ID_Grupa = Integer.parseInt(request.getParameter("ID_Grupa"));
+        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0&join=false");
     }
 
     /** 
@@ -70,20 +70,8 @@ public class IzbrisiGroup extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        String User = (String)request.getSession().getAttribute("username");
-        String inf = (String)request.getParameter("t1");
-        int Group = Integer.parseInt(request.getParameter("groupID"));
-        List<String> resVreme = DataBaseHelper.getRestoranAndVreme(Group);
-        String str = "Grupata vo " + resVreme.get(0) + " vo " + resVreme.get(1) + " kreirana od " + DataBaseHelper.getUserIme(User) + " " + DataBaseHelper.getUserPrezime(User)+ " e izbrisana, Pricina : ";
-        List<String> Users = DataBaseHelper.getUserByGroup(Group);
-        for(int i = 0; i<Users.size(); i++)
-        {
-            if(!(Users.get(i).equals(User)))
-            DataBaseHelper.insertNotofication(str + inf, Users.get(i));
-        }
-        DataBaseHelper.deleteGroup(Group);
-        response.sendRedirect("MainPage.jsp");
+        int ID_Grupa = Integer.parseInt(request.getParameter("ID_Grupa"));
+        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0&join=false");
     }
 
     /** 

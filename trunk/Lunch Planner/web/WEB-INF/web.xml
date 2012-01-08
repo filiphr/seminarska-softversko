@@ -110,6 +110,10 @@
         <servlet-name>IzbrisiNotification</servlet-name>
         <servlet-class>MainPage.IzbrisiNotification</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NarackaZaDrug</servlet-name>
+        <servlet-class>MainPage.NarackaZaDrug</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -201,6 +205,10 @@
     <servlet-mapping>
         <servlet-name>IzbrisiNotification</servlet-name>
         <url-pattern>/UserPages/IzbrisiNotification.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NarackaZaDrug</servlet-name>
+        <url-pattern>/UserPages/NarackaZaDrug.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

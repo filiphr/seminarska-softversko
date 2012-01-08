@@ -70,7 +70,7 @@ public class Izmeni extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         int ID_Grupa = Integer.parseInt(request.getParameter("ID_Grupa"));
-        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=1");
+        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=1&join=true");
     }
 
     /** 
