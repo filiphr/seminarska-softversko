@@ -4,6 +4,7 @@
  */
 package Filters;
 
+import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -11,10 +12,10 @@ import java.io.StringWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,21 +24,21 @@ import javax.servlet.http.HttpSession;
  *
  * @author Filip
  */
-public class AuthorizeFilter implements Filter {
-    
+public class LoginFilter implements Filter {
+
     private static final boolean debug = true;
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
-    public AuthorizeFilter() {
-    }    
-    
+
+    public LoginFilter() {
+    }
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthorizeFilter:DoBeforeProcessing");
+            log("RememberFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -61,12 +62,12 @@ public class AuthorizeFilter implements Filter {
         log(buf.toString());
         }
          */
-    }    
-    
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthorizeFilter:DoAfterProcessing");
+            log("RememberFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -102,23 +103,51 @@ public class AuthorizeFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
-        //Create HttpServletRequest
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        
-        //Get the session
-        HttpSession session = httpRequest.getSession();
-        //Get the username from the session
-        String user = (String) session.getAttribute("username");
-        //if the user is not in session redirect to najava
-        if (user == null) {
-            //RequestDispatcher rd = httpRequest.getRequestDispatcher("../Najava.jsp");
-            //rd.forward(request, response);
-            HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.sendRedirect("../Najava.jsp");
+
+        try {
+            //Make HttpServletRequest
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
             
-        } else {
+            //Make HttpServletRespons
+            HttpServletResponse httpResponse = (HttpServletResponse) response;
+            
+            //Get the session
+            HttpSession session=httpRequest.getSession();
+
+            //Get the client cookies
+            Cookie[] cookies = httpRequest.getCookies();
+            String username = null, password = null;
+
+            //If the client has cookies make checks
+            if (cookies != null) {
+                //Go through his cookies
+                for (int i = 0; i < cookies.length; i++) {
+
+                    Cookie cookie = cookies[i];
+                    if ("username".equals(cookie.getName())) {
+                        //Get the value for the username cookie
+                        username = cookie.getValue();
+                    }
+                    if ("password".equals(cookie.getName())) {
+                        //Get the value for the password cookie
+                        password = cookie.getValue();
+                    }
+                }
+            }
+
+            if (username != null && password != null) {
+                //Is there are username and password check whether he exists in the Database
+                if (DataBaseHelper.CheckUser(username, password)) {
+                    //putt the user in session
+                    session.setAttribute("username", username);
+                    //Redirect to MainPage.jsp
+                    httpResponse.sendRedirect("UserPages/MainPage.jsp");
+                }
+            }
+
             chain.doFilter(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -141,17 +170,17 @@ public class AuthorizeFilter implements Filter {
     /**
      * Destroy method for this filter 
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter 
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
-                log("AuthorizeFilter:Initializing filter");
+            if (debug) {
+                log("RememberFilter:Initializing filter");
             }
         }
     }
@@ -162,27 +191,27 @@ public class AuthorizeFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AuthorizeFilter()");
+            return ("RememberFilter()");
         }
-        StringBuffer sb = new StringBuffer("AuthorizeFilter(");
+        StringBuffer sb = new StringBuffer("RememberFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -199,7 +228,7 @@ public class AuthorizeFilter implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -213,8 +242,8 @@ public class AuthorizeFilter implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
 }

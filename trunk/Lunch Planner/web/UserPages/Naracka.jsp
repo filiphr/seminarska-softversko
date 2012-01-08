@@ -88,7 +88,8 @@
                                                         List<String> UsersNoOrder;
                                                         //Get all the active groups in the Databae
                                                         List<String> AllGroups = DataBaseHelper.getAllGroups();
-
+                                                        
+                                                        //
                                                         if (!"true".equals(join)) {
                                                             UsersNoOrder = AllUsers;
                                                             //Find the users that are in some group
@@ -104,6 +105,7 @@
                                                                 }
                                                             }
                                                         } else {
+                                                            //You cannot order for someone else if you are joining
                                                             UsersNoOrder= new ArrayList<String>();
                                                             UsersNoOrder.add(username);
                                                         }
@@ -126,7 +128,7 @@
                                                     <%
                                                         //Get the restaurant for the group with id=IDGroup(this group)
                                                         String restaurant = DataBaseHelper.getRestaurantName(IDGroup);
-                                                        //get the menu items and prices for the restaurant
+                                                        //Get the menu items and prices for the restaurant
                                                         List<List<String>> ItemsPrice = DataBaseHelper.getAllMenuItemsAndPrice(restaurant);
                                                         for (int i = 0; i < ItemsPrice.get(0).size(); i++) {
                                                             String stavkaIme = ItemsPrice.get(0).get(i);
@@ -142,50 +144,68 @@
                                                 <select name="odbrani" size="3" onchange="formSubmit('odbrani')">
                                                     <option value="" disabled="disabled">Клик за да избришете ставка</option>
                                                     <%
+                                                    //Get the pending order items from the session
                                                         List<String> Odbrani = (List<String>) session.getAttribute("Odbrani");
                                                         if (Odbrani == null) {
                                                             Odbrani = new ArrayList<String>();
                                                         }
 
+                                                        //You can only use your own preferences
                                                         if (username.equals(OrderUser)) {
-                                                            //get all the items in the restaurant for this group
+                                                            //Get all the items in the restaurant for this group
                                                             List<String> ItemsInRestaurant = ItemsPrice.get(0);
-                                                            //get the prefered meal
+                                                            //Get the prefered meal
                                                             String prefMeal = DataBaseHelper.getPreferencesMeal(username);
-                                                            //check whethee there is a prefered meal and it exists in the current restaurant
+                                                            //Check whethee there is a prefered meal and it exists in the current restaurant
                                                             if (prefMeal != null && ItemsInRestaurant.contains(prefMeal) && !Odbrani.contains(prefMeal)) {
                                                                 Odbrani.add(prefMeal);
                                                             }
                                                         }
 
+                                                        //For AutoPostBack get the chosen item from the menu
                                                         String odbrano = request.getParameter("Meni");
+                                                        //For AutoPostBack get the item that you want to remove from the order list
                                                         String remove = request.getParameter("odbrani");
 
+                                                        //For AutoPostBacko get the source
                                                         String pom = request.getParameter("source");
 
                                                         if ("Meni".equals(pom)) {
                                                             if (odbrano != null) {
+                                                                //Add the chosen item in your pending order
                                                                 Odbrani.add(odbrano);
 
                                                             }
                                                         } else if ("odbrani".equals(pom)) {
                                                             if (remove != null) {
+                                                                //Remove the chosen item from the pending order
                                                                 Odbrani.remove(remove);
                                                             }
                                                         }
 
+                                                        //If you want to modify your order get the parameters and update your old order
                                                         if (izmeni == 1) {
+                                                            //Get the items you have ordered
                                                             List<String> lst3 = DataBaseHelper.getLunch(username, IDGroup);
                                                             for (int i = 0; i < lst3.size(); i++) {
+                                                                //Add them so you can show them
                                                                 Odbrani.add(lst3.get(i));
                                                             }
+                                                            //Get the comment
                                                             komentar = DataBaseHelper.getKomentar(username, IDGroup);
+                                                            
+                                                            //Remove Odbrani from your session in order to avoid duplicates
+                                                            session.removeAttribute("Odbrani");
+                                                            
+                                                            //Add the pending order in your session if it is not already there 
                                                             session.setAttribute("Odbrani", Odbrani);
+                                                            
+                                                            //Redirect to make new order
                                                             response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&Izmeni=0&Komentar=" + komentar);
                                                         }
 
 
-
+                                                        //Save changes you have done to your pending order
                                                         session.setAttribute("Odbrani", Odbrani);
                                                         for (int i = 0; i < Odbrani.size(); i++) {
                                                             String s = Odbrani.get(i);

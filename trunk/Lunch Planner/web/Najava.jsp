@@ -40,7 +40,7 @@
                                     Корисничко име:
                                 </td>
                                 <td>
-                                    <input type="text" name="username" />
+                                    <input type="text" name="username" >
                                 </td>
                             </tr>
                             <tr>
@@ -48,7 +48,7 @@
                                     Лозинка:
                                 </td>
                                 <td>
-                                    <input type="password" name="password" />
+                                    <input type="password" name="password"  />
                                 </td>
                             </tr>
                             <tr>
@@ -61,10 +61,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="button" value="Потсети ме"/>
+                                    <input type="button" value="Потсети ме" />
                                 </td>
                                 <td>
-                                    <input type="submit" value="Логирај се"/>
+                                    <input type="submit" value="Логирај се" />
                                 </td>
                             </tr>
                         </table>
