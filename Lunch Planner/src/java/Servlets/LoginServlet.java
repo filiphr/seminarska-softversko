@@ -73,35 +73,45 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Get the username from the request
         String username = request.getParameter("username");
+        
+        //Get the password from the request
         String password = request.getParameter("password");
+        
+        //Get the remember from the request to check whether the user wants to remeber his password
         String remember = request.getParameter("remember");
-        //DO check in database
+        
+        //Check whether a user exists in the database
         String user = null;
         if (DataBaseHelper.CheckUser(username, password)) {
             user = username;
         }
 
+        //If a user exists then add him in session and redirect him to MainPage.jsp
         if (user != null) {
-//            if ("selected".equals(remember)) {
-//                Cookie c = new Cookie("username", username);
-//                c.setMaxAge(100000);
-//                response.addCookie(c);
-//
-//                c = new Cookie("password", password);
-//                c.setMaxAge(100000);
-//                response.addCookie(c);
-//            }
+            
+            if ("selected".equals(remember)) {
+            //Save his password and username in his cookie
+                Cookie c = new Cookie("username", username);
+                c.setMaxAge(100000);
+                response.addCookie(c);
 
+                c = new Cookie("password", password);
+                c.setMaxAge(100000);
+                response.addCookie(c);
+            }
 
+            //Get the session
             HttpSession session = request.getSession();
+            
+            //Save the user in the session
             session.setAttribute("username", username);
-            //RequestDispatcher rd = request.getRequestDispatcher("UserPages/MainPage.jsp");
-            //rd.forward(request, response);
+            //Redirect to MainPage.jsp
             response.sendRedirect("UserPages/MainPage.jsp");
         } else {
-            RequestDispatcher rd = request.getRequestDispatcher("Najava.jsp");
-            rd.forward(request, response);
+            //Redirect to Najava.jsp
+            response.sendRedirect("Najava.jsp");
         }
     }
 
