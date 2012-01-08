@@ -59,7 +59,7 @@
     </servlet>
     <servlet>
         <servlet-name>Naracka</servlet-name>
-        <servlet-class>Servlets.Naracka</servlet-class>
+        <servlet-class>Naracka.Naracka</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ClearPreference</servlet-name>
