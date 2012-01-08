@@ -117,24 +117,26 @@ public class HasNarackaFilter implements Filter {
         if (StrGroupID == null) {
             //if there is no GroupID go to MainPage
             httpResponse.sendRedirect("MainPage.jsp");
-        } else {
-
-
-            Integer groupID = Integer.parseInt(StrGroupID);
-
-            //Get the user from the session
-            String username = (String) session.getAttribute("username");
-
-            //Find the groupID for the user if there is one
-            Integer userGroupID = DataBaseHelper.getGroupOdNaracka(username);
-            if (userGroupID != -1 && groupID != userGroupID) {
-                //if the user wants to acces different Group from his own go to MainPage
-                httpResponse.sendRedirect("MainPage.jsp");
-            }else{
-                chain.doFilter(request, response);
-            }
+            return;
         }
-        
+
+
+        Integer groupID = Integer.parseInt(StrGroupID);
+
+        //Get the user from the session
+        String username = (String) session.getAttribute("username");
+
+        //Find the groupID for the user if there is one
+        Integer userGroupID = DataBaseHelper.getGroupOdNaracka(username);
+        if (userGroupID != -1 && groupID != userGroupID) {
+            //if the user wants to acces different Group from his own go to MainPage
+            httpResponse.sendRedirect("MainPage.jsp");
+            return;
+        }
+        chain.doFilter(request, response);
+
+
+
     }
 
     /**

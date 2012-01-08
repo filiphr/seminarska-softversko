@@ -105,8 +105,10 @@ public class CreateFilter implements Filter {
        HttpServletRequest req = (HttpServletRequest)request;
        HttpServletResponse res = (HttpServletResponse)response;
        String user = (String)req.getSession().getAttribute("username");
-       if(DataBaseHelper.hasCreatedEvent(user))
+       if(DataBaseHelper.hasCreatedEvent(user)){
            res.sendRedirect("MainPage.jsp");
+           
+       }
        chain.doFilter(request, response);
     }
 
