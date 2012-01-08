@@ -27,12 +27,15 @@
         <jsp:include page="../header.jsp"/>
         <table>
             <%
-                String nesto = (String)request.getParameter("notification");
                 String User = (String) request.getSession().getAttribute("username");
+                boolean hasCreator = DataBaseHelper.hasCreatedEvent(User);
                 boolean Naracka = DataBaseHelper.IsNaracka(User);
                 int Grupa = 0;
                 if (Naracka) {
                     Grupa = DataBaseHelper.getGroupOdNaracka(User);
+                }
+                if(hasCreator){
+                    Grupa = DataBaseHelper.getGroupIDFromCreator(User);
                 }
                 List<String> lst = DataBaseHelper.getAllPokani(User);
                 if (lst != null) {
@@ -147,6 +150,7 @@
                                     <input type="submit" name="Izlistaj" value="Izlistaj"/>
                                 </form>
                             </td>
+                            <%  if(Naracka) { %>
                             <td><form action="Izmeni.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
                                     <input type="submit" name="Izmeni" value="Izmeni Naracka"/>
@@ -158,8 +162,15 @@
                                     <input type="submit" name="Izlezi" value="Izlezi od grupata"/>
                                 </form>
                             </td>
+                            <% }}else{ %>
+                            <td>
+                                <form action="Join.do" method="post">
+                                    <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
+                                    <input type="submit" name="Join" value="Join"/>
+                                </form>
+                            </td>
                         </tr>
-                        <% }for (int s = 0; s < Namestmp.get(0).size() * 5 && s < 25; s++) {
+                        <%}for (int s = 0; s < Namestmp.get(0).size() * 5 && s < 25; s++) {
                         %>
                         <tr> <td> </td></tr>
                         <%   }%>
@@ -172,7 +183,6 @@
                                     List<String> lst1 = DataBaseHelper.getRestoranAndVreme(ID_Group);
                                     String Restoran = lst1.get(0);
                                     String Vreme = lst1.get(1);
-
                         %>
                         <tr><td>
                                 <ul id="nav">
@@ -196,7 +206,7 @@
                                 </form>
                             </td>
                             <%
-                                if (!Naracka) {%>
+                                if (!Naracka && !hasCreator) {%>
                             <td>
                                 <form action="Join.do" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=ID_Group%>"/>
@@ -210,7 +220,7 @@
                         %>
                         <tr> <td> </td></tr>
                         <%   }%>
-                        <% }
+                        <% } 
                             }%>
                     </table>
                 </td>
