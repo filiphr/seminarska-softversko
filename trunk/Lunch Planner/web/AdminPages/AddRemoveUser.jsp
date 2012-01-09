@@ -123,7 +123,8 @@
                     <tr><td colspan="2"><input type="submit" value="Избриши"/></td></tr>
                 </table>
             </form>
+
+            <p><a href="Azuriranje.jsp"><b>Назад</b></a></p>
         </div>
-        <p><a href="Azuriranje.jsp"><b>Назад</b></a></p>
     </body>
 </html>

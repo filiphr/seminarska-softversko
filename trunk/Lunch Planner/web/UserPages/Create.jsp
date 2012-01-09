@@ -47,70 +47,72 @@
     </head>
     <body>
         <jsp:include page="../header.jsp"/>
-        <form name="forma" method="post" action= "CreateNastan.do" onsubmit="return validate()">
-            <table>
-                <tr>
-                <tr>
-                    <th colspan="2">Локација и време на настанот</th><th>Покани</th>
-                </tr>
-                <td colspan="2" width="300px" >
-                    <select name="ImeRestorant" size="1">
-                        <option value="">-избери ресторант-</option>
-                        <%
-                            List<String> lst3 = DataBaseHelper.getAllRestaurantNames();
-                            for (int i = 0; i < lst3.size(); i++) {
-                                String s = lst3.get(i);
+        <div>
+            <form name="forma" method="post" action= "CreateNastan.do" onsubmit="return validate()">
+                <table>
+                    <tr>
+                    <tr>
+                        <th colspan="2">Локација и време на настанот</th><th>Покани</th>
+                    </tr>
+                    <td colspan="2" width="300px" >
+                        <select name="ImeRestorant" size="1">
+                            <option value="">-избери ресторант-</option>
+                            <%
+                                List<String> lst3 = DataBaseHelper.getAllRestaurantNames();
+                                for (int i = 0; i < lst3.size(); i++) {
+                                    String s = lst3.get(i);
 
-                        %>
-                        <option value="<%=s%>"
-                                <% if (s.equals(restorantCompare)) {
-                                        out.write("selected=\"true\"");
-                                    }%>
-                                ><%=s%></option>
-                        <%
-                            }
-                        %>
-                    </select>
-                </td>
-                <td rowspan="3">
-                    <select multiple="multiple" name="Pokani" size="8">
-                        <%
-                            List<String> lst = DataBaseHelper.getAllUsernames();
-                            for (int i = 0; i < lst.size(); i++) {
-                                String s = lst.get(i);
-                                if (!s.equals(userID)) {
-                        %>
-                        <option value="<%=s%>"
-                                <%
-                                    if (lst1.contains(s)) {
-                                        out.write("selected=\"true\"");
-                                    }
-                                %>
-                                ><%=DataBaseHelper.getUserIme(s)%> <%= DataBaseHelper.getUserPrezime(s)%></option>
-                        <%
+                            %>
+                            <option value="<%=s%>"
+                                    <% if (s.equals(restorantCompare)) {
+                                            out.write("selected=\"true\"");
+                                        }%>
+                                    ><%=s%></option>
+                            <%
                                 }
-                            }
+                            %>
+                        </select>
+                    </td>
+                    <td rowspan="3">
+                        <select multiple="multiple" name="Pokani" size="8">
+                            <%
+                                List<String> lst = DataBaseHelper.getAllUsernames();
+                                for (int i = 0; i < lst.size(); i++) {
+                                    String s = lst.get(i);
+                                    if (!s.equals(userID)) {
+                            %>
+                            <option value="<%=s%>"
+                                    <%
+                                        if (lst1.contains(s)) {
+                                            out.write("selected=\"true\"");
+                                        }
+                                    %>
+                                    ><%=DataBaseHelper.getUserIme(s)%> <%= DataBaseHelper.getUserPrezime(s)%></option>
+                            <%
+                                    }
+                                }
 
-                        %>
-                    </select>
-                </td>
-                </tr>
-                <tr>
-                    <td>Време:</td>
-                    <td>
-                        <input type="text" value="<%= DataBaseHelper.getPreferencesHour(userID)%>" name="Vreme"/>
+                            %>
+                        </select>
                     </td>
-                </tr>
-                <tr allign="bottom" >
-                    <td>
-                        <input type="submit" value="Креирај"/>
-                    </td>
-                    <td>
-                        <input type="button" onclick="goToMain()" value="Откажи"/>
-                    </td>
-                </tr>
+                    </tr>
+                    <tr>
+                        <td>Време:</td>
+                        <td>
+                            <input type="text" value="<%= DataBaseHelper.getPreferencesHour(userID)%>" name="Vreme"/>
+                        </td>
+                    </tr>
+                    <tr allign="bottom" >
+                        <td>
+                            <input type="submit" value="Креирај"/>
+                        </td>
+                        <td>
+                            <input type="button" onclick="goToMain()" value="Откажи"/>
+                        </td>
+                    </tr>
 
-            </table>
-        </form>
+                </table>
+            </form>
+        </div>
     </body>
 </html>

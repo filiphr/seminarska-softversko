@@ -31,31 +31,32 @@
     }
 
 %>
+<link rel="stylesheet" type="text/css" href="/Lunch_Planner/CSS/GlavnaUreduvackaCSS.css"/>
 <link rel="stylesheet" type="text/css" href="/Lunch_Planner/CSS/HeaderCSS.css"/>
-<table id="header"> 
+<table class="header"> 
     <tr>
         <td rowspan="3"><img src="/Lunch_Planner/nca-logo-home.GIF"/></td>
         <td>
-            <a id="whiteLink" href="/Lunch_Planner/UserPages/MainPage.jsp">Главна страна</a>
+            <a class="whiteLink" href="/Lunch_Planner/UserPages/MainPage.jsp">Главна страна</a>
         </td>
         <td>
-            <a id="whiteLink" href="/Lunch_Planner/Logout.do">Одјава</a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a id="whiteLink" href="<%= administratorLink %>"><%= administratorText %></a>
-        </td>
-        <td>
-            <a id="whiteLink" href="<%=  preferenceLink%>"><%= preferenceText%></a>
+            <a class="whiteLink" href="/Lunch_Planner/Logout.do">Одјава</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a id="whiteLink" href="<%= createdLink%>"><%= createdText%></a>
+            <a class="whiteLink" href="<%= administratorLink %>"><%= administratorText %></a>
         </td>
         <td>
-            <a id="whiteLink" href="/Lunch_Planner/UserPages/Statistika.jsp">Корисничка историја</a>
+            <a class="whiteLink" href="<%=  preferenceLink%>"><%= preferenceText%></a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a class="whiteLink" href="<%= createdLink%>"><%= createdText%></a>
+        </td>
+        <td>
+            <a class="whiteLink" href="/Lunch_Planner/UserPages/Statistika.jsp">Корисничка историја</a>
         </td>
     </tr>
 </table>
