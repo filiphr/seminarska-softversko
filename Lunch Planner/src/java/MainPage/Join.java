@@ -73,7 +73,7 @@ public class Join extends HttpServlet {
         int ID_Grupa = Integer.parseInt(request.getParameter("ID_Grupa"));
         //RequestDispatcher r = request.getRequestDispatcher("/UserPages/Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0");
         //r.forward(request, response);
-        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0&join=true");
+        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&join=true");
     }
 
     /** 

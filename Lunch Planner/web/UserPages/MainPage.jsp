@@ -156,9 +156,10 @@
                                 </form>
                             </td>
                             <%  if(Naracka) { %>
-                            <td><form action="Izmeni.do" method="post">
+                            <td><form action="Naracka.jsp?groupID=<%=Grupa%>&join=true" method="post">
                                     <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
                                     <input type="hidden" name="listaj" value="0"/>
+                                    <input type="hidden" name="Izmeni" value="1"/>
                                     <input type="submit" name="Izmeni" value="Izmeni Naracka"/>
                                 </form></td>
                                 <td>
@@ -246,7 +247,7 @@
                     if(str!=null && str.equals("1"))
                                                {
                     %>
-                    <jsp:include page="ListaParticipanti.jsp"/>
+                    <jsp:include page="ListanjeNarackiSoKomentari.jsp"/>
                     <% } %>
                 </td>
             </tr>            

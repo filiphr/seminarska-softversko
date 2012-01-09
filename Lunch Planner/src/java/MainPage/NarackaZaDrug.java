@@ -71,7 +71,7 @@ public class NarackaZaDrug extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int ID_Grupa = Integer.parseInt(request.getParameter("ID_Grupa"));
-        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&Izmeni=0&join=false");
+        response.sendRedirect("Naracka.jsp?groupID="+ID_Grupa+"&join=false");
     }
 
     /** 

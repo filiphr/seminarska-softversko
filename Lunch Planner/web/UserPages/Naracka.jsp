@@ -31,13 +31,22 @@
 
         //if join=true the username joins the group, he cannot make order for different person
         String join = request.getParameter("join");
+        int izmeni = 0;
 
         //izmeni=1 -user edits his order, izmeni=0 users creates order
-        Integer izmeni = Integer.parseInt(request.getParameter("Izmeni"));
+        String izme = (String) request.getParameter("Izmeni");
+        if (izme != null && !(izme.isEmpty())) {
+            izmeni = 1;
+        }
         String komentar = (String) request.getParameter("Komentar");
         if (komentar == null) {
             komentar = new String();
         }
+        int flag = 0;
+                                                        String flagg = request.getParameter("Flag");
+                                                        if (flagg != null) {
+                                                            flag = Integer.parseInt(flagg);
+                                                        }
     %>
 
 
@@ -78,7 +87,7 @@
             
             function goToMain()
             {
-                 window.location="MainPage.jsp";
+                window.location="MainPage.jsp";
             }
         </script>
 
@@ -113,17 +122,17 @@
                                                     <%
                                                         //Users without order
                                                         List<String> UsersNoOrderOrUpdate = new ArrayList<String>();
-
-
+                                                        List<String> Komentars = new ArrayList<String>();
+                                                        String prefMeal = DataBaseHelper.getPreferencesMeal(username);
                                                         if ("false".equals(join)) {
                                                             //Find the users that are not in a group
                                                             UsersNoOrderOrUpdate = new ArrayList<String>();
-                                                            List<String> Naracatel=DataBaseHelper.getNarackiByNaracatel(username);
-                                                            for (int i=0; i<Naracatel.size(); i++){
-                                                                String tmp=Naracatel.get(i);
+                                                            List<String> Naracatel = DataBaseHelper.getNarackiByNaracatel(username);
+                                                            for (int i = 0; i < Naracatel.size(); i++) {
+                                                                String tmp = Naracatel.get(i);
                                                                 UsersNoOrderOrUpdate.add(tmp);
                                                             }
-                                                           UsersNoOrderOrUpdate.addAll(DataBaseHelper.getParticipantBezJadenje());
+                                                            UsersNoOrderOrUpdate.addAll(DataBaseHelper.getParticipantBezJadenje());
 
                                                             UsersNoOrderOrUpdate.remove(username);
                                                         } else if ("true".equals(join)) {
@@ -142,6 +151,47 @@
                                                         }
                                                     %>
                                                 </select>
+                                                <%//If you want to modify your order get the parameters and update your old order
+                                                    String tmp = "";
+                                                    String tmpKomentari = "";
+                                                    if (izmeni == 1) {
+                                                        //Initialize new pending order to avoid duplicates
+                                                        List<String> Odbranitmp = new ArrayList<String>();
+
+                                                        //Get the items you have ordered
+                                                        List<String> lst3 = DataBaseHelper.getLunch(username, IDGroup);
+                                                        for (int i = 0; i < lst3.size(); i++) {
+                                                            //Add them so you can show them
+                                                            Odbranitmp.add(lst3.get(i));
+                                                        }
+                                                        //Get the comment
+                                                        //komentar = DataBaseHelper.getKomentar(username, IDGroup);
+                                                        //String tmp = "";
+                                                        Komentars = DataBaseHelper.getKomentars(username, IDGroup);
+                                                        if (!Odbranitmp.isEmpty()) {
+
+
+                                                            for (int i = 0; i < Odbranitmp.size(); i++) {
+                                                                tmp += Odbranitmp.get(i) + ";;";
+                                                            }
+                                                        }
+                                                        if (!Komentars.isEmpty()) {
+
+
+                                                            for (int i = 0; i < Komentars.size(); i++) {
+                                                                tmpKomentari += Komentars.get(i) + ";;";
+                                                            }
+                                                        }
+                                                        flag = 1;
+                                                        //Add the pending order in your session if it is not already there %>
+                                                <input type="hidden" name="Odbrani" value="<%=tmp%>"/>
+                                                <input type="hidden" name="Komentari" value="<%=tmpKomentari%>"/>
+
+                                                <%//Redirect to make new order
+                                                        //RequestDispatcher r = request.getRequestDispatcher("Naracka.jsp?groupID=" + IDGroup + "&Izmeni=0&Komentar=" + komentar + "&join=true");
+                                                        //r.forward(request, response);
+                                                        //response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&Izmeni=0&Komentar=" + komentar + "&join=true");
+                                                    }%>
                                             </td>
                                             <td>                            
                                                 <select  name="Meni" size="3" onchange="formSubmit('Meni')">
@@ -165,24 +215,49 @@
                                                 <select name="odbrani" size="3" onchange="formSubmit('odbrani')">
                                                     <option value="" disabled="disabled">Клик за да избришете ставка</option>
                                                     <%
-                                                        //Get the pending order items from the session
-                                                        List<String> Odbrani = (List<String>) session.getAttribute("Odbrani");
-                                                        if (Odbrani == null) {
-                                                            Odbrani = new ArrayList<String>();
+                                                        List<String> Odbrani = new ArrayList<String>();
+                                                        if ("false".equals(join) && flag == 0) {
+                                                            String Naracatel = request.getParameter("Naracuvac");
+                                                            if (Naracatel != null && !(Naracatel.isEmpty())) {
+                                                                Odbrani = DataBaseHelper.getLunch(Naracatel, IDGroup);
+                                                                Komentars = DataBaseHelper.getKomentars(Naracatel, IDGroup);
+                                                            }
+
                                                         }
 
-                                                        //You can only use your own preferences
-                                                        if (username.equals(OrderUser)) {
-                                                            //Get all the items in the restaurant for this group
-                                                            List<String> ItemsInRestaurant = ItemsPrice.get(0);
-                                                            //Get the prefered meal
-                                                            String prefMeal = DataBaseHelper.getPreferencesMeal(username);
-                                                            //Check whethee there is a prefered meal and it exists in the current restaurant
-                                                            if (prefMeal != null && ItemsInRestaurant.contains(prefMeal) && !Odbrani.contains(prefMeal)) {
-                                                                Odbrani.add(prefMeal);
+                                                        //Get the pending order items from the session
+                                                        String Odbranistr = request.getParameter("Odbrani");
+                                                        if (Odbranistr == null && !(tmp.isEmpty())) {
+                                                            Odbranistr = tmp;
+                                                        }
+
+                                                        if (Odbranistr != null && flag == 1) {
+                                                            Odbrani = new ArrayList<String>();
+                                                            if (!(Odbranistr.isEmpty())) {
+                                                                String[] OdbraniNiza = Odbranistr.split(";;");
+                                                                for (int iter = 0; iter < OdbraniNiza.length; iter++) {
+                                                                    Odbrani.add(OdbraniNiza[iter]);
+                                                                }
                                                             }
                                                         }
 
+                                                        String Komentarstr = request.getParameter("Komentari");
+                                                        if (Komentarstr == null && !(tmpKomentari.isEmpty())) {
+                                                            Komentarstr = tmpKomentari;
+                                                        }
+                                                        if (Komentarstr != null && flag == 1) {
+                                                            Komentars = new ArrayList<String>();
+                                                            if (!(Komentarstr.isEmpty())) {
+                                                                String[] KomentariNiza = Komentarstr.split(";;");
+                                                                for (int iter = 0; iter < KomentariNiza.length; iter++) {
+                                                                    Komentars.add(KomentariNiza[iter]);
+                                                                }
+                                                                for (int i = Komentars.size() - 1; i < Odbrani.size(); i++) {
+                                                                    Komentars.add("");
+                                                                }
+
+                                                            }
+                                                        }
                                                         //For AutoPostBack get the chosen item from the menu
                                                         String odbrano = request.getParameter("Meni");
                                                         //For AutoPostBack get the item that you want to remove from the order list
@@ -195,47 +270,69 @@
                                                             if (odbrano != null) {
                                                                 //Add the chosen item in your pending order
                                                                 Odbrani.add(odbrano);
+                                                                Komentars.add("");
+                                                                flag = 1;
+                                                                //You can only use your own preferences
+
+
 
                                                             }
-                                                        } else if ("odbrani".equals(pom)) {
+                                                        } 
+                                                        if (username.equals(OrderUser)) {
+                                                            //Get all the items in the restaurant for this group
+                                                            List<String> ItemsInRestaurant = ItemsPrice.get(0);                                                            //Get the prefered meal
+
+                                                            //Check whethee there is a prefered meal and it exists in the current restaurant
+                                                            if (prefMeal != null && ItemsInRestaurant.contains(prefMeal) && !Odbrani.contains(prefMeal) && (Odbrani.isEmpty()) && remove == null && "true".equals(join)) {
+                                                                Odbrani.add(prefMeal);
+                                                                Komentars.add(DataBaseHelper.getPreferencesKomentar(username));
+                                                                flag = 1;
+                                                            }
+                                                        }
+                                                        if ("odbrani".equals(pom)) {
                                                             if (remove != null) {
+                                                                flag = 1;
                                                                 //Remove the chosen item from the pending order
-                                                                Odbrani.remove(remove);
+                                                                for (int i = 0; i < Odbrani.size(); i++) {
+                                                                    if (Odbrani.get(i).equals(remove)) {
+                                                                        Odbrani.remove(i);
+                                                                        Komentars.remove(i);
+                                                                        break;
+                                                                    }
+                                                                }
                                                             }
                                                         }
 
-                                                        //If you want to modify your order get the parameters and update your old order
-                                                        if (izmeni == 1) {
-                                                            //Initialize new pending order to avoid duplicates
-                                                            Odbrani = new ArrayList<String>();
-
-                                                            //Get the items you have ordered
-                                                            List<String> lst3 = DataBaseHelper.getLunch(username, IDGroup);
-                                                            for (int i = 0; i < lst3.size(); i++) {
-                                                                //Add them so you can show them
-                                                                Odbrani.add(lst3.get(i));
-                                                            }
-                                                            //Get the comment
-                                                            komentar = DataBaseHelper.getKomentar(username, IDGroup);
-
-                                                            //Add the pending order in your session if it is not already there 
-                                                            session.setAttribute("Odbrani", Odbrani);
-
-                                                            //Redirect to make new order
-                                                            response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&Izmeni=0&Komentar=" + komentar + "&join=true");
-                                                        }
 
 
                                                         //Save changes you have done to your pending order
-                                                        session.setAttribute("Odbrani", Odbrani);
+                                                        //session.setAttribute("Odbrani", Odbrani);
                                                         for (int i = 0; i < Odbrani.size(); i++) {
                                                             String s = Odbrani.get(i);
                                                     %>
                                                     <option value="<%=s%>"><%=s%></option>
                                                     <%
                                                         }
+                                                        String KomentariT = "";
+                                                        String OdbraniT = "";
+                                                        if (!Odbrani.isEmpty()) {
+
+                                                            for (int i = 0; i < Odbrani.size(); i++) {
+                                                                OdbraniT += Odbrani.get(i) + ";;";
+                                                            }
+                                                        }
+                                                        if (!Komentars.isEmpty()) {
+
+
+                                                            for (int i = 0; i < Komentars.size(); i++) {
+                                                                KomentariT += Komentars.get(i) + ";;";
+                                                            }
+                                                        }
                                                     %>
                                                 </select>
+                                                <input type="hidden" name="Odbrani" value="<%=OdbraniT%>"/>
+                                                <input type="hidden" name="Komentari" value="<%=KomentariT%>"/>
+                                                <input type="hidden" name="Flag" value="<%=flag%>"/>
                                             </td>
                                         </tr>
                                     </table>
@@ -243,17 +340,25 @@
                                 <form method="post" action="Naracka.do" onsubmit="return Validate()">
                                     <input type="hidden" name="groupID" value="<%=IDGroup%>"/>
                                     <input type="hidden" name="OrderUser" value="<%=OrderUser%>"/>
-
+                                    <input type="hidden" name="Odbrani" value="<%=OdbraniT%>"/>
                                     <table>                                       
-                                            <%
-                                                for (int i = 0; i < Odbrani.size(); i++) {
-                                                    String s = Odbrani.get(i);
-                                            %>
-                                            <tr>
-                                                <td>
-                                                   Коментар за <%=s%>: <input type="text" name="Komentar<%=i%>"/>
-                                                </td>
-                                            </tr>
+                                        <%
+                                            for (int i = 0; i < Odbrani.size(); i++) {
+                                                String s = Odbrani.get(i);
+                                                String K = "";
+                                                if (!(Komentars.isEmpty()) && i < Komentars.size()) {
+                                                    K = Komentars.get(i);
+                                                }
+                                                    if ("true".equals(join) && prefMeal != null && prefMeal.equals(Odbrani.get(i)) && K.isEmpty()) {
+                                                        K = DataBaseHelper.getPreferencesKomentar(username);
+                                                    }
+                                                
+                                        %>
+                                        <tr>
+                                            <td>
+                                                Коментар за <%=s%>: <input type="text" name="Komentar<%=i%>" value="<%=K%>"/>
+                                            </td>
+                                        </tr>
                                         <%
                                             }
                                         %>
@@ -267,13 +372,13 @@
                                         </tr>
                                     </table>
                                 </form>
-                                        <% if("false".equals(join)) { %>
-                                        <form action="IzbrisiNaracka.do" method="post" onsubmit="return ValidateIzbrisi()">
-                                            <input type="hidden" name="Naracuvac" value="<%=OrderUser%>"/>
-                                            <input type="hidden" name="IDGrupa" value="<%=IDGroup%>"/>
-                                            <input type="submit" value="Izbrisi Naracka"/>
-                                        </form>
-                                                <% } %>
+                                <% if ("false".equals(join)) {%>
+                                <form action="IzbrisiNaracka.do" method="post" onsubmit="return ValidateIzbrisi()">
+                                    <input type="hidden" name="Naracuvac" value="<%=OrderUser%>"/>
+                                    <input type="hidden" name="IDGrupa" value="<%=IDGroup%>"/>
+                                    <input type="submit" value="Izbrisi Naracka"/>
+                                </form>
+                                <% }%>
                             </td>
                         </tr>
                     </table>
