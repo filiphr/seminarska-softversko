@@ -93,20 +93,20 @@
 
         <jsp:include page="../header.jsp"/>
         <table>
-            <tr class="header">
+            <tr>
                 <td>
 
                 </td>
             </tr>
-            <tr class="menu" >
+            <tr>
                 <td>
 
 
                 </td>
             </tr>
-            <tr class="body" >
+            <tr>
                 <td>
-                    <table border="2">
+                    <table border="0">
                         <tr>
                             <td>
                                 <jsp:include page="ListaParticipanti.jsp"/>
@@ -384,7 +384,7 @@
                     </table>
                 </td>
             </tr>
-            <tr class="footer" >
+            <tr>
                 <td>
 
                 </td>
