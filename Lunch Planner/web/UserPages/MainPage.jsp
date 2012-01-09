@@ -134,21 +134,7 @@
                                     String Vremetmp = lst1tmp.get(1);
 
                             %>
-                            <tr><td>
-                                    <ul id="nav">
-                                        <li class="top"><a class="top_link"><span>Restoran: <%= Restorantmp%> Vreme: <%= Vremetmp%></span></a></li>        
-                                        <li class="top"><a id="participanti" class="top_link"><span class="down">Participanti</span></a>
-                                            <ul class="sub">
-                                                <% for (int j = 0; j < Namestmp.get(0).size() && j < 5; j++) {
-                                                        String Nametmp = Namestmp.get(0).get(j);
-                                                        String SNametmp = Namestmp.get(1).get(j);
-                                                        String Lucnhtmp = Namestmp.get(2).get(j);
-                                                %>
-                                                <li> <a> <%= Nametmp%>  <%= SNametmp%>  -  <%= Lucnhtmp%> </a></li>
-                                                <% }%>
-                                            </ul>
-                                    </ul>
-                                </td>
+                            <tr>
                                 <td>
                                     <form name="Listanje" action="" method="post">
                                         <input type="hidden" name="groupID" value="<%=Grupa%>"/>
@@ -187,9 +173,27 @@
                                         <input type="submit" name="Join" value="Join"/>
                                     </form>
                                 </td>
+                            </tr> <% } %>
+                            <tr><td colspan="4">
+                                    <ul id="nav">
+                                        <li class="top"><a class="top_link"><span>Restoran: <%= Restorantmp%> Vreme: <%= Vremetmp%></span></a></li>        
+                                        <li class="top"><a id="participanti" class="top_link"><span class="down">Participanti</span></a>
+                                            <ul class="sub">
+                                                <% for (int j = 0; j < Namestmp.get(0).size() && j < 5; j++) {
+                                                        String Nametmp = Namestmp.get(0).get(j);
+                                                        String SNametmp = Namestmp.get(1).get(j);
+                                                        String Lucnhtmp = Namestmp.get(2).get(j);
+                                                %>
+                                                <li> <a> <%= Nametmp%>  <%= SNametmp%>  -  <%= Lucnhtmp%> </a></li>
+                                                <% }%>
+                                            </ul>
+                                    </ul>
+                                </td>
                             </tr>
-                            <%}
-                                for (int s = 0; s < Namestmp.get(0).size() * 5 && s < 25; s++) {
+                                
+                            
+                            <%
+                                for (int s = 0; s < (Namestmp.get(0).size() * 5) - 4 && s < 20; s++) {
                             %>
                             <tr> <td> </td></tr>
                             <%   }%>
@@ -203,21 +207,7 @@
                                         String Restoran = lst1.get(0);
                                         String Vreme = lst1.get(1);
                             %>
-                            <tr><td>
-                                    <ul id="nav">
-                                        <li class="top"><a class="top_link"><span>Restoran: <%= Restoran%> Vreme: <%= Vreme%></span></a></li>        
-                                        <li class="top"><a id="participanti" class="top_link"><span class="down">Participanti</span></a>
-                                            <ul class="sub">
-                                                <% for (int j = 0; j < Names.get(0).size() && j < 5; j++) {
-                                                        String Name = Names.get(0).get(j);
-                                                        String SName = Names.get(1).get(j);
-                                                        String Lucnh = Names.get(2).get(j);
-                                                %>
-                                                <li> <a> <%= Name%>  <%= SName%>  -  <%= Lucnh%> </a></li>
-                                                <% }%>
-                                            </ul>
-                                    </ul>
-                                </td>
+                            <tr>
                                 <td>
                                     <form name="Listanje" action="" method="post">
                                         <input type="hidden" name="groupID" value="<%=ID_Group%>"/>
@@ -237,7 +227,24 @@
                                 <% }%>
 
                             </tr>
-                            <% for (int s = 0; s < Names.get(0).size() * 5 && s < 25; s++) {
+                            <tr><td colspan="4">
+                                    <ul id="nav">
+                                        <li class="top"><a class="top_link"><span>Restoran: <%= Restoran%> Vreme: <%= Vreme%></span></a></li>        
+                                        <li class="top"><a id="participanti" class="top_link"><span class="down">Participanti</span></a>
+                                            <ul class="sub">
+                                                <% for (int j = 0; j < Names.get(0).size() && j < 5; j++) {
+                                                        String Name = Names.get(0).get(j);
+                                                        String SName = Names.get(1).get(j);
+                                                        String Lucnh = Names.get(2).get(j);
+                                                %>
+                                                <li> <a> <%= Name%>  <%= SName%>  -  <%= Lucnh%> </a></li>
+                                                <% }%>
+                                            </ul>
+                                    </ul>
+                                </td>
+                            </tr>
+                            
+                            <% for (int s = 0; s < (Names.get(0).size() * 5) - 10 && s < 20; s++) {
                             %>
                             <tr> <td> </td></tr>
                             <%   }%>
