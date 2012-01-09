@@ -766,6 +766,13 @@ public class DataBaseHelper {
     public static void deleteAllPokani() {
         ExecuteQuery("DELETE FROM pokani");
     }
+    
+    public static void deleteAllPokaniForUser(String User) {
+        StringBuilder sqlStr = new StringBuilder("DELETE FROM pokani WHERE korisnik_USer = '");
+        sqlStr.append(User);
+        sqlStr.append("'");
+        ExecuteQuery(sqlStr.toString());
+    }
 
     public static boolean hasCreatedEvent(String userID) {
         List<String> lst = GetQuery("SELECT Korisnik_User FROM tekovnagrupa WHERE Korisnik_User = '" + userID + "';", 1);
