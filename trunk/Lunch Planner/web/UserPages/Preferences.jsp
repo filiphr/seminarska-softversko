@@ -59,7 +59,7 @@
         <div>
             <form method="post" name="PreferenceForm" action="Preferences.do" onsubmit="return validatePreferenceForm()">
                 <table class="izbornaTabela">
-                    <tr>
+                    <tr class="headrow">
                         <th colspan="3">Преферирани опции</th>
                     </tr>
                     <tr>
