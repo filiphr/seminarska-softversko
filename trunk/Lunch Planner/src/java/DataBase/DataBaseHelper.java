@@ -525,6 +525,19 @@ public class DataBaseHelper {
         }
         return Komentar;
     }
+    
+    public static List<String> getKomentars(String User, int ID_Grupa) {
+        StringBuilder sqlStr = new StringBuilder("select * from naracka where Korisnik_User = '");
+        sqlStr.append(User);
+        sqlStr.append("' And  TekovnaGrupa_idTekovnaGrupa = ");
+        sqlStr.append(ID_Grupa);
+        List<String> lst = GetQuery(sqlStr.toString(), 2);
+        if (lst.isEmpty()) {
+            return new ArrayList<String>();
+        } else {
+            return lst;
+        }
+    }
 
     //Filip go ima napisano ova. gi vrakja site ID koi nekoj korisnik gi napravil vo opredelena grupa
     public static List<Integer> getIDNaracka2(String User, int ID_Grupa) {
@@ -560,6 +573,22 @@ public class DataBaseHelper {
             ID = -1;
         }
         return ID;
+    }
+    
+    public static String getKomentarByStavka(String Stavka)
+    {
+        if(Stavka == null && Stavka.isEmpty()) return new String();
+        StringBuilder sqlStr = new StringBuilder("select Komentar from naracka where stavkameni_Ime = '");
+        sqlStr.append(Stavka);
+        sqlStr.append("'");
+        List<String> lst = GetQuery(sqlStr.toString(), 1);
+        String Komentar;
+        if (!lst.isEmpty()) {
+            Komentar = lst.get(0);
+        } else {
+            Komentar = new String();
+        }
+        return Komentar;
     }
 
     public static int getGroupIDFromCreator(String userID) {

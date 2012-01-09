@@ -110,10 +110,6 @@
         <servlet-class>MainPage.Pokana</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Izmeni</servlet-name>
-        <servlet-class>MainPage.Izmeni</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Izlezi</servlet-name>
         <servlet-class>MainPage.Izlezi</servlet-class>
     </servlet>
@@ -212,10 +208,6 @@
     <servlet-mapping>
         <servlet-name>Pokana</servlet-name>
         <url-pattern>/UserPages/Pokana.do</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Izmeni</servlet-name>
-        <url-pattern>/UserPages/Izmeni.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Izlezi</servlet-name>
