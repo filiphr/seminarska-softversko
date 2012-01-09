@@ -10,7 +10,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    
+
     <head>
         <title>Ажурирање на податоци</title>
         <style type="text/css">
@@ -21,13 +21,15 @@
             }
         </style>
     </head>
-    
-    
+
+
     <body>
-        <jsp:include page="../header.jsp"/>
-        <p><a href="AddRemoveUser.jsp">Ажурирање на листа на корисници</a></p>
-        <p><a href="UpdateUser.jsp">Промена на податоци на корисник</a></p>
-        <p><a href="AddRemoveRestorant.jsp">Ажурирање на листа на ресторанти</a></p>
-        <p><a href="AddRemoveItem.jsp">Ажурирање на мени на ресторантите</a></p>
+        <div>
+            <jsp:include page="../header.jsp"/>
+            <p><a href="AddRemoveUser.jsp">Ажурирање на листа на корисници</a></p>
+            <p><a href="UpdateUser.jsp">Промена на податоци на корисник</a></p>
+            <p><a href="AddRemoveRestorant.jsp">Ажурирање на листа на ресторанти</a></p>
+            <p><a href="AddRemoveItem.jsp">Ажурирање на мени на ресторантите</a></p>
+        </div>
     </body>
 </html>

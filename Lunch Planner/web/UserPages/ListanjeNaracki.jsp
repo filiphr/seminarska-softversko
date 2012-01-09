@@ -15,7 +15,7 @@
     </head>
     <body>
         <jsp:include page="../header.jsp"/>
-        <jsp:include page="ListanjeNarackiSoKomentari.jsp"/>
-        <a href="MainPage.jsp">Nazad</a>
+        <p><jsp:include page="ListanjeNarackiSoKomentari.jsp"/></p>
+        <p><a href="MainPage.jsp">Кон главна срана</a></p>
     </body>
 </html>
