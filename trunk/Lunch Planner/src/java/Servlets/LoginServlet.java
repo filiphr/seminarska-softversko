@@ -59,8 +59,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("Najava.jsp");
-        rd.forward(request, response);
+
+        response.sendRedirect("Najava.jsp");
+
+//        RequestDispatcher rd = request.getRequestDispatcher("Najava.jsp");
+//        rd.forward(request, response);
     }
 
     /** 
@@ -75,13 +78,13 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         //Get the username from the request
         String username = request.getParameter("username");
-        
+
         //Get the password from the request
         String password = request.getParameter("password");
-        
+
         //Get the remember from the request to check whether the user wants to remeber his password
         String remember = request.getParameter("remember");
-        
+
         //Check whether a user exists in the database
         String user = null;
         if (DataBaseHelper.CheckUser(username, password)) {
@@ -90,9 +93,9 @@ public class LoginServlet extends HttpServlet {
 
         //If a user exists then add him in session and redirect him to MainPage.jsp
         if (user != null) {
-            
+
             if ("selected".equals(remember)) {
-            //Save his password and username in his cookie
+                //Save his password and username in his cookie
                 Cookie c = new Cookie("username", username);
                 c.setMaxAge(100000);
                 response.addCookie(c);
@@ -104,7 +107,7 @@ public class LoginServlet extends HttpServlet {
 
             //Get the session
             HttpSession session = request.getSession();
-            
+
             //Save the user in the session
             session.setAttribute("username", username);
             //Redirect to MainPage.jsp

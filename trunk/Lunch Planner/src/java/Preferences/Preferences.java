@@ -58,7 +58,7 @@ public class Preferences extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("Preferences.jsp");
     }
 
     /** 
@@ -90,8 +90,10 @@ public class Preferences extends HttpServlet {
         if(komentar!=null)
             DataBaseHelper.updatePreferencesKomentar(komentar, user);
         
-        RequestDispatcher rd = request.getRequestDispatcher("Preferences.jsp");
-        rd.forward(request,response);
+        response.sendRedirect("Preferences.jsp");
+        
+//        RequestDispatcher rd = request.getRequestDispatcher("Preferences.jsp");
+//        rd.forward(request,response);
     }
 
     /** 

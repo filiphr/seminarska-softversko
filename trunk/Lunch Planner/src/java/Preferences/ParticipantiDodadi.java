@@ -58,7 +58,7 @@ public class ParticipantiDodadi extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("Preferences.jsp");
     }
 
     /** 
@@ -82,8 +82,11 @@ public class ParticipantiDodadi extends HttpServlet {
                 DataBaseHelper.insertPreferencesParticipant(user, lst[i]);
             }
         }
-        RequestDispatcher rd = request.getRequestDispatcher("Preferences.jsp");
-        rd.forward(request, response);
+        
+        response.sendRedirect("Preferences.jsp");
+        
+//        RequestDispatcher rd = request.getRequestDispatcher("Preferences.jsp");
+//        rd.forward(request, response);
     }
 
     /** 

@@ -17,7 +17,10 @@
     </head>
     <%
         Integer IDGroup = Integer.parseInt(request.getParameter("groupID"));
-        String user = (String) session.getAttribute("username");
+        String user = "";
+        synchronized (session) {
+            user = (String) session.getAttribute("username");
+        }
     %>
 
 
@@ -142,7 +145,7 @@
                                         </tr>
                                     </table>
                                 </form>
-                                                
+
                                 <form method="post" action="Pokani.do">
                                     <input type="hidden" name="groupID" value="<%=IDGroup%>"/>
                                     <table>
@@ -153,7 +156,7 @@
                                         </tr>
                                     </table>
                                 </form>
-                                    
+
                             </td>
                         </tr>
                     </table>

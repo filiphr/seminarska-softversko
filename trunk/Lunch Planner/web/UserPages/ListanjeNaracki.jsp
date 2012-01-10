@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Listanje na narackite</title>
+        <title>Листање на нарачките</title>
     </head>
     <body>
         <jsp:include page="../header.jsp"/>

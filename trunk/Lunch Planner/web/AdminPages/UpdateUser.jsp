@@ -11,7 +11,10 @@
 <html>
 
     <%
-        String userID = (String) session.getAttribute("username");
+        String userID = "";
+        synchronized (session) {
+            userID = (String) session.getAttribute("username");
+        }
         String usrNameUpdate = "";
         if (request.getParameter("usrNameUpdate") != null) {
             usrNameUpdate = request.getParameter("usrNameUpdate");

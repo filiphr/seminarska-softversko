@@ -1,7 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="DataBase.DataBaseHelper" %>
 <%
-    String userID = (String) request.getSession().getAttribute("username");
+    String userID = "";
+    synchronized (session) {
+        userID = (String) request.getSession().getAttribute("username");
+    }
     boolean hasCreated = DataBaseHelper.hasCreatedEvent(userID);
     boolean hasOrdered = DataBaseHelper.IsNaracka(userID);
     String createdLink = "";
@@ -26,8 +29,8 @@
 
     boolean administrator = DataBaseHelper.isAdministrator(userID);
     if (administrator) {
-        administratorLink="/Lunch_Planner/AdminPages/Azuriranje.jsp";
-        administratorText="Администрација на апликацијата";
+        administratorLink = "/Lunch_Planner/AdminPages/Azuriranje.jsp";
+        administratorText = "Администрација на апликацијата";
     }
 
 %>
@@ -45,7 +48,7 @@
     </tr>
     <tr>
         <td>
-            <a class="whiteLink" href="<%= administratorLink %>"><%= administratorText %></a>
+            <a class="whiteLink" href="<%= administratorLink%>"><%= administratorText%></a>
         </td>
         <td>
             <a class="whiteLink" href="<%=  preferenceLink%>"><%= preferenceText%></a>

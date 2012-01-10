@@ -24,13 +24,23 @@
 
 
     <body>
+        <jsp:include page="../header.jsp"/>
         <div>
-            <jsp:include page="../header.jsp"/>
-            <p><a href="AddRemoveUser.jsp">Ажурирање на листа на корисници</a></p>
-            <p><a href="UpdateUser.jsp">Промена на податоци на корисник</a></p>
-            <p><a href="AddRemoveRestorant.jsp">Ажурирање на листа на ресторанти</a></p>
-            <p><a href="AddRemoveItem.jsp">Ажурирање на мени на ресторантите</a></p>
-            <p><a href="NEKADE_VO_NOKJTA.jsp">Архивирање на групите</a></p>
+            <br/>
+            <br/>
+            <a href="AddRemoveUser.jsp">Ажурирање на листа на корисници</a>
+            <br/>
+            <br/>
+            <a href="UpdateUser.jsp">Промена на податоци на корисник</a>
+            <br/>
+            <br/>
+            <a href="AddRemoveRestorant.jsp">Ажурирање на листа на ресторанти</a>
+            <br/>
+            <br/>
+            <a href="AddRemoveItem.jsp">Ажурирање на мени на ресторантите</a>
+            <br/>
+            <br/>
+            <a href="NEKADE_VO_NOKJTA.jsp">Архивирање на групите</a>
             <%-- TUKA TREBA DA SE BUTNE ARHIVIRANJE NA GRUPITE --%>
         </div>
     </body>

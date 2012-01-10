@@ -21,8 +21,10 @@
         Integer IDGroup = Integer.parseInt(request.getParameter("groupID"));
 
         //Get the currently user in the session
-        String username = (String) session.getAttribute("username");
-
+        String username = "";
+        synchronized (session) {
+            username = (String) session.getAttribute("username");
+        }
         //User za kogo se pravi naracka, default e aktivniot user
         String OrderUser = request.getParameter("Naracuvac");
         if (OrderUser == null) {
@@ -365,7 +367,7 @@
                                             %>
                                             <tr>
                                                 <td>
-                                                    <input type="submit" name="Naracaj" value="Naracaj"/>
+                                                    <input type="submit" name="Naracaj" value="Нарачај"/>
                                                 </td>
                                                 <td>
                                                     <input type="button" value="Врати се назад" onclick="goToMain()"/>
@@ -377,7 +379,7 @@
                                     <form action="IzbrisiNaracka.do" method="post" onsubmit="return ValidateIzbrisi()">
                                         <input type="hidden" name="Naracuvac" value="<%=OrderUser%>"/>
                                         <input type="hidden" name="IDGrupa" value="<%=IDGroup%>"/>
-                                        <input type="submit" value="Izbrisi Naracka"/>
+                                        <input type="submit" value="Избриши нарачка"/>
                                     </form>
                                     <% }%>
                                 </td>
