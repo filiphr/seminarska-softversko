@@ -59,7 +59,7 @@ public class PokaniServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("MainPage.jsp");
     }
 
     /** 
@@ -86,9 +86,11 @@ public class PokaniServlet extends HttpServlet {
             }
         }
         session.removeAttribute("pokaneti");
+        
+        response.sendRedirect("MainPage.jsp");
 
-        RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
-        rd.forward(request, response);
+//        RequestDispatcher rd = request.getRequestDispatcher("MainPage.jsp");
+//        rd.forward(request, response);
     }
 
     /** 

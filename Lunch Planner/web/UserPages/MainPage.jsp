@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Glavna Strana</title>
+        <title>Главна страна</title>
         <link rel="stylesheet" type="text/css" href="../MainPage/pro_dropdown_3.css" />
         <script src="../MainPage/stuHover.js" type="text/javascript"></script>
         <script type="text/javascript">
@@ -28,7 +28,10 @@
         <div>
             <table>
                 <%
-                    String User = (String) request.getSession().getAttribute("username");
+                    String User = "";
+                    synchronized (session) {
+                        User = (String) request.getSession().getAttribute("username");
+                    }
                     boolean hasCreator = DataBaseHelper.hasCreatedEvent(User);
                     boolean Naracka = DataBaseHelper.IsNaracka(User);
                     int Grupa = 0;
@@ -48,15 +51,15 @@
                             if (i == 0) {
                 %>
                 <tr>
-                    <td> <b> Pokani za pridruzuvanje vo grupa </b> </td>
+                    <td> <b> Покани за придружување во група </b> </td>
                 </tr>
                 <% }%>
                 <tr><td><form action="Pokana.do" method="post">
-                            Vie ste pokaneti vo restoran <%= Restoran%> vo <%= Vreme%> casot   
+                            Вие сте поканети во ресторант <%= Restoran%> во <%= Vreme%> часот   
                             <% if (!Naracka) {%>
-                            <input type="submit" name="Potvrda" value="Potvrdi"/>
+                            <input type="submit" name="Potvrda" value="Потврди"/>
                             <% }%>
-                            <input type="submit" name="Potvrda" value="Otkazi"/>
+                            <input type="submit" name="Potvrda" value="Откажи"/>
                             <input type="hidden" name="listaj" value="0"/>
                             <input type="hidden" name="ID_Grupa" value="<%=ID_Grupa%>"/>
                         </form>
@@ -69,7 +72,7 @@
                         if (i == 0) {
                 %>
                 <tr>
-                    <td><b>Izvestuvanja!!</b></td>
+                    <td><b>Известувања</b></td>
                 </tr>    
                 <% }%>
                 <tr>
@@ -83,7 +86,7 @@
                     <td>
                         <form action="IzbrisiNotification.do" method="get">
                             <input type="hidden" name="listaj" value="0"/>
-                            <input type="submit" value="Izbrisi Izvestuvanja"/>
+                            <input type="submit" value="Избриши известувања"/>
                         </form>
                     </td>
                 </tr>
@@ -95,7 +98,7 @@
                 %>
                 <tr>
                     <td>
-                        Vie imate organizirano jadenje vo <b><%= UserRestoran.get(0)%></b> vo <b><%= UserRestoran.get(1)%> </b>
+                        Вие имате организирано јадење во <b><%= UserRestoran.get(0)%></b> во <b><%= UserRestoran.get(1)%> </b>
                     </td>
                 </tr>
                 <tr>
@@ -103,15 +106,15 @@
                         <form action="ListanjeNaracki.jsp" method="post">
                             <input type="hidden" name="groupID" value="<%=UserGroup%>"/>
                             <input type="hidden" name="listaj" value="0"/>
-                            <input type="submit" value="Izlistaj naracki vo grupata"/>
+                            <input type="submit" value="Излистај нарачки во групата"/>
                         </form>
                     </td>
                     <td>
                         <form id="IzbrisiForm" action="IzbrisiGroup.do" method="post" onsubmit="return Potvrda()">
                             <input type="hidden" name="groupID" value="<%=UserGroup%>"/>
                             <input type="hidden" name="listaj" value="0"/>
-                            <input type="submit" name="izbrisi" value="Izbrisi grupa"/>
-                            <b> Vnesete Pricina: </b><INPUT TYPE=TEXT NAME="t1"/>
+                            <input type="submit" name="izbrisi" value="Избриши група"/>
+                            <b> Внесете причина: </b><INPUT TYPE=TEXT NAME="t1"/>
                         </form>
                     </td>
                 </tr>
@@ -120,7 +123,7 @@
             <table>
                 <tr>
                     <td>
-                        <b> Kreirani Grupi </b>
+                        <b> Креирани групи </b>
                     </td>
                 </tr>
                 <tr>
@@ -139,7 +142,7 @@
                                     <form name="Listanje" action="" method="post">
                                         <input type="hidden" name="groupID" value="<%=Grupa%>"/>
                                         <input type="hidden" name="listaj" value="1"/>
-                                        <input type="submit" name="Izlistaj" value="Izlistaj"/>
+                                        <input type="submit" name="Izlistaj" value="Излистај"/>
                                     </form>
                                 </td>
                                 <%  if (Naracka) {%>
@@ -147,13 +150,13 @@
                                         <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
                                         <input type="hidden" name="listaj" value="0"/>
                                         <input type="hidden" name="Izmeni" value="1"/>
-                                        <input type="submit" name="Izmeni" value="Izmeni Naracka"/>
+                                        <input type="submit" name="Izmeni" value="Измени нарачка"/>
                                     </form></td>
                                 <td>
                                     <form action="NarackaZaDrug.do" method="post">
                                         <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
                                         <input type="hidden" name="listaj" value="0"/>
-                                        <input type="submit" value="Naracaj/Izmeni Za Drug"/>
+                                        <input type="submit" value="Нарачај/измени за друг"/>
                                     </form>
                                 </td>
                                 <% if (UserGroup == -1) {%>
@@ -161,23 +164,23 @@
                                     <form action="Izlezi.do" method="post">
                                         <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
                                         <input type="hidden" name="listaj" value="0"/>
-                                        <input type="submit" name="Izlezi" value="Izlezi od grupata"/>
+                                        <input type="submit" name="Izlezi" value="Излези од групата"/>
                                     </form>
                                 </td>
                                 <% }
-                            } else {%>
+                                } else {%>
                                 <td>
                                     <form action="Join.do" method="post">
                                         <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
                                         <input type="hidden" name="listaj" value="0"/>
-                                        <input type="submit" name="Join" value="Join"/>
+                                        <input type="submit" name="Join" value="Приклучу се"/>
                                     </form>
                                 </td>
-                            </tr> <% } %>
+                            </tr> <% }%>
                             <tr><td colspan="4">
                                     <ul id="nav">
-                                        <li class="top"><a class="top_link"><span>Restoran: <%= Restorantmp%> Vreme: <%= Vremetmp%></span></a></li>        
-                                        <li class="top"><a id="participanti" class="top_link"><span class="down">Participanti</span></a>
+                                        <li class="top"><a class="top_link"><span>Ресторант: <%= Restorantmp%> Време: <%= Vremetmp%></span></a></li>        
+                                        <li class="top"><a id="participanti" class="top_link"><span class="down">Партиципанти</span></a>
                                             <ul class="sub">
                                                 <% for (int j = 0; j < Namestmp.get(0).size() && j < 5; j++) {
                                                         String Nametmp = Namestmp.get(0).get(j);
@@ -190,8 +193,8 @@
                                     </ul>
                                 </td>
                             </tr>
-                                
-                            
+
+
                             <%
                                 for (int s = 0; s < (Namestmp.get(0).size() * 5) - 4 && s < 20; s++) {
                             %>
@@ -212,16 +215,16 @@
                                     <form name="Listanje" action="" method="post">
                                         <input type="hidden" name="groupID" value="<%=ID_Group%>"/>
                                         <input type="hidden" name="listaj" value="1"/>
-                                        <input type="submit" name="Izlistaj" value="Izlistaj"/>
+                                        <input type="submit" name="Izlistaj" value="Излистај"/>
                                     </form>
                                 </td>
                                 <%
-                                if (!Naracka && !hasCreator) {%>
+                                    if (!Naracka && !hasCreator) {%>
                                 <td>
                                     <form action="Join.do" method="post">
                                         <input type="hidden" name="ID_Grupa" value="<%=ID_Group%>"/>
                                         <input type="hidden" name="listaj" value="0"/>
-                                        <input type="submit" name="Join" value="Join"/>
+                                        <input type="submit" name="Join" value="Приклучи се"/>
                                     </form>
                                 </td>
                                 <% }%>
@@ -229,8 +232,8 @@
                             </tr>
                             <tr><td colspan="4">
                                     <ul id="nav">
-                                        <li class="top"><a class="top_link"><span>Restoran: <%= Restoran%> Vreme: <%= Vreme%></span></a></li>        
-                                        <li class="top"><a id="participanti" class="top_link"><span class="down">Participanti</span></a>
+                                        <li class="top"><a class="top_link"><span>Ресторант: <%= Restoran%> Време: <%= Vreme%></span></a></li>        
+                                        <li class="top"><a id="participanti" class="top_link"><span class="down">Партиципанти</span></a>
                                             <ul class="sub">
                                                 <% for (int j = 0; j < Names.get(0).size() && j < 5; j++) {
                                                         String Name = Names.get(0).get(j);
@@ -243,13 +246,13 @@
                                     </ul>
                                 </td>
                             </tr>
-                            
+
                             <% for (int s = 0; s < (Names.get(0).size() * 5) - 10 && s < 20; s++) {
                             %>
                             <tr> <td> </td></tr>
                             <%   }%>
                             <% }
-                            }%>
+                                }%>
                         </table>
                     </td>
                     <td>

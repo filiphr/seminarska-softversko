@@ -9,7 +9,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <%  String userID = (String) session.getAttribute("username");
+    <%
+        String userID = "";
+        synchronized (session) {
+            userID = (String) session.getAttribute("username");
+        }
         String usrNameDelete = "";
         if (request.getParameter("usrNameDelete") != null) {
             usrNameDelete = request.getParameter("usrNameDelete");

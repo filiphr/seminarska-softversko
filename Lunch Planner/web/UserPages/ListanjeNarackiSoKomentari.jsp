@@ -32,35 +32,35 @@
                 if (i == 0) {
     %>
     <tr>
-            <td><b>Kreator: </b></td>
+            <td><b>Креатор:</b></td>
             <td> <%=ImeCreator%> <%=PrezimeCreator%> </td>
     </tr>
     <tr>
-        <td><b> Restoran: </b></td> 
-        <td> <%=Restoran%> </td>
+        <td><b>Ресторант:</b></td> 
+        <td><%=Restoran%></td>
     </tr>
     <tr>
-        <td><b> Време </b></td>
-        <td> <%=Vreme%> </td>
+        <td><b>Време</b></td>
+        <td><%=Vreme%></td>
     </tr>
     <tr>
-        <td><b> Адреса: </b></td>
-        <td> <%=Adresa%> </td>
+        <td><b>Адреса:</b></td>
+        <td><%=Adresa%></td>
     </tr>
     <tr>
-        <td><b> Телефон: </b></td>
-        <td> <%=Telefon%> </td>
+        <td><b>Телефон:</b></td>
+        <td><%=Telefon%></td>
     </tr>
     <tr>
-        <td><b>Име и презиме    </b></td>
-        <td><b>     Јадење</b></td>
+        <td><b>Име и презиме</b></td>
+        <td><b>Јадење</b></td>
         <td><b>Коментар</b></td>
     </tr>
     <% }%>
     <tr>
-        <td> <%=Name%>  <%= SName%>     </td>
-        <td>      <%=Lunch%></td>
-        <td> <%=Komentar%> </td>
+        <td><%=Name%>  <%= SName%></td>
+        <td><%=Lunch%></td>
+        <td> <%=Komentar%></td>
     </tr>
     <% }}%>
 </table>

@@ -73,8 +73,11 @@ public class ClearPreference extends HttpServlet {
             DataBaseHelper.clearPreferenceRestorant(user);
         else if ("komentar".equals(what))
             DataBaseHelper.clearPreferenceKomentar(user);
-        RequestDispatcher rd= request.getRequestDispatcher("Preferences.jsp");
-        rd.forward(request, response);
+        
+        response.sendRedirect("Preferences.jsp");
+        
+//        RequestDispatcher rd= request.getRequestDispatcher("Preferences.jsp");
+//        rd.forward(request, response);
     }
 
     /** 
@@ -87,7 +90,7 @@ public class ClearPreference extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("Preferences.jsp");
     }
 
     /** 

@@ -10,7 +10,10 @@
 <!DOCTYPE html>
 <html>
     <%
-        String userID = (String) request.getSession().getAttribute("username");
+        String userID = "";
+        synchronized (session) {
+            userID = (String) request.getSession().getAttribute("username");
+        }
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

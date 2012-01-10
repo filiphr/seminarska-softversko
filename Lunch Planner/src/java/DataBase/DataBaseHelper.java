@@ -21,10 +21,10 @@ import java.util.logging.Logger;
 public class DataBaseHelper {
 
     public static List<String> GetQuery(String query, int number) {
-        String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
-        String driver = "com.mysql.jdbc.Driver";
-        String user = "root";
-        String pass = "admin";
+        String dbUrl = DataBaseSetup.getDbUrl();
+        String driver = DataBaseSetup.getDbDriver();
+        String user = DataBaseSetup.getDbUser();
+        String pass = DataBaseSetup.getDbPassword();
         Connection conect = null;
         ResultSet rs = null;
         List<String> lst = new ArrayList<String>();
@@ -45,8 +45,9 @@ public class DataBaseHelper {
             //throw new RuntimeException(e);
         } finally {
             try {
-                if(conect != null){
-                conect.close();}
+                if (conect != null) {
+                    conect.close();
+                }
 
             } catch (SQLException ex) {
                 Logger.getLogger(DataBaseHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,10 +57,10 @@ public class DataBaseHelper {
     }
 
     public static int ExecuteQuery(String Query) {
-        String dbUrl = "jdbc:mysql://localhost:3306/dbsoftversko";
-        String driver = "com.mysql.jdbc.Driver";
-        String user = "root";
-        String pass = "admin";
+        String dbUrl = DataBaseSetup.getDbUrl();
+        String driver = DataBaseSetup.getDbDriver();
+        String user = DataBaseSetup.getDbUser();
+        String pass = DataBaseSetup.getDbPassword();
         Connection conect = null;
         int number = 0;
         try {
@@ -71,8 +72,12 @@ public class DataBaseHelper {
             conect.commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            
-            try{conect.rollback();}catch(SQLException sql) {System.out.println(e.getMessage());}
+
+            try {
+                conect.rollback();
+            } catch (SQLException sql) {
+                System.out.println(e.getMessage());
+            }
             //throw new RuntimeException(e);
         } finally {
             try {
@@ -405,7 +410,7 @@ public class DataBaseHelper {
         ExecuteQuery(sqlStr.toString());
     }
 
-    public static void insertNaracka(String User, int ID_Grupa, String Stavka, String Komentar,String Naracal) {
+    public static void insertNaracka(String User, int ID_Grupa, String Stavka, String Komentar, String Naracal) {
         if (User == null) {
             return;
         }
@@ -525,7 +530,7 @@ public class DataBaseHelper {
         }
         return Komentar;
     }
-    
+
     public static List<String> getKomentars(String User, int ID_Grupa) {
         StringBuilder sqlStr = new StringBuilder("select * from naracka where Korisnik_User = '");
         sqlStr.append(User);
@@ -574,10 +579,11 @@ public class DataBaseHelper {
         }
         return ID;
     }
-    
-    public static String getKomentarByStavka(String Stavka)
-    {
-        if(Stavka == null && Stavka.isEmpty()) return new String();
+
+    public static String getKomentarByStavka(String Stavka) {
+        if (Stavka == null && Stavka.isEmpty()) {
+            return new String();
+        }
         StringBuilder sqlStr = new StringBuilder("select Komentar from naracka where stavkameni_Ime = '");
         sqlStr.append(Stavka);
         sqlStr.append("'");
@@ -766,7 +772,7 @@ public class DataBaseHelper {
     public static void deleteAllPokani() {
         ExecuteQuery("DELETE FROM pokani");
     }
-    
+
     public static void deleteAllPokaniForUser(String User) {
         StringBuilder sqlStr = new StringBuilder("DELETE FROM pokani WHERE korisnik_USer = '");
         sqlStr.append(User);
@@ -903,19 +909,23 @@ public class DataBaseHelper {
         }
         return ID.get(0);
     }
-    
-    public static List<String> getNarackiByNaracatel(String User)
-    {
-        if(User == null || User.isEmpty()) return new ArrayList<String>();
+
+    public static List<String> getNarackiByNaracatel(String User) {
+        if (User == null || User.isEmpty()) {
+            return new ArrayList<String>();
+        }
         List<String> lst = GetQuery("select distinct(Korisnik_User) from naracka where Naracal_User = '" + User + "'", 1);
-        if(lst == null || lst.isEmpty()) return new ArrayList<String>();
+        if (lst == null || lst.isEmpty()) {
+            return new ArrayList<String>();
+        }
         return lst;
     }
-    
-    public static String getGroupCreator(int ID)
-    {
+
+    public static String getGroupCreator(int ID) {
         List<String> lst = GetQuery("select * from tekovnagrupa where idTekovnaGrupa = " + ID, 3);
-        if(lst == null || lst.isEmpty()) return new String();
+        if (lst == null || lst.isEmpty()) {
+            return new String();
+        }
         return lst.get(0);
     }
 }

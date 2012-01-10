@@ -10,7 +10,10 @@
 <!DOCTYPE html>
 <html>
     <%
-        String userID = (String) request.getSession().getAttribute("username");
+        String userID = "";
+        synchronized (session) {
+            userID = (String) request.getSession().getAttribute("username");
+        }
         String restorantCompare = DataBaseHelper.getPreferencesRestoran(userID);
         List<String> lst1 = DataBaseHelper.getPreferencesParticipant(userID);
     %>
