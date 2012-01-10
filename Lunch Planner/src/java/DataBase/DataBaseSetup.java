@@ -13,7 +13,7 @@ public class DataBaseSetup {
     static String dbURL = "jdbc:mysql://localhost:3306/dbsoftversko?useUnicode=yes&characterEncoding=UTF-8";
     static String dbDriver = "com.mysql.jdbc.Driver";
     static String dbUser = "root";
-    static String dbPassword = "admin";
+    static String dbPassword = "";
     
     public static String getDbUrl()
     {

@@ -134,7 +134,7 @@ public class DataBaseHelper {
         if (Vreme.isEmpty()) {
             lst.add("");
         } else {
-            lst.add(Vreme.get(0));
+            lst.add(Vreme.get(0).substring(0, 5));
         }
         return lst;
     }
@@ -219,7 +219,7 @@ public class DataBaseHelper {
     public static String getPreferencesHour(String user) {
         List<String> lst = (GetQuery("select Vreme from preferences where Korisnik_User = '" + user + "'", 1));
         if (!lst.isEmpty()) {
-            return lst.get(0);
+            return lst.get(0).substring(0, 5);
         }
         return new String();
     }
@@ -613,7 +613,7 @@ public class DataBaseHelper {
     public static String getVremeFromGroup(int groupID) {
         String str = "SELECT Vreme FROM tekovnagrupa WHERE idTekovnaGrupa='" + groupID + "';";
         List<String> lst = GetQuery(str, 1);
-        return lst.get(0);
+        return lst.get(0).substring(0, 5);
     }
 
     public static void deleteNaracka(int ID_Naracka) {
