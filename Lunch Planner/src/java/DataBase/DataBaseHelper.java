@@ -611,7 +611,7 @@ public class DataBaseHelper {
     }
 
     public static String getVremeFromGroup(int groupID) {
-        String str = "SELECT DATE_FORMAT(Vreme(), '%H:%i') FROM tekovnagrupa WHERE idTekovnaGrupa='" + groupID + "';";
+        String str = "SELECT Vreme FROM tekovnagrupa WHERE idTekovnaGrupa='" + groupID + "';";
         List<String> lst = GetQuery(str, 1);
         return lst.get(0);
     }
