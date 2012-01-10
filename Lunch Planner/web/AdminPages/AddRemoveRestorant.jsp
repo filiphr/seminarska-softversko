@@ -59,8 +59,6 @@
                     <tr><td colspan="2"><input type="submit" value="Додади"/></td></tr>
                 </table>
             </form>
-        </div>
-        <div>
             <form name="RemoveRestorantForm" method="POST" action="RemoveRestorant.do" onsubmit="return validateRemoveRestorantForm()">
                 <table>
                     <tr><th width="300px">Бришење ресторант</th></tr>
