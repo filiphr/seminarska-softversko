@@ -9,7 +9,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -927,5 +929,33 @@ public class DataBaseHelper {
             return new String();
         }
         return lst.get(0);
+    }
+    
+    public static void Arhiviraj()
+    {
+        List<String> lst = getAllGroups();
+        Calendar date = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String Today = format.format(date.getTime());
+        for(int i = 0; i<lst.size(); i++)
+        {
+            int grupa = Integer.parseInt(lst.get(i));
+            List<String> Ime = GetQuery("select naracka.Korisnik_User, Restoran_Ime, stavkameni_Ime from naracka,tekovnagrupa where TekovnaGrupa_idTekovnaGrupa = idTekovnaGrupa And idTekovnaGrupa = " + grupa, 1);
+            List<String> Restoran = GetQuery("select naracka.Korisnik_User, Restoran_Ime, stavkameni_Ime from naracka,tekovnagrupa where TekovnaGrupa_idTekovnaGrupa = idTekovnaGrupa And idTekovnaGrupa = " + grupa, 2);
+            List<String> Stavka = GetQuery("select naracka.Korisnik_User, Restoran_Ime, stavkameni_Ime from naracka,tekovnagrupa where TekovnaGrupa_idTekovnaGrupa = idTekovnaGrupa And idTekovnaGrupa = " + grupa, 3);
+            for(int j = 0; j<Ime.size(); j++)
+            {
+                DataBaseHelper.insertArhiviraniGrupi(Today, Ime.get(j), Restoran.get(j), Stavka.get(j));
+            }
+        }
+        DataBaseHelper.deleteAllNaracki();
+        DataBaseHelper.deleteAllGroups();
+        DataBaseHelper.deleteAllPokani();
+        DataBaseHelper.deleteAllNotification();
+    }
+    
+    public static void deleteAllNotification()
+    {
+        ExecuteQuery("DELETE FROM notification");
     }
 }
