@@ -60,14 +60,14 @@
                 var minutes = now.getMinutes();
                 var hours = now.getHours();
                 hours = hours + Div(minutes+30,60);
-                minutes = Mod(minutes+30,60);
+                minutes = Mod(minutes+45,60);
                 if (hours<10)
                     hours = "0" + hours;
                 if (minutes<10) 
                     minutes= "0" + minutes;
                 var cmp = hours+":"+minutes;
                 if( strcmp(cmp, x) > 0){
-                    alert("Изберете време бар половина час по сегашниот момент");
+                    alert("Изберете време бар 45 минути по сегашниот момент");
                     return false;
                 }    
             }
