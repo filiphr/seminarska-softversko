@@ -11,11 +11,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Нарачка</title>
-
-    </head>
     <%
         //get the Group ID for the order
         Integer IDGroup = Integer.parseInt(request.getParameter("groupID"));
@@ -50,11 +45,10 @@
             flag = Integer.parseInt(flagg);
         }
     %>
-
-
-
-    <body>
-        <script>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Нарачка</title>
+        <script type="text/javascript">
             function formSubmit(source)
             {
                 var myForm=document.getElementById("naracka");
@@ -92,7 +86,12 @@
                 window.location="MainPage.jsp";
             }
         </script>
+    </head>
+    
 
+
+
+    <body>
         <jsp:include page="../header.jsp"/>
         <div>
             <table>
@@ -121,7 +120,7 @@
                                             <tr>
                                                 <td>                            
                                                     <select  name="Naracuvac" size="3" onchange="formSubmit('Naracuvac')">
-                                                        <option value="" disabled="disabled">Изберете во кое име сакате да нарачате</option>
+                                                        <option value="" disabled="disabled">Изберете во чие име сакате да нарачате</option>
                                                         <%
                                                             //Users without order
                                                             List<String> UsersNoOrderOrUpdate = new ArrayList<String>();
