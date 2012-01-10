@@ -19,7 +19,7 @@
             function Potvrda()
             {
                 
-                return confirm("Dali sakate da ja izbrisite grupata");
+                return confirm("Дали сакате да ја избришете групата?");
             };
         </script>
     </head>

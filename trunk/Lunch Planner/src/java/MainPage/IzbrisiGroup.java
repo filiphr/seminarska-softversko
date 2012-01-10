@@ -75,7 +75,7 @@ public class IzbrisiGroup extends HttpServlet {
         String inf = (String)request.getParameter("t1");
         int Group = Integer.parseInt(request.getParameter("groupID"));
         List<String> resVreme = DataBaseHelper.getRestoranAndVreme(Group);
-        String str = "Grupata vo " + resVreme.get(0) + " vo " + resVreme.get(1) + " kreirana od " + DataBaseHelper.getUserIme(User) + " " + DataBaseHelper.getUserPrezime(User)+ " e izbrisana, Pricina : ";
+        String str = "Групата во " + resVreme.get(0) + " во " + resVreme.get(1) + " часот, креирана од " + DataBaseHelper.getUserIme(User) + " " + DataBaseHelper.getUserPrezime(User)+ " е избришана, од причина: ";
         List<String> Users = DataBaseHelper.getUserByGroup(Group);
         for(int i = 0; i<Users.size(); i++)
         {
