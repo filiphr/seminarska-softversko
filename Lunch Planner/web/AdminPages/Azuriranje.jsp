@@ -31,6 +31,7 @@
             <p><a href="AddRemoveRestorant.jsp">Ажурирање на листа на ресторанти</a></p>
             <p><a href="AddRemoveItem.jsp">Ажурирање на мени на ресторантите</a></p>
             <p><a href="NEKADE_VO_NOKJTA.jsp">Архивирање на групите</a></p>
+            <%-- TUKA TREBA DA SE BUTNE ARHIVIRANJE NA GRUPITE --%>
         </div>
     </body>
 </html>
