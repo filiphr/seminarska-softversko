@@ -4,6 +4,8 @@
     Author     : user
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="javax.xml.stream.events.Namespace"%>
 <%@page import="java.util.List"%>
 <%@page import="DataBase.DataBaseHelper" %>
@@ -28,6 +30,11 @@
         <div>
             <table>
                 <%
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                String Today = format.format(c.getTime());
+                String[] TodaySplit = Today.split(":");
+                int todayminutes = Integer.parseInt(TodaySplit[0])*60 + Integer.parseInt(TodaySplit[1]);
                     String User = "";
                     synchronized (session) {
                         User = (String) request.getSession().getAttribute("username");
@@ -135,7 +142,8 @@
                                     List<String> lst1tmp = DataBaseHelper.getRestoranAndVreme(Grupa);
                                     String Restorantmp = lst1tmp.get(0);
                                     String Vremetmp = lst1tmp.get(1);
-
+                                    String[] VremetmpSplit = Vremetmp.split(":");
+                                    int Vremetmpminutes = Integer.parseInt(VremetmpSplit[0])*60 + Integer.parseInt(VremetmpSplit[1]) + 30;
                             %>
                             <tr>
                                 <td>
@@ -145,6 +153,7 @@
                                         <input type="submit" name="Izlistaj" value="Излистај"/>
                                     </form>
                                 </td>
+                                <% if(Vremetmpminutes > todayminutes) { %>
                                 <%  if (Naracka) {%>
                                 <td><form action="Naracka.jsp?groupID=<%=Grupa%>&join=true" method="post">
                                         <input type="hidden" name="ID_Grupa" value="<%=Grupa%>"/>
@@ -175,8 +184,8 @@
                                         <input type="hidden" name="listaj" value="0"/>
                                         <input type="submit" name="Join" value="Приклучу се"/>
                                     </form>
-                                </td>
-                            </tr> <% }%>
+                                </td> <% } }%>
+                            </tr> 
                             <tr><td colspan="4">
                                     <ul id="nav">
                                         <li class="top"><a class="top_link"><span>Ресторант: <%= Restorantmp%> Време: <%= Vremetmp%></span></a></li>        
@@ -209,6 +218,9 @@
                                         List<String> lst1 = DataBaseHelper.getRestoranAndVreme(ID_Group);
                                         String Restoran = lst1.get(0);
                                         String Vreme = lst1.get(1);
+                                        String[] VremeSplit = Vreme.split(":");
+                                    int Vrememinutes = Integer.parseInt(VremeSplit[0])*60 + Integer.parseInt(VremeSplit[1]) + 30;
+                                         
                             %>
                             <tr>
                                 <td>
@@ -219,7 +231,7 @@
                                     </form>
                                 </td>
                                 <%
-                                    if (!Naracka && !hasCreator) {%>
+                                    if (!Naracka && !hasCreator && Vrememinutes > todayminutes) {%>
                                 <td>
                                     <form action="Join.do" method="post">
                                         <input type="hidden" name="ID_Grupa" value="<%=ID_Group%>"/>
