@@ -103,6 +103,12 @@ public class DataBaseHelper {
         }
         return lst;
     }
+    
+    public static String getUserName(String User)
+    {
+        List<String> str = GetQuery("select User from korisnik where User = '" + User + "'", 1);
+        return str.get(0);
+    }
 
     public static boolean CheckUser(String user, String password) {
         List<String> lst = GetQuery("select * from korisnik where User = '" + user + "'", 5);
@@ -218,7 +224,7 @@ public class DataBaseHelper {
 
     public static String getPreferencesHour(String user) {
         List<String> lst = (GetQuery("select Vreme from preferences where Korisnik_User = '" + user + "'", 1));
-        if (!lst.isEmpty()) {
+        if (!lst.isEmpty() && !(lst.get(0).isEmpty())) {
             return lst.get(0).substring(0, 5);
         }
         return new String();

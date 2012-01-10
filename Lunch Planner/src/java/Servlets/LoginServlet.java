@@ -88,15 +88,15 @@ public class LoginServlet extends HttpServlet {
         //Check whether a user exists in the database
         String user = null;
         if (DataBaseHelper.CheckUser(username, password)) {
-            user = username;
+            user = DataBaseHelper.getUserName(username);
         }
-
+        
         //If a user exists then add him in session and redirect him to MainPage.jsp
         if (user != null) {
 
             if ("selected".equals(remember)) {
                 //Save his password and username in his cookie
-                Cookie c = new Cookie("username", username);
+                Cookie c = new Cookie("username", user);
                 c.setMaxAge(100000);
                 response.addCookie(c);
 
@@ -109,7 +109,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
 
             //Save the user in the session
-            session.setAttribute("username", username);
+            session.setAttribute("username", user);
             //Redirect to MainPage.jsp
             response.sendRedirect("UserPages/MainPage.jsp");
         } else {

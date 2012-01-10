@@ -55,6 +55,9 @@
                             List<String> lst1 = DataBaseHelper.getRestoranAndVreme(ID_Grupa);
                             String Restoran = lst1.get(0);
                             String Vreme = lst1.get(1);
+                            String[] VremetmpSplit = Vreme.split(":");
+                            int Vremetmpminutes = Integer.parseInt(VremetmpSplit[0])*60 + Integer.parseInt(VremetmpSplit[1]) - 30;
+                            if(Vremetmpminutes > todayminutes) {
                             if (i == 0) {
                 %>
                 <tr>
@@ -72,7 +75,10 @@
                         </form>
                     </td>
                 </tr>
-                <% }
+                <% }else
+                {
+                           DataBaseHelper.deletePokani(User, ID_Grupa);                        
+                }}
                     }
                     List<String> Notification = DataBaseHelper.getNotification(User);
                     for (int i = 0; i < Notification.size(); i++) {
@@ -102,6 +108,9 @@
                     int UserGroup = DataBaseHelper.getGroupIDFromCreator(User);
                     if (UserGroup != -1) {
                         List<String> UserRestoran = DataBaseHelper.getRestoranAndVreme(UserGroup);
+                        String Vreme = UserRestoran.get(1);
+                            String[] VremetmpSplit = Vreme.split(":");
+                            int Vremetmpminutes = Integer.parseInt(VremetmpSplit[0])*60 + Integer.parseInt(VremetmpSplit[1]) - 30;
                 %>
                 <tr>
                     <td>
@@ -116,6 +125,7 @@
                             <input type="submit" value="Излистај нарачки во групата"/>
                         </form>
                     </td>
+                    <% if(Vremetmpminutes > todayminutes) { %>
                     <td>
                         <form id="IzbrisiForm" action="IzbrisiGroup.do" method="post" onsubmit="return Potvrda()">
                             <input type="hidden" name="groupID" value="<%=UserGroup%>"/>
@@ -123,7 +133,7 @@
                             <input type="submit" name="izbrisi" value="Избриши група"/>
                             <b> Внесете причина: </b><INPUT TYPE=TEXT NAME="t1"/>
                         </form>
-                    </td>
+                    </td> <% } %>
                 </tr>
                 <% }%>
             </table>
@@ -143,7 +153,7 @@
                                     String Restorantmp = lst1tmp.get(0);
                                     String Vremetmp = lst1tmp.get(1);
                                     String[] VremetmpSplit = Vremetmp.split(":");
-                                    int Vremetmpminutes = Integer.parseInt(VremetmpSplit[0])*60 + Integer.parseInt(VremetmpSplit[1]) + 30;
+                                    int Vremetmpminutes = Integer.parseInt(VremetmpSplit[0])*60 + Integer.parseInt(VremetmpSplit[1]) - 30;
                             %>
                             <tr>
                                 <td>
@@ -219,7 +229,7 @@
                                         String Restoran = lst1.get(0);
                                         String Vreme = lst1.get(1);
                                         String[] VremeSplit = Vreme.split(":");
-                                    int Vrememinutes = Integer.parseInt(VremeSplit[0])*60 + Integer.parseInt(VremeSplit[1]) + 30;
+                                    int Vrememinutes = Integer.parseInt(VremeSplit[0])*60 + Integer.parseInt(VremeSplit[1]) - 30;
                                          
                             %>
                             <tr>
@@ -259,7 +269,7 @@
                                 </td>
                             </tr>
 
-                            <% for (int s = 0; s < (Names.get(0).size() * 5) - 10 && s < 20; s++) {
+                            <% for (int s = 0; s < (Names.get(0).size() * 5) - 4 && s < 20; s++) {
                             %>
                             <tr> <td> </td></tr>
                             <%   }%>
