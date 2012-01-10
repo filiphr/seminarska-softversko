@@ -40,7 +40,7 @@
             <a href="AddRemoveItem.jsp">Ажурирање на мени на ресторантите</a>
             <br/>
             <br/>
-            <a href="NEKADE_VO_NOKJTA.jsp">Архивирање на групите</a>
+            <a href="Arhiviraj.do">Архивирање на групите</a>
             <%-- TUKA TREBA DA SE BUTNE ARHIVIRANJE NA GRUPITE --%>
         </div>
     </body>
