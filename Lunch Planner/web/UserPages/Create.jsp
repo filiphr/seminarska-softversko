@@ -18,7 +18,22 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Креирање на настан</title>
         <script type="text/javascript">
-            function validate()
+            
+            function strcmp(a, b) {
+                if (a.toString() < b.toString()) return -1;
+                if (a.toString() > b.toString()) return 1;
+                return 0;
+            }
+            
+            function Mod(X, Y) { 
+                return X - Math.floor(X/Y)*Y; 
+            }
+            
+            function Div(X, Y) { 
+                return Math.floor(X/Y);
+            }
+            
+            function validateForma()
             {
                 var x= document.forms["forma"]["ImeRestorant"].value;
                 if(x==null || x=="")
@@ -37,8 +52,23 @@
                 {
                     alert("Формат за време ЧЧ:ММ");
                     return false;
-                }  
+                }
+                var now = new Date();
+                var minutes = now.getMinutes();
+                var hours = now.getHours();
+                hours = hours + Div(minutes+30,60);
+                minutes = Mod(minutes+30,60);
+                if (hours<10)
+                    hours = "0" + hours;
+                if (minutes<10) 
+                    minutes= "0" + minutes;
+                var cmp = hours+":"+minutes;
+                if( strcmp(cmp, x) > 0){
+                    alert("Изберете време бар половина час по сегашниот момент");
+                    return false;
+                }    
             }
+            
             function goToMain()
             {
                 window.location="MainPage.jsp"
@@ -48,7 +78,7 @@
     <body>
         <jsp:include page="../header.jsp"/>
         <div>
-            <form name="forma" method="post" action= "CreateNastan.do" onsubmit="return validate()">
+            <form name="forma" method="post" action= "CreateNastan.do" onsubmit="return validateForma()">
                 <table>
                     <tr>
                     <tr>
