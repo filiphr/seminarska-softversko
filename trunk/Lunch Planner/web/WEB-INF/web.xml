@@ -20,6 +20,15 @@
         <filter-name>CreateFilter</filter-name>
         <filter-class>Filters.CreateFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>CharSetFilter</filter-name>
+        <filter-class>Filters.CharSetFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharSetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>CreateFilter</filter-name>
         <url-pattern>/UserPages/Create.jsp</url-pattern>

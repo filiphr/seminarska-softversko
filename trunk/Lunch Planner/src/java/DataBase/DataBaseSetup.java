@@ -10,10 +10,10 @@ package DataBase;
  */
 public class DataBaseSetup {
     
-    static String dbURL = "jdbc:mysql://localhost:3306/dbsoftversko";
+    static String dbURL = "jdbc:mysql://localhost:3306/dbsoftversko?useUnicode=yes&characterEncoding=UTF-8";
     static String dbDriver = "com.mysql.jdbc.Driver";
     static String dbUser = "root";
-    static String dbPassword = "";
+    static String dbPassword = "admin";
     
     public static String getDbUrl()
     {

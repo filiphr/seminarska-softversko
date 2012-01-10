@@ -26,7 +26,7 @@ public class Popolni extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,41 +53,47 @@ public class Popolni extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DataBaseHelper.insertUser("Марко", "Доцевски", "mdocevski", "mdocevski@gmail.com ", "marko");
-        DataBaseHelper.insertUser("Игор", "Судијовски", "isudijovski", "isudijovski@gmail.com ", "igor");
-        DataBaseHelper.insertUser("Филип", "Хрисафов", "fhrisafov", "fhrisafov@gmail.com ", "filip");
-        DataBaseHelper.insertUser("Ѓорѓи", "Маџаров", "gmadzarov", "asdfa@asdfa.sad", "gorgi");
-        DataBaseHelper.insertAdministrator("isudijovski");
-        DataBaseHelper.insertRestoran("Енрико", "Лептокарија", "076512354");
-        DataBaseHelper.insertRestoran("Вегера", "Карпош 3", "076512354");
-        DataBaseHelper.insertRestoran("Старо буре", "Лептокарија", "076512354");
-        DataBaseHelper.insertStavkaMeni("Пица");
-        DataBaseHelper.insertStavkaMeni("Лазањи");
-        DataBaseHelper.insertStavkaMeni("Кифла");
-        DataBaseHelper.insertStavkaMeni("Кебап");
-        DataBaseHelper.insertStavkaMeni("Пилешки прсти");
-        DataBaseHelper.insertMeni("250", "Енрико", "Пица");
-        DataBaseHelper.insertMeni("80", "Енрико", "Сендвич");
-        DataBaseHelper.insertMeni("280", "Енрико", "Лазањи");
-        DataBaseHelper.insertMeni("20", "Вегера", "Геврек");
-        DataBaseHelper.insertMeni("30", "Вегера", "Кифла");
-        DataBaseHelper.insertMeni("50", "Вегера", "Бурек");
-        DataBaseHelper.insertMeni("12", "Старо буре", "Кебап");
-        DataBaseHelper.insertMeni("170", "Старо буре", "Ловечка");
-        DataBaseHelper.insertMeni("250", "Старо буре", "Пилешки прсти");
-        DataBaseHelper.insertTekovnaGrupa("12:00:00", "isudijovski", "Енрико");
-        DataBaseHelper.insertTekovnaGrupa("11:30:00", "mdocevski", "Вегера");
-        DataBaseHelper.insertNaracka("fhrisafov", 1, "Пица", "Без кечап", "fhrisafov");
-        DataBaseHelper.insertNaracka("isudijovski", 1, "Лазањи", "", "isudijovski");
-        DataBaseHelper.insertNaracka("mdocevski", 2, "Бурек", "", "mdocevski");
-        DataBaseHelper.insertArhiviraniGrupi("2012-01-05", "isudijovski", "Енрико", "Пица");
-        DataBaseHelper.insertArhiviraniGrupi("2012-01-06", "isudijovski", "Вегера", "Бурек");
-        DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "isudijovski", "Енрико", "Пица");
-        DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "mdocevski", "Енрико", "Пица");
-        DataBaseHelper.insertNotofication("Групата...", "isudijovski");
-        DataBaseHelper.insertNotofication("Групата mdocevski", "gmadzarov");
-        DataBaseHelper.insertPokani("gmadzarov", 1);
-        DataBaseHelper.insertPokani("gmadzarov", 2);
+         DataBaseHelper.insertUser("Марко","Доцевски","mdocevski","mdocevski@gmail.com ","marko");
+         DataBaseHelper.insertUser("Игор","Судијовски","isudijovski","isudijovski@gmail.com ","igor");
+         DataBaseHelper.insertUser("Филип","Хрисафов","fhrisafov","fhrisafov@gmail.com ","filip");
+         DataBaseHelper.insertUser("Ѓорѓи", "Маџаров", "gmadzarov", "asdfa@asdfa.sad", "gorgi");
+         DataBaseHelper.insertAdministrator("isudijovski");
+         DataBaseHelper.insertRestoran("Енрико", "Лептокарија", "076512354");
+         DataBaseHelper.insertRestoran("Вегера", "Карпош 3", "076512354");
+         DataBaseHelper.insertRestoran("Старо буре", "Лептокарија", "076512354");
+         DataBaseHelper.insertStavkaMeni("Пица");
+         DataBaseHelper.insertStavkaMeni("Лазањи");
+         DataBaseHelper.insertStavkaMeni("Кифла");
+         DataBaseHelper.insertStavkaMeni("Кебап");
+         DataBaseHelper.insertStavkaMeni("Пилешки прсти");
+         DataBaseHelper.insertMeni("250", "Енрико", "Пица");
+         DataBaseHelper.insertMeni("80", "Енрико", "Сендвич");
+         DataBaseHelper.insertMeni("280", "Енрико", "Лазањи");
+         DataBaseHelper.insertMeni("20", "Вегера", "Геврек");
+         DataBaseHelper.insertMeni("30", "Вегера", "Кифла");
+         DataBaseHelper.insertMeni("50", "Вегера", "Бурек");
+         DataBaseHelper.insertMeni("12", "Старо буре", "Кебап");
+         DataBaseHelper.insertMeni("170", "Старо буре", "Ловечка");
+         DataBaseHelper.insertMeni("250", "Старо буре", "Пилешки прсти");
+         DataBaseHelper.insertTekovnaGrupa("12:00:00", "isudijovski", "Енрико");
+         DataBaseHelper.insertTekovnaGrupa("11:30:00", "mdocevski", "Вегера");
+         DataBaseHelper.insertNaracka("fhrisafov", 1, "Пица", "Без кечап", "fhrisafov");
+         DataBaseHelper.insertNaracka("isudijovski", 1, "Лазањи","", "isudijovski");
+         DataBaseHelper.insertNaracka("mdocevski", 2, "Бурек","","mdocevski");
+         DataBaseHelper.insertArhiviraniGrupi("2012-01-05", "isudijovski", "Енрико", "Пица");
+         DataBaseHelper.insertArhiviraniGrupi("2012-01-06", "isudijovski", "Вегера", "Бурек");
+         DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "isudijovski", "Енрико", "Пица");
+         DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "mdocevski", "Енрико", "Пица");
+         DataBaseHelper.insertNotofication("Групата ...", "isudijovski");
+         DataBaseHelper.insertNotofication("Групата доцевски...", "mdocevski");
+         DataBaseHelper.insertNotofication("Групата доцевски...", "gmadzarov");
+         DataBaseHelper.insertPokani("gmadzarov", 1);
+         DataBaseHelper.insertPokani("gmadzarov", 2);
+         DataBaseHelper.insertPreferencesParticipant("mdocevski", "fhrisafov");
+         DataBaseHelper.insertPreferencesParticipant("gmadzarov", "isudijovski");
+         DataBaseHelper.insertPreferencesParticipant("gmadzarov", "fhrisafov");
+         DataBaseHelper.insertPreferencesParticipant("gmadzarov", "mdocevski");
+         DataBaseHelper.updatePreferences("gmadzarov", "09:45:00", "Вегера", "Бурек", null);
         response.sendRedirect("Najava.jsp");
     }
 

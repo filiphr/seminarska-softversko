@@ -84,9 +84,6 @@
                     <tr><td colspan="2"><input type="submit" value="Додади"/></td></tr>
                 </table>
             </form>
-        </div>
-
-        <div>
             <form method="post" action="">  
                 <table>
                     <tr><th width="300px">Бришење на ставка од менито</th></tr>

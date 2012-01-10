@@ -93,10 +93,6 @@
                     <tr><td colspan="2"><input type="submit" value="Додади"/></td></tr>
                 </table>
             </form>
-        </div>
-
-
-        <div>
             <form method="post" action="" id="usrDeleteForm">
                 <table>
                     <tr><th colspan="2" width="300px">Бришење на кориснки</th></tr>

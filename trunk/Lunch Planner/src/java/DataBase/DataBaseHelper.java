@@ -386,7 +386,7 @@ public class DataBaseHelper {
         if (Vreme.isEmpty() || User.isEmpty() || Restoran.isEmpty()) {
             return;
         }
-        StringBuilder sqlStr = new StringBuilder("INSERT INTO tekovnagrupa (Vreme,Korisnik_USer,Restoran_Ime) VALUES('");
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO tekovnagrupa (Vreme, Korisnik_User, Restoran_Ime) VALUES('");
         sqlStr.append(Vreme);
         sqlStr.append("', '");
         sqlStr.append(User);
@@ -611,7 +611,7 @@ public class DataBaseHelper {
     }
 
     public static String getVremeFromGroup(int groupID) {
-        String str = "SELECT Vreme FROM tekovnagrupa WHERE idTekovnaGrupa='" + groupID + "';";
+        String str = "SELECT DATE_FORMAT(Vreme(), '%H:%i') FROM tekovnagrupa WHERE idTekovnaGrupa='" + groupID + "';";
         List<String> lst = GetQuery(str, 1);
         return lst.get(0);
     }
