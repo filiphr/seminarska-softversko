@@ -8,6 +8,7 @@ import DataBase.DataBaseHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -78,6 +79,7 @@ public class Naracka extends HttpServlet {
 
         //Get the pending order
         List<String> Odbrani = new ArrayList<String>();
+
         String tmp1 = request.getParameter("Odbrani");
         if (tmp1 == null || tmp1.isEmpty()) {
             //If the order is empty just forward to Naracka.jsp
@@ -86,10 +88,7 @@ public class Naracka extends HttpServlet {
             response.sendRedirect("Naracka.jsp");
         } else {
             String[] tmpNiza = tmp1.split(";;");
-            for(int i = 0; i<tmpNiza.length; i++)
-            {
-                Odbrani.add(tmpNiza[i]);
-            }
+            Odbrani.addAll(Arrays.asList(tmpNiza));
             //Get the user for whom the order is being made
             String user = (String) request.getParameter("OrderUser");
 
@@ -132,10 +131,10 @@ public class Naracka extends HttpServlet {
 
             if (!user.equals(UserOrdering)) {
                 response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&join=false");
-            }else{
+            }else {
                 response.sendRedirect("MainPage.jsp");
             }
-                
+
         }
     }
 
