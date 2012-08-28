@@ -17,6 +17,7 @@ public class CreateDB {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        String korisnici [] = new String[500];
         for (int i=1; i<51; i++)
         {
             DataBaseHelper.insertUser("Филип"+i, "Хрисафов"+i, "fhrisafov"+i, "filip.hrisfov@gmail.com", "fhrisafov"+i);
@@ -37,11 +38,20 @@ public class CreateDB {
             }
         }
         
-        String [] stavki = {"Капричиоза", "Маргарита", "Кватро Формаџи", "Кватро Стаџоне", "Рамстек", "Бифтек", "Бурек",
+        String [] stavkiHelp = {"Капричиоза", "Маргарита", "Кватро Формаџи", "Кватро Стаџоне", "Рамстек", "Бифтек", "Бурек",
             "Симит погача", "Сарма", "Пастрмка", "Шопска салата", "Цезар салата", "Македонска салата",
             "Шеф салата", "Вешалица", "Кременадла", "Шарска", "Плескавица", "Колбаси", "Ражнич", "Пилешки стек", "Увијач", 
             "Пастрмајлија", "Пача", "Качамак", "Тавче гравче", "Мусака", "Гулаш", "Полнети пиперки", "Шкембе чорба", "Телешка чорба",};
         
+        String stavki [] = new String[1024];
+        
+        for (int i=0; i<stavkiHelp.length; i++)
+        {
+            String ime=stavkiHelp[i];
+            for (int j=0; j<3; j++){
+                restorani[i*3+j] = ime+""+(j+1);
+            }
+        }
         
     }
 }
