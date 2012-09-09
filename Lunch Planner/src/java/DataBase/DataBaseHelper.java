@@ -5,6 +5,7 @@
 package DataBase;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -73,6 +74,47 @@ public class DataBaseHelper {
             conect.setAutoCommit(false);
             Statement s = conect.createStatement();
             number = s.executeUpdate(Query);
+            conect.commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+            try {
+                conect.rollback();
+            } catch (SQLException sql) {
+                System.out.println(e.getMessage());
+            }
+            //throw new RuntimeException(e);
+        } finally {
+            try {
+                if (conect != null) {
+                    conect.setAutoCommit(true);
+                    conect.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBaseHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return number;
+    }
+    
+    public static int ExecuteQueryAndGetID(String Query) {
+        String dbUrl = DataBaseSetup.getDbUrl();
+        String driver = DataBaseSetup.getDbDriver();
+        String user = DataBaseSetup.getDbUser();
+        String pass = DataBaseSetup.getDbPassword();
+        Connection conect = null;
+        int number = 0;
+        try {
+            Class.forName(driver).newInstance();
+            conect = DriverManager.getConnection(dbUrl, user, pass);
+            conect.setAutoCommit(false);
+            Statement s = conect.createStatement();
+            number = s.executeUpdate(Query, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = s.getGeneratedKeys();
+            if (rs.next()){
+                number=rs.getInt(1);
+            }
+            rs.close();
             conect.commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -684,15 +726,13 @@ public class DataBaseHelper {
         ExecuteQuery("DELETE FROM naracka");
     }
 
-    public static void insertArhiviraniGrupi(String Vreme, String User, String Restoran, String Stavka) {
-        StringBuilder sqlStr = new StringBuilder("INSERT INTO arhiviranagrupa (Vreme, Korisnik_User, Restoran, StavkaMeni) VALUES('");
-        sqlStr.append(Vreme);
-        sqlStr.append("', '");
+    public static void insertArhiviraniGrupi(String User, String Stavka, int GroupID) {
+        StringBuilder sqlStr = new StringBuilder("INSERT INTO arhiviranagrupa (Korisnik_User, StavkaMeni, Grupa) VALUES('");
         sqlStr.append(User);
         sqlStr.append("', '");
-        sqlStr.append(Restoran);
-        sqlStr.append("', '");
         sqlStr.append(Stavka);
+        sqlStr.append("', '");
+        sqlStr.append(GroupID);
         sqlStr.append("' );");
         ExecuteQuery(sqlStr.toString());
     }
@@ -953,7 +993,7 @@ public class DataBaseHelper {
             List<String> Stavka = GetQuery("select naracka.Korisnik_User, Restoran_Ime, stavkameni_Ime from naracka,tekovnagrupa where TekovnaGrupa_idTekovnaGrupa = idTekovnaGrupa And idTekovnaGrupa = " + grupa, 3);
             for(int j = 0; j<Ime.size(); j++)
             {
-                DataBaseHelper.insertArhiviraniGrupi(Today, Ime.get(j), Restoran.get(j), Stavka.get(j));
+              // DataBaseHelper.insertArhiviraniGrupi(Today, Ime.get(j), Restoran.get(j), Stavka.get(j));
             }
         }
         DataBaseHelper.deleteAllNaracki();
@@ -965,5 +1005,33 @@ public class DataBaseHelper {
     public static void deleteAllNotification()
     {
         ExecuteQuery("DELETE FROM notification");
+    }
+
+    public static int insertGrupa(String restoran, String kreator, Date date) {
+          StringBuilder sqlStr = new StringBuilder("INSERT INTO grupa (Restoran, Kreator, Vreme) VALUES('");
+        sqlStr.append(restoran);
+        sqlStr.append("', '");
+        sqlStr.append(kreator);
+        sqlStr.append("', '");
+        sqlStr.append(date);
+        sqlStr.append("' );");
+        
+        //sqlStr.append("SELECT LAST_INSERT_ID();");
+        
+        
+        int groupID = ExecuteQueryAndGetID(sqlStr.toString());
+        
+        return groupID;
+    }
+
+    public static void insertGrupaKorisnik(String kreator, int groupID) {
+         StringBuilder sqlStr = new StringBuilder("INSERT INTO grupa_korisnik (korisnik, grupa) VALUES('");
+        sqlStr.append(kreator);
+        sqlStr.append("', '");
+        sqlStr.append(groupID);
+        sqlStr.append("' );");
+
+       ExecuteQuery(sqlStr.toString());
+        
     }
 }
