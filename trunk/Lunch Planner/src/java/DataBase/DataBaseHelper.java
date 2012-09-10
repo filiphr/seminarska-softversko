@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -1007,7 +1008,7 @@ public class DataBaseHelper {
         ExecuteQuery("DELETE FROM notification");
     }
 
-    public static int insertGrupa(String restoran, String kreator, Date date) {
+    public static int insertGrupa(String restoran, String kreator, Timestamp date) {
           StringBuilder sqlStr = new StringBuilder("INSERT INTO grupa (Restoran, Kreator, Vreme) VALUES('");
         sqlStr.append(restoran);
         sqlStr.append("', '");
