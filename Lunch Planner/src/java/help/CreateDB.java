@@ -6,6 +6,7 @@ package help;
 
 import DataBase.DataBaseHelper;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -114,7 +115,7 @@ public class CreateDB {
               }
               usedKorisnici.add(kreator);
               String restoran = restoraniHelp[r.nextInt(restoraniHelp.length)];
-              Date date = new Date(startCalendar.getTimeInMillis() + r.nextInt(18)*halfHourInMilis);
+              Timestamp date = new Timestamp(startCalendar.getTimeInMillis() + r.nextInt(18)*halfHourInMilis);
               Vector<String> stavkiVector = restoran_stavki.get(restoran);
               String stavka = stavkiVector.get(r.nextInt(stavkiVector.size()));
               int groupID=0;
