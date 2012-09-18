@@ -29,7 +29,7 @@ public class CreateDB {
         ArrayList<String> korisnici = new ArrayList<String>();
         for (int i=1; i<14; i++)
         {
-           // InsertUserInDB(i);
+            InsertUserInDB(i);
             korisnici.add("fhrisafov"+i);
             korisnici.add("isudijovski"+i);
             korisnici.add("gmadzarov"+i);
@@ -119,7 +119,7 @@ public class CreateDB {
               Vector<String> stavkiVector = restoran_stavki.get(restoran);
               String stavka = stavkiVector.get(r.nextInt(stavkiVector.size()));
               int groupID=0;
-              groupID = DataBaseHelper.insertGrupa(restoran, kreator, date);
+//              groupID = DataBaseHelper.insertGrupa(restoran, kreator, date,1);
               groupIDs.add(groupID);
               
               DataBaseHelper.insertGrupaKorisnik(kreator, groupID);

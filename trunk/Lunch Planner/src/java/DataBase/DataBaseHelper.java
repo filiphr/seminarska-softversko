@@ -5,7 +5,8 @@
 package DataBase;
 
 import java.sql.Connection;
-import java.sql.Date;
+//import java.sql.Date;
+//import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,11 +15,16 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import model.OdrzuvanjePredict;
+import model.Prediction;
+import model.RestoranPredict;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 /**
  *
@@ -867,7 +873,138 @@ public class DataBaseHelper {
         }
         return new String();
     }
-
+    
+    public static ArrayList<OdrzuvanjePredict> getOdrzuvanjePredict(String Restoran){
+        List<List<String>> lstGrupa = new ArrayList<List<String>>();
+        for(int i = 1; i <=5; i++){
+            lstGrupa.add(GetQuery("select * from grupa where Restoran='" + Restoran + "'", i));
+        }
+        if(lstGrupa.get(0).isEmpty()) return new ArrayList<OdrzuvanjePredict>();
+        StringBuilder mnozestvo = new StringBuilder();
+        mnozestvo.append("( ");
+        for(int i = 0; i < lstGrupa.get(1).size() - 1; i++){
+            mnozestvo.append(lstGrupa.get(0).get(i)).append(", ");
+        }
+        mnozestvo.append(lstGrupa.get(0).get(lstGrupa.get(0).size() - 1)).append(" )");
+        List<List<String>> participanti = new ArrayList<List<String>>();
+        for(int i = 1; i <= 2; i++){
+            participanti.add(GetQuery("select * from grupa_korisnik where grupa in " + mnozestvo.toString(), i));
+        }
+        HashMap<Integer, ArrayList<String>> participantiMap = new HashMap<Integer, ArrayList<String>>();
+        for(int i = 0; i < participanti.get(0).size(); i++){
+            participantiMap.put(Integer.parseInt(participanti.get(0).get(i)), new ArrayList<String>());
+        }
+        for(int i = 0; i < participanti.get(0).size(); i++){
+            participantiMap.get(Integer.parseInt(participanti.get(0).get(i))).add(participanti.get(1).get(i));
+        }
+        ArrayList<OdrzuvanjePredict> returnvalue = new ArrayList<OdrzuvanjePredict>();
+        for(int i = 0; i < lstGrupa.get(0).size(); i++){
+            OdrzuvanjePredict od = new OdrzuvanjePredict(lstGrupa.get(2).get(i), lstGrupa.get(3).get(i), ("1".equals(lstGrupa.get(4).get(i))?true:false));
+            od.setParticipanti(participantiMap.get(Integer.parseInt(lstGrupa.get(0).get(i))));
+            returnvalue.add(od);
+        }
+        return returnvalue;
+    }
+    
+    public static Prediction getPredictionObject(String date){
+        Prediction predictObject = new Prediction();
+        List<List<String>> grupaAll = new ArrayList<List<String>>();
+        for(int i = 1; i <= 5; i++){
+            grupaAll.add(GetQuery("select * from grupa", i));
+        }
+        ArrayList<String> grupaFiltered = new ArrayList<String>();
+        for(int i = 0; i < grupaAll.get(0).size(); i++){
+            if(grupaAll.get(3).get(i).contains(date.split(" ")[0])){
+                grupaFiltered.add(grupaAll.get(0).get(i) + ";" + grupaAll.get(1).get(i));
+                predictObject.RestKreator.add(grupaAll.get(1).get(i) + ";" + grupaAll.get(2).get(i));
+            }
+        }
+        StringBuilder mnozestvo = new StringBuilder();
+        mnozestvo.append("( ");
+        for(int i = 0; i < grupaFiltered.size() - 1; i++){
+            String[] split = grupaFiltered.get(i).split(";");
+            mnozestvo.append(split[0]).append(", ");
+        }
+        String[] split = grupaFiltered.get(grupaFiltered.size() - 1).split(";");
+        mnozestvo.append(split[0]).append(" )");
+        grupaAll.clear();
+        for(int i = 1; i < 3; i++){
+            grupaAll.add(GetQuery("select * from grupa_korisnik where grupa in " + mnozestvo.toString(), i));
+        }
+        for(int i = 0; i < grupaAll.get(0).size(); i++){
+            for(int j = 0; j < grupaFiltered.size(); j++){
+                split = grupaFiltered.get(j).split(";");
+                if(split[0].equals(grupaAll.get(0).get(i))){
+                    predictObject.partiRes.add(grupaAll.get(1).get(i) + ";" + split[1]);
+                    break;
+                }
+            }
+        }
+        grupaAll.clear();
+        for(int i = 1; i <=4; i++){
+            grupaAll.add(GetQuery("select * from arhiviranagrupa where Grupa in " + mnozestvo.toString(), i));
+        }
+        for(int i = 0; i < grupaAll.get(0).size(); i++){
+            predictObject.partiStavka.add(grupaAll.get(3).get(i) + ";" + grupaAll.get(0).get(i));
+        }
+        return predictObject;
+    }
+    
+    public static ArrayList<RestoranPredict> getRestoranPredict(String user){
+        List<String> groupIDS = GetQuery("select Grupa from arhiviranagrupa where Korisnik_User='" + user + "'", 1);
+        StringBuilder mnozestvo = new StringBuilder();
+        mnozestvo.append("( ");
+        for(int i = 0; i < groupIDS.size() - 1; i++){
+            mnozestvo.append(groupIDS.get(i)).append(", ");
+        }
+        mnozestvo.append(groupIDS.get(groupIDS.size() - 1)).append(" )");
+        int tmp[] = {1,2,3,4};
+        int tmpStavki[] = {1,3,4};
+        List<List<String>> lstgrupa = new ArrayList<List<String>>();
+        for(int i = 0; i < tmp.length; i++){
+            List<String> temp = GetQuery("select * from grupa where idGrupa in " + mnozestvo.toString(), tmp[i]);
+            lstgrupa.add(temp);
+        }
+        List<List<String>> lstGrupa_Korisnik = new ArrayList<List<String>>();
+        for(int i = 0; i < 2; i++){
+            List<String> temp = GetQuery("select * from grupa_korisnik where grupa in " + mnozestvo.toString(), i+1);
+            lstGrupa_Korisnik.add(temp);
+        }
+        HashMap<Integer,ArrayList<String>> idGrupaUser = new HashMap<Integer, ArrayList<String>>();
+        HashMap<String,String> StavkaMeni = new HashMap<String, String>();
+        List<List<String>> lstarhivirani = new ArrayList<List<String>>();
+        for(int i = 0; i < tmpStavki.length; i++){
+            List<String> temp = GetQuery("select * from arhiviranagrupa", tmpStavki[i]);
+            lstarhivirani.add(temp);
+        }
+        for(int i = 0; i < lstarhivirani.get(0).size(); i++){
+            String key = lstarhivirani.get(1).get(i)+";"+lstarhivirani.get(2).get(i);
+            StavkaMeni.put(key, lstarhivirani.get(0).get(i));
+        }
+        for(int i = 0; i < lstGrupa_Korisnik.get(0).size(); i++){
+            idGrupaUser.put(Integer.parseInt(lstGrupa_Korisnik.get(0).get(i)), new ArrayList<String>());
+        }
+        for(int i = 0; i < lstGrupa_Korisnik.get(0).size(); i++){
+            idGrupaUser.get(Integer.parseInt(lstGrupa_Korisnik.get(0).get(i))).add(lstGrupa_Korisnik.get(1).get(i));
+        }
+        ArrayList<RestoranPredict> returnvalue = new ArrayList<RestoranPredict>();
+        for(int i = 0; i < lstgrupa.get(0).size();i++){
+            Integer idGroup = Integer.parseInt(lstgrupa.get(0).get(i));
+            RestoranPredict respredict = new RestoranPredict(lstgrupa.get(3).get(i), lstgrupa.get(1).get(i),lstgrupa.get(2).get(i),StavkaMeni.get(idGroup + ";" + user));
+            for(int j = 0; j < idGrupaUser.get(idGroup).size();j++){
+                respredict.putHash(idGrupaUser.get(idGroup).get(j), lstgrupa.get(1).get(i));
+                respredict.putHashStavka(idGrupaUser.get(idGroup).get(j), StavkaMeni.get(idGroup + ";" + idGrupaUser.get(idGroup).get(j)));
+//                select StavkaMeni from arhiviranagrupa where Grupa=281 and Korisnik_User='fhrisafov12'
+                /*List<String> stavkameni = GetQuery("select * from arhiviranagrupa where Grupa="+idGroup + " and Korisnik_User='" + idGrupaUser.get(idGroup).get(j) + "'", 1);
+                if(!stavkameni.isEmpty()){
+                    respredict.putHashStavka(idGrupaUser.get(idGroup).get(j), stavkameni.get(0));
+                }  */              
+            }
+            returnvalue.add(respredict);
+        }
+        return returnvalue;
+    }
+    
     public static List<List<String>> getVremeRestoranStavkaOdArhivirani(String User) {
         if (User == null) {
             return new ArrayList<List<String>>();
@@ -1008,13 +1145,15 @@ public class DataBaseHelper {
         ExecuteQuery("DELETE FROM notification");
     }
 
-    public static int insertGrupa(String restoran, String kreator, Timestamp date) {
-          StringBuilder sqlStr = new StringBuilder("INSERT INTO grupa (Restoran, Kreator, Vreme) VALUES('");
+    public static int insertGrupa(String restoran, String kreator, String date, boolean odrzana) {
+          StringBuilder sqlStr = new StringBuilder("INSERT INTO grupa (Restoran, Kreator, Vreme, Odrzana) VALUES('");
         sqlStr.append(restoran);
         sqlStr.append("', '");
         sqlStr.append(kreator);
         sqlStr.append("', '");
         sqlStr.append(date);
+        sqlStr.append("', '");
+        sqlStr.append((odrzana)?1:0);
         sqlStr.append("' );");
         
         //sqlStr.append("SELECT LAST_INSERT_ID();");

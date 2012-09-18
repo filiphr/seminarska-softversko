@@ -80,10 +80,10 @@ public class Popolni extends HttpServlet {
          DataBaseHelper.insertNaracka("fhrisafov", 1, "Пица", "Без кечап", "fhrisafov");
          DataBaseHelper.insertNaracka("isudijovski", 1, "Лазањи","", "isudijovski");
          DataBaseHelper.insertNaracka("mdocevski", 2, "Бурек","","mdocevski");
-         DataBaseHelper.insertArhiviraniGrupi("2012-01-05", "isudijovski", "Енрико", "Пица");
-         DataBaseHelper.insertArhiviraniGrupi("2012-01-06", "isudijovski", "Вегера", "Бурек");
-         DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "isudijovski", "Енрико", "Пица");
-         DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "mdocevski", "Енрико", "Пица");
+//         DataBaseHelper.insertArhiviraniGrupi("2012-01-05", "isudijovski", "Енрико", "Пица");
+//         DataBaseHelper.insertArhiviraniGrupi("2012-01-06", "isudijovski", "Вегера", "Бурек");
+//         DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "isudijovski", "Енрико", "Пица");
+//         DataBaseHelper.insertArhiviraniGrupi("2012-01-07", "mdocevski", "Енрико", "Пица");
          DataBaseHelper.insertNotofication("Групата ...", "isudijovski");
          DataBaseHelper.insertNotofication("Групата доцевски...", "mdocevski");
          DataBaseHelper.insertNotofication("Групата доцевски...", "gmadzarov");
