@@ -21,16 +21,20 @@ public class SortedString {
             Object1 tmp = new Object1();
             String strsplit[] = lst.get(i).split(";");
             for(int j = 0; j < strsplit.length - 1; j++){
-                tmp.str.append(strsplit[j]);
+                tmp.str.append(strsplit[j]+";");
             }
             tmp.p = Double.parseDouble(strsplit[strsplit.length - 1]);
             lstobj.add(tmp);
         }
         Object1 lista[] = new Object1[lstobj.size()];
+        for (int i = 0; i<lstobj.size(); i++)
+        {
+            lista[i] = (Object1) lstobj.get(i);
+        }
         Arrays.sort(lista);
 
         for(int i = 0; i < lista.length; i++){
-            returnvalue.add(lista[i].str + ";" + Double.toString(lista[i].p));
+            returnvalue.add(lista[i].str + "" + Double.toString(lista[i].p));
         }
             return returnvalue;
     }
