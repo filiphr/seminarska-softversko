@@ -4,9 +4,19 @@
     Author     : Filip
 --%>
 
+<%@page import="prediction.BuildC45forAllEmployee"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <%
+    synchronized(application){
+                      BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
+                      if (bC45==null) {
+                          bC45 = prediction.SetC45.set();
+                          application.setAttribute("PredikcijaRestorani", bC45);
+                      }
+                }
+    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Најава</title>

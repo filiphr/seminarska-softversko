@@ -213,7 +213,7 @@ public class BuildC45forAllEmployee {
         return restorants.get((int) restoran) + ";" + stavki.get((int) stavka);
     }
     
-    public void getPrediction(String date, String user) throws Exception{
+    public ArrayList<String> getPrediction(String date, String user) throws Exception{
         ArrayList<String> users = new ArrayList<String>(restoranPredict.keySet());
         users.add(0, "");
         Instances testData = new Instances("testData", attrRestorans, 0);
@@ -250,17 +250,20 @@ public class BuildC45forAllEmployee {
             ArrayList<String> restorantsForTest = new ArrayList<String>();
             for(int i = sorted.length - 1; i >= 0; i--){
                 if(sorted[i] == 0) break;
-                System.out.println(restorants.get(indexof.indexOf(sorted[i])) + " " + (sorted[i] * 100) + "%");
-                restorantsForTest.add(restorants.get(indexof.indexOf(sorted[i])));
+                //System.out.println(restorants.get(indexof.indexOf(sorted[i])) + " " + (sorted[i] * 100) + "%");
+                restorantsForTest.add(restorants.get(indexof.indexOf(sorted[i])) + ";" + (sorted[i] * 100) + "%");
             }
-            for(int i = 0; i < restorantsForTest.size(); i++){
-                getPredictionRestoran(object, restorantsForTest.get(i), date);
-                getPredictionStavka(object, restorantsForTest.get(i), date, user);
-            }
+            /*for(int i = 0; i < restorantsForTest.size(); i++){
+                getPredictionRestoran(restorantsForTest.get(i), date);
+                getPredictionStavka(restorantsForTest.get(i), date, user);
+            }*/
+            return restorantsForTest;
             
     }
     
-    public void getPredictionStavka(Prediction object, String Restoran, String date, String user) throws Exception {
+    public void getPredictionStavka(String Restoran, String date, String user) throws Exception {
+        ArrayList<String> returnvalue = new ArrayList<String>();
+        Prediction object = DataBaseHelper.getPredictionObject(date);
         ArrayList<String> users = new ArrayList<String>(restoranPredict.keySet());
         users.add(0, "");
         Instances testData = new Instances("testData2", attrAll, 0);
@@ -298,14 +301,17 @@ public class BuildC45forAllEmployee {
             for(int i = sorted.length - 1; i >= 0; i--){
                 if(sorted[i] == 0) break;
                 if(stavkiForRestoran.contains(stavki.get(indexof.indexOf(sorted[i])))){
-                    System.out.println(Restoran + " " + kreators.get(k) + " " + stavki.get(indexof.indexOf(sorted[i])) + " " + (sorted[i] * 100) + "%");
+//                    System.out.println(Restoran + " " + kreators.get(k) + " " + stavki.get(indexof.indexOf(sorted[i])) + " " + (sorted[i] * 100) + "%");
+                    returnvalue.add(Restoran + ";" + kreators.get(k) + ";" + stavki.get(indexof.indexOf(sorted[i])) + ";" + (sorted[i] * 100) + "%");
                 }                
             }
         }
 
     }
     
-    public void getPredictionRestoran(Prediction object, String Restoran, String date) throws Exception{
+    public ArrayList<String> getPredictionRestoran(String Restoran, String date) throws Exception{
+        ArrayList<String> returnvalue = new ArrayList<String>();
+        Prediction object = DataBaseHelper.getPredictionObject(date);
         ArrayList<String> users = new ArrayList<String>(restoranPredict.keySet());
         users.add(0, "");
         Instances testData = new Instances("testData1", attrOdrzuvanje, 0);
@@ -325,9 +331,11 @@ public class BuildC45forAllEmployee {
             }
             values[values.length - 1] = 0;
             testData.add(new DenseInstance(1.0, values));
+
             double prediction[] = OdrzuvanjePredict.get(Restoran).distributionForInstance(testData.get(i));
-            System.out.println(Restoran + " " + kreators.get(i) + " " + Double.toString(prediction[1] * 100) + "%");
-        }        
+            returnvalue.add(Restoran + ";" + kreators.get(i) + ";" + Double.toString(prediction[1] * 100) + "%");
+        }
+        return returnvalue;
     }
     
     public void getPrediction(HashMap<String,String> map, String date, String user) throws Exception{
