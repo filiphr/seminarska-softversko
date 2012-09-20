@@ -4,6 +4,7 @@
     Author     : Home
 --%>
 
+<%@page import="prediction.BuildC45forAllEmployee"%>
 <%@page import="java.util.List"%>
 <%@page import="DataBase.DataBaseHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -25,6 +26,11 @@
             <table>
 
                 <%
+                synchronized(application){
+                      BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
+                      if (bC45==null) {
+                      }
+                }
                     List<List<String>> lst = DataBaseHelper.getVremeRestoranStavkaOdArhivirani(userID);
                     if (!lst.isEmpty()) {
                 %>
@@ -56,7 +62,7 @@
                 %>
                 <tr>
                     <td coslpan="3">
-                        Немате корисничка исотрија  
+                        Немате корисничка историја  
                     </td>
                 </tr>
                 <%                    }
