@@ -312,6 +312,21 @@ public class DataBaseHelper {
         List<String> lst = GetQuery("select * from korisnik", 3);
         return lst;
     }
+    
+    public static HashMap<String, ArrayList<String>> getAllRestorantsAndStavki(){
+        HashMap<String, ArrayList<String>> resStavki = new HashMap<String, ArrayList<String>>();
+        List<List<String>> values = new ArrayList<List<String>>();
+        for(int i = 3; i < 5; i++){            
+            values.add(GetQuery("select * from meni", i));
+        }
+        for(int i = 0; i < values.get(0).size(); i++){
+            resStavki.put(values.get(0).get(i), new ArrayList<String>());
+        }
+        for(int i = 0; i < values.get(0).size(); i++){
+            (resStavki.get(values.get(0).get(i))).add(values.get(1).get(i));
+        }
+        return resStavki;
+    }
 
     public static List<String> getAllRestaurantNames() {
         List<String> lst = GetQuery("select * from restoran", 1);
