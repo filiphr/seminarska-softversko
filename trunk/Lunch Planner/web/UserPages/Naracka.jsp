@@ -4,6 +4,9 @@
     Author     : Filip
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="prediction.BuildC45forAllEmployee"%>
 <%@page import="sun.security.krb5.internal.KDCOptions"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="DataBase.DataBaseHelper"%>
@@ -87,7 +90,7 @@
             }
         </script>
     </head>
-    
+
 
 
 
@@ -386,12 +389,30 @@
                         </table>
                     </td>
                 </tr>
+                <%
+                    BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
+                    Calendar currentDate = Calendar.getInstance();
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                    String dateNow = formatter.format(currentDate.getTime());
+                    ArrayList<String> stavkiPredict = bC45.getPredictionStavka(DataBaseHelper.getRestaurantName(IDGroup), dateNow, username);
+                    for (int i = 0; i < stavkiPredict.size(); i++) {
+                %>
                 <tr>
                     <td>
-                        <%
-                        %>
+                        <%=stavkiPredict.get(i).split(";")[0]%>
+                    </td>
+                    <td>
+                        <%=stavkiPredict.get(i).split(";")[1]%>
+                    </td>
+                    <td>
+                        <%=stavkiPredict.get(i).split(";")[2]%>
+                    </td>
+                    <td>
+                        <%=stavkiPredict.get(i).split(";")[3]%>
                     </td>
                 </tr>
+                <%                                            }
+                %>
             </table>
         </div>
     </body>

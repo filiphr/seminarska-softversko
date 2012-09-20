@@ -261,7 +261,7 @@ public class BuildC45forAllEmployee {
             
     }
     
-    public void getPredictionStavka(String Restoran, String date, String user) throws Exception {
+    public ArrayList<String> getPredictionStavka(String Restoran, String date, String user) throws Exception {
         ArrayList<String> returnvalue = new ArrayList<String>();
         Prediction object = DataBaseHelper.getPredictionObject(date);
         ArrayList<String> users = new ArrayList<String>(restoranPredict.keySet());
@@ -306,6 +306,7 @@ public class BuildC45forAllEmployee {
                 }                
             }
         }
+        return returnvalue;
 
     }
     
@@ -333,7 +334,7 @@ public class BuildC45forAllEmployee {
             testData.add(new DenseInstance(1.0, values));
 
             double prediction[] = OdrzuvanjePredict.get(Restoran).distributionForInstance(testData.get(i));
-            returnvalue.add(Restoran + ";" + kreators.get(i) + ";" + Double.toString(prediction[1] * 100) + "%");
+            returnvalue.add(Restoran + ";" + kreators.get(i) + ";" + Double.toString(prediction[1] * 100));
         }
         return returnvalue;
     }

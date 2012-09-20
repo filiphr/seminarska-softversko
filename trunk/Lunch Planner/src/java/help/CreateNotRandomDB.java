@@ -39,8 +39,8 @@ public class CreateNotRandomDB {
         }
         Random r = new Random();
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.MONTH, 6);
-        c.set(Calendar.YEAR, 2012);
+        c.set(Calendar.MONTH, 1);
+        c.set(Calendar.YEAR, 2010);
         c.set(Calendar.DAY_OF_MONTH, 1);
         c.set(Calendar.HOUR_OF_DAY, RandomDate.randBetween(9, 17));
         c.set(Calendar.MINUTE, minutes[r.nextInt(minutes.length)]);
@@ -48,7 +48,7 @@ public class CreateNotRandomDB {
         c.set(Calendar.MILLISECOND, 0);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 //        DataBaseHelper.insertGrupa("asdfa", "filev", sdf.format(c.getTime()), true);
-        int count = 500;
+        int count = 1000;
         while (count-- != 0) {
             int groups = RandomDate.randBetween(6, 8);
             ArrayList<ArrayList<String>> userstemp = new ArrayList<ArrayList<String>>();
@@ -64,17 +64,17 @@ public class CreateNotRandomDB {
                 int participants = r.nextInt(userstemp.get(i % 4).size());
                 c.set(Calendar.HOUR_OF_DAY, RandomDate.randBetween(9, 17));
                 c.set(Calendar.MINUTE, minutes[r.nextInt(minutes.length)]);
-                System.out.println(resStav + " " + userstemp.get(i%4).get(participants)+ " " + sdf.format(c.getTime()) + " " + Boolean.toString((participants > 3) ? true : false));
-//                int groupID = DataBaseHelper.insertGrupa(resStav, userstemp.get(i%4).get(participants), sdf.format(c.getTime()), (participants > 3) ? true : false);
-//                DataBaseHelper.insertArhiviraniGrupi(userstemp.get(i%4).get(participants), stavkiHelp[indexRestoran][r.nextInt(stavkiHelp[indexRestoran].length)], groupID);
-//                DataBaseHelper.insertGrupaKorisnik(userstemp.get(i%4).get(participants), groupID);
-                System.out.println(userstemp.get(i%4).get(participants) + " " + stavkiHelp[indexRestoran][r.nextInt(stavkiHelp[indexRestoran].length)]);
+//                System.out.println(resStav + " " + userstemp.get(i%4).get(participants)+ " " + sdf.format(c.getTime()) + " " + Boolean.toString((participants > 3) ? true : false));
+                int groupID = DataBaseHelper.insertGrupa(resStav, userstemp.get(i%4).get(participants), sdf.format(c.getTime()), (participants > 3) ? true : false);
+                DataBaseHelper.insertArhiviraniGrupi(userstemp.get(i%4).get(participants), stavkiHelp[indexRestoran][r.nextInt(stavkiHelp[indexRestoran].length)], groupID);
+                DataBaseHelper.insertGrupaKorisnik(userstemp.get(i%4).get(participants), groupID);
+//                System.out.println(userstemp.get(i%4).get(participants) + " " + stavkiHelp[indexRestoran][r.nextInt(stavkiHelp[indexRestoran].length)]);
                 userstemp.get(i % 4).remove(participants);
                 for (int participan = 1; participan < participants; participan++) {
                     int temp = r.nextInt(userstemp.get(i % 4).size());
-                    System.out.println(userstemp.get(i%4).get(participants) + " " + stavkiHelp[indexRestoran][r.nextInt(stavkiHelp[indexRestoran].length)]);
-//                    DataBaseHelper.insertArhiviraniGrupi(userstemp.get(i%4).get(temp), stavkiHelp[indexRestoran][r.nextInt(stavkiHelp[indexRestoran].length)], groupID);
-//                    DataBaseHelper.insertGrupaKorisnik(userstemp.get(i%4).get(temp), groupID);
+//                    System.out.println(userstemp.get(i%4).get(participants) + " " + stavkiHelp[indexRestoran][r.nextInt(stavkiHelp[indexRestoran].length)]);
+                    DataBaseHelper.insertArhiviraniGrupi(userstemp.get(i%4).get(temp), stavkiHelp[indexRestoran][r.nextInt(stavkiHelp[indexRestoran].length)], groupID);
+                    DataBaseHelper.insertGrupaKorisnik(userstemp.get(i%4).get(temp), groupID);
                     userstemp.get(i % 4).remove(temp);
                 }
             }
