@@ -4,6 +4,11 @@
     Author     : Home
 --%>
 
+<%@page import="model.SortedString"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.GregorianCalendar"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="prediction.BuildC45forAllEmployee"%>
 <%@page import="java.util.List"%>
 <%@page import="DataBase.DataBaseHelper"%>
@@ -26,47 +31,63 @@
             <table>
 
                 <%
-                synchronized(application){
-                      BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
-                      if (bC45==null) {
+                ArrayList<String> predikcija = new ArrayList<String>();  
+                synchronized(application){  
+                    BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
+                      if (bC45!=null) {
+                         List<String> restorani = DataBaseHelper.getAllRestaurantNames();
+                         Calendar currentDate = Calendar.getInstance();
+                        SimpleDateFormat formatter=  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                          String dateNow = formatter.format(currentDate.getTime());
+                          for(String restoran : restorani){
+                              ArrayList<String> tmp = bC45.getPredictionRestoran(restoran, dateNow);
+                              if (!tmp.isEmpty()){
+                                  predikcija.addAll(tmp);
+                              }
+                          }
+                          //bC45.getPrediction(date, user)
                       }
                 }
-                    List<List<String>> lst = DataBaseHelper.getVremeRestoranStavkaOdArhivirani(userID);
-                    if (!lst.isEmpty()) {
-                %>
-                <tr>
-                    <th width="25%">Ресторант</th>
-                    <th width="25%">Јадење</th>
-                    <th width="25%">Датум</th>
-                </tr> 
-                <%
-                    for (int i = (lst.get(0).size() - 1); i >= 0 && i > (lst.get(0).size() - 20); i--) {
-                        String vreme = lst.get(0).get(i);
-                        String restorant = lst.get(1).get(i);
-                        String stavka = lst.get(2).get(i);
+                predikcija = SortedString.getSorted(predikcija);
+                
                 %>
                 <tr>
                     <td>
-                        <%= restorant%>
+                        <table>
+                            <% if (!predikcija.isEmpty()) { %>
+                            <tr>
+                                <td>Веројатноста за одржување на креираните настани е следна:</td>
+                            </tr>
+                            <%
+                                for (String tmp : predikcija){
+                                    if (!tmp.isEmpty()){
+                                    String [] tmp2 = tmp.split(";");
+                             %>
+                             <tr>
+                                 <td>
+                                     <%=tmp2[0]%> креиран од <%=tmp2[1]%> ќе се одржи со <%=tmp2[2]%>
+                                 </td>
+                             </tr>
+                                    <%}%>
+                                <% }%>
+                            <tr></tr>
+                            <%} else {%>
+                            <tr>
+                                <td>
+                                    Неможе да се направи предикција бидејќи нема креирани ресторан за овој ден
+                                </td>
+                            </tr>
+                            <%}%>
+                        </table>
                     </td>
                     <td>
-                        <%= stavka%>
-                    </td>
-                    <td>
-                        <%= vreme%>
+                        <table>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
-                <%
-                    }
-                } else {
-                %>
-                <tr>
-                    <td coslpan="3">
-                        Немате корисничка историја  
-                    </td>
-                </tr>
-                <%                    }
-                %>
             </table>
         </div>
     </body>
