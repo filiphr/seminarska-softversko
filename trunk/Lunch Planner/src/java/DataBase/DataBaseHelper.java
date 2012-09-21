@@ -921,6 +921,32 @@ public class DataBaseHelper {
         return returnvalue;
     }
     
+    public static Prediction getPredictionObjectToDay(){
+        Prediction predictObject = new Prediction();
+        List<List<String>> allGroups = new ArrayList<List<String>>();
+        for(int i = 1; i < 5; i++){
+            allGroups.add(GetQuery("select * from tekovnagrupa", i));
+        }
+        List<List<String>> allNaracki = new ArrayList<List<String>>();
+        for(int i = 3; i <= 6; i++){
+            allNaracki.add(GetQuery("select * from naracka", i));
+        }
+        for(int i = 0; i < allGroups.get(0).size(); i++){
+            predictObject.RestKreator.add(allGroups.get(3).get(i) + ";" + allGroups.get(2).get(i));
+        }
+        for(int i = 0; i < allNaracki.get(0).size(); i++){
+            predictObject.partiStavka.add(allNaracki.get(0).get(i) + ";" + allNaracki.get(2).get(i));
+        }
+        for(int i = 0; i < allGroups.get(0).size(); i++){
+            for(int j = 0; j < allNaracki.get(0).size(); j++){
+                if(allGroups.get(0).get(i).equals(allNaracki.get(1).get(j))){
+                    predictObject.partiRes.add(allNaracki.get(0).get(j) + ";" + allGroups.get(3).get(i));
+                }
+            }
+        }
+        return predictObject;
+    }
+    
     public static Prediction getPredictionObject(String date){
         Prediction predictObject = new Prediction();
         List<List<String>> grupaAll = new ArrayList<List<String>>();
@@ -934,6 +960,7 @@ public class DataBaseHelper {
                 predictObject.RestKreator.add(grupaAll.get(1).get(i) + ";" + grupaAll.get(2).get(i));
             }
         }
+        if(grupaFiltered.isEmpty()) return  predictObject;
         StringBuilder mnozestvo = new StringBuilder();
         mnozestvo.append("( ");
         for(int i = 0; i < grupaFiltered.size() - 1; i++){

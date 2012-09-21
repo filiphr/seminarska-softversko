@@ -399,9 +399,9 @@
                 %>
                 <tr>
                     <td>
-                        <%=stavkiPredict.get(i).split(";")[0]%>
+                        <%=stavkiPredict.get(i).split(";")[0]%> <%=stavkiPredict.get(i).split(";")[1]%> <%=stavkiPredict.get(i).split(";")[2]%> <%=stavkiPredict.get(i).split(";")[3]%>
                     </td>
-                    <td>
+                  <!--  <td>
                         <%=stavkiPredict.get(i).split(";")[1]%>
                     </td>
                     <td>
@@ -409,7 +409,7 @@
                     </td>
                     <td>
                         <%=stavkiPredict.get(i).split(";")[3]%>
-                    </td>
+                    </td> -->
                 </tr>
                 <%                                            }
                 %>

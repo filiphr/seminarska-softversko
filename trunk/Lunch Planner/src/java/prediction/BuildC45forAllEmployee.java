@@ -221,7 +221,8 @@ public class BuildC45forAllEmployee {
         double values[] = new double[testData.numAttributes()];
             values[0] = testData.attribute(0).parseDate(date);
             int valueind = 1;
-            Prediction object = DataBaseHelper.getPredictionObject(date);
+//            Prediction object = DataBaseHelper.getPredictionObject(date);
+            Prediction object = DataBaseHelper.getPredictionObjectToDay();
             HashMap<String,String> map = new HashMap<String, String>();
             for(int i = 0; i < object.partiRes.size(); i++){
                 String split[] = object.partiRes.get(i).split(";");
@@ -263,7 +264,8 @@ public class BuildC45forAllEmployee {
     
     public ArrayList<String> getPredictionStavka(String Restoran, String date, String user) throws Exception {
         ArrayList<String> returnvalue = new ArrayList<String>();
-        Prediction object = DataBaseHelper.getPredictionObject(date);
+//        Prediction object = DataBaseHelper.getPredictionObject(date);
+        Prediction object = DataBaseHelper.getPredictionObjectToDay();
         ArrayList<String> users = new ArrayList<String>(restoranPredict.keySet());
         users.add(0, "");
         Instances testData = new Instances("testData2", attrAll, 0);
@@ -312,7 +314,8 @@ public class BuildC45forAllEmployee {
     
     public ArrayList<String> getPredictionRestoran(String Restoran, String date) throws Exception{
         ArrayList<String> returnvalue = new ArrayList<String>();
-        Prediction object = DataBaseHelper.getPredictionObject(date);
+//        Prediction object = DataBaseHelper.getPredictionObject(date);
+        Prediction object = DataBaseHelper.getPredictionObjectToDay();
         ArrayList<String> users = new ArrayList<String>(restoranPredict.keySet());
         users.add(0, "");
         Instances testData = new Instances("testData1", attrOdrzuvanje, 0);

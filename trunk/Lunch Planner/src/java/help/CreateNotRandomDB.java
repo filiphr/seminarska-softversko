@@ -48,7 +48,7 @@ public class CreateNotRandomDB {
         c.set(Calendar.MILLISECOND, 0);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 //        DataBaseHelper.insertGrupa("asdfa", "filev", sdf.format(c.getTime()), true);
-        int count = 1000;
+        int count = 600;
         while (count-- != 0) {
             int groups = RandomDate.randBetween(6, 8);
             ArrayList<ArrayList<String>> userstemp = new ArrayList<ArrayList<String>>();
