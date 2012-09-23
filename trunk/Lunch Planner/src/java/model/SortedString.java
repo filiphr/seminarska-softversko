@@ -48,6 +48,6 @@ public class SortedString {
         Double p;
 
     public int compareTo(Object1 o) {
-        return Double.compare(this.p, o.p);
+        return Double.compare(o.p, this.p);
     }
     }
