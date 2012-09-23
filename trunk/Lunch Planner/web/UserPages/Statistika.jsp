@@ -32,6 +32,7 @@
 
                 <%
                 ArrayList<String> predikcija = new ArrayList<String>();  
+                ArrayList<String> predikcijaUser = new ArrayList<String>();
                 synchronized(application){  
                     BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
                       if (bC45!=null) {
@@ -45,6 +46,7 @@
                                   predikcija.addAll(tmp);
                               }
                           }
+                         predikcijaUser.addAll(bC45.getPrediction(dateNow, userID));
                           //bC45.getPrediction(date, user)
                       }
                 }
@@ -65,12 +67,11 @@
                              %>
                              <tr>
                                  <td>
-                                     <%=tmp2[0]%> креиран од <%=tmp2[1]%> ќе се одржи со <%=tmp2[2]%>
+                                     <%=tmp2[0]%> креиран од <%=tmp2[1]%> ќе се одржи со <%=tmp2[2]%>%
                                  </td>
                              </tr>
                                     <%}%>
                                 <% }%>
-                            <tr></tr>
                             <%} else {%>
                             <tr>
                                 <td>
@@ -82,9 +83,29 @@
                     </td>
                     <td>
                         <table>
+                            <% if (!predikcijaUser.isEmpty()) { %>
                             <tr>
-                                <td></td>
+                                <td>Вие би оделе во следните ресторани:</td>
                             </tr>
+                            <%
+                                for (String tmp : predikcijaUser){
+                                    if (!tmp.isEmpty()){
+                                    String [] tmp2 = tmp.split(";");
+                             %>
+                             <tr>
+                                 <td>
+                                     <%=tmp2[0]%> со <%=tmp2[1]%>
+                                 </td>
+                             </tr>
+                                    <%}%>
+                                <% }%>
+                            <%} else {%>
+                            <tr>
+                                <td>
+                                    Неможе да се направи предикција за Вас
+                                </td>
+                            </tr>
+                            <%}%>
                         </table>
                     </td>
                 </tr>

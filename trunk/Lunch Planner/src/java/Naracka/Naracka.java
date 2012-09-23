@@ -10,12 +10,16 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.tomcat.util.net.SecureNioChannel.ApplicationBufferHandler;
+import prediction.BuildC45forAllEmployee;
 
 /**
  *
@@ -132,6 +136,17 @@ public class Naracka extends HttpServlet {
             if (!user.equals(UserOrdering)) {
                 response.sendRedirect("Naracka.jsp?groupID=" + IDGroup + "&join=false");
             }else {
+                ServletContext application = getServletContext();
+                BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
+                String restoran = DataBaseHelper.getRestaurantName(IDGroup);
+                try {
+                   // bC45.BuildCalssifierForRestoran(restoran);
+                    synchronized(application){
+                     //   application.setAttribute("PredikcijaRestorani", bC45);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Naracka.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 response.sendRedirect("MainPage.jsp");
             }
 
