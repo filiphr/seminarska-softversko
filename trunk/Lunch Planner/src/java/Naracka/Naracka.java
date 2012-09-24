@@ -140,9 +140,9 @@ public class Naracka extends HttpServlet {
                 BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
                 String restoran = DataBaseHelper.getRestaurantName(IDGroup);
                 try {
-                   // bC45.BuildCalssifierForRestoran(restoran);
+                   bC45.BuildRestoran();
                     synchronized(application){
-                     //   application.setAttribute("PredikcijaRestorani", bC45);
+                        application.setAttribute("PredikcijaRestorani", bC45);
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(Naracka.class.getName()).log(Level.SEVERE, null, ex);
