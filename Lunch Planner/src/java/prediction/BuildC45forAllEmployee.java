@@ -252,7 +252,8 @@ public class BuildC45forAllEmployee {
             for(int i = sorted.length - 1; i >= 0; i--){
                 if(sorted[i] == 0) break;
                 //System.out.println(restorants.get(indexof.indexOf(sorted[i])) + " " + (sorted[i] * 100) + "%");
-                restorantsForTest.add(restorants.get(indexof.indexOf(sorted[i])) + ";" + (sorted[i] * 100) + "%");
+                String tmp = String.format("%.2f", sorted[i] * 100);
+                restorantsForTest.add(restorants.get(indexof.indexOf(sorted[i])) + ";" +tmp + "%");
             }
             /*for(int i = 0; i < restorantsForTest.size(); i++){
                 getPredictionRestoran(restorantsForTest.get(i), date);
@@ -304,7 +305,8 @@ public class BuildC45forAllEmployee {
                 if(sorted[i] == 0) break;
                 if(stavkiForRestoran.contains(stavki.get(indexof.indexOf(sorted[i])))){
 //                    System.out.println(Restoran + " " + kreators.get(k) + " " + stavki.get(indexof.indexOf(sorted[i])) + " " + (sorted[i] * 100) + "%");
-                    returnvalue.add(Restoran + ";" + kreators.get(k) + ";" + stavki.get(indexof.indexOf(sorted[i])) + ";" + (sorted[i] * 100) + "%");
+                    String tmp = String.format("%.2f", sorted[i]*100);
+                    returnvalue.add(Restoran + ";" + kreators.get(k) + ";" + stavki.get(indexof.indexOf(sorted[i])) + ";" + tmp + "%");
                 }                
             }
         }
@@ -337,7 +339,8 @@ public class BuildC45forAllEmployee {
             testData.add(new DenseInstance(1.0, values));
 
             double prediction[] = OdrzuvanjePredict.get(Restoran).distributionForInstance(testData.get(i));
-            returnvalue.add(Restoran + ";" + kreators.get(i) + ";" + Double.toString(prediction[1] * 100));
+            String tmp = String.format("%.2f", prediction[1] * 100);
+            returnvalue.add(Restoran + ";" + kreators.get(i) + ";" + tmp);
         }
         return returnvalue;
     }

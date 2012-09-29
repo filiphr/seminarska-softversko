@@ -1,0 +1,23 @@
+/* 
+    Document   : predict
+    Created on : 29-Sep-2012, 11:14:28
+    Author     : Filip
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.predictStavka{
+    border: 2px solid black;
+}
+
+.predictStavka td, th{
+    border: 1px solid black;
+}
+
+
+

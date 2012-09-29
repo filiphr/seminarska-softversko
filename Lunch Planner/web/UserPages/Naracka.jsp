@@ -389,30 +389,45 @@
                         </table>
                     </td>
                 </tr>
-                <%
-                    BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
-                    Calendar currentDate = Calendar.getInstance();
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-                    String dateNow = formatter.format(currentDate.getTime());
-                    ArrayList<String> stavkiPredict = bC45.getPredictionStavka(DataBaseHelper.getRestaurantName(IDGroup), dateNow, username);
-                    for (int i = 0; i < stavkiPredict.size(); i++) {
-                %>
+                <tr>
+                    <td align="center">
+                        <table  class="predictStavka">
+                            <%
+                             BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
+                            Calendar currentDate = Calendar.getInstance();
+                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                            String dateNow = formatter.format(currentDate.getTime());
+                            ArrayList<String> stavkiPredict = bC45.getPredictionStavka(DataBaseHelper.getRestaurantName(IDGroup), dateNow, username);
+                            if (!stavkiPredict.isEmpty()){
+                            %>
+                            <tr>
+                                <th>Ставка</th>
+                                <th>Веројатност за јадење</th>
+                            </tr>
+                            <%
+                              for (int i = 0; i < stavkiPredict.size(); i++) {
+                            %>
                 <tr>
                     <td>
-                        <%=stavkiPredict.get(i).split(";")[0]%> <%=stavkiPredict.get(i).split(";")[1]%> <%=stavkiPredict.get(i).split(";")[2]%> <%=stavkiPredict.get(i).split(";")[3]%>
-                    </td>
-                  <!--  <td>
-                        <%=stavkiPredict.get(i).split(";")[1]%>
-                    </td>
-                    <td>
-                        <%=stavkiPredict.get(i).split(";")[2]%>
+                        <%=stavkiPredict.get(i).split(";")[2]%> 
                     </td>
                     <td>
                         <%=stavkiPredict.get(i).split(";")[3]%>
-                    </td> -->
+                    </td>
                 </tr>
-                <%                                            }
+                <%                                            }} else{                
                 %>
+                <tr>
+                    <td>
+                        Неможе да се направи предикција за вашата ставка
+                    </td>
+                </tr>
+                <%}%>
+                        </table>
+                    </td>
+                </tr>
+                
+                
             </table>
         </div>
     </body>
