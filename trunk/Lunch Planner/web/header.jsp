@@ -36,6 +36,7 @@
 %>
 <link rel="stylesheet" type="text/css" href="/Lunch_Planner/CSS/GlavnaUreduvackaCSS.css"/>
 <link rel="stylesheet" type="text/css" href="/Lunch_Planner/CSS/HeaderCSS.css"/>
+<link rel="stylesheet" type="text/css" href="/Lunch_Planner/CSS/predict.css"/>
 <table class="header"> 
     <tr>
         <td rowspan="3"><img src="/Lunch_Planner/nca-logo-home.GIF"/></td>

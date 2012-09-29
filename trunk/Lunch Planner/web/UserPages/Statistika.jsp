@@ -28,8 +28,7 @@
     <body>
         <jsp:include page="../header.jsp"/>
         <div>
-            <table>
-
+            <table width="100%">
                 <%
                 ArrayList<String> predikcija = new ArrayList<String>();  
                 ArrayList<String> predikcijaUser = new ArrayList<String>();
@@ -54,11 +53,14 @@
                 
                 %>
                 <tr>
-                    <td>
-                        <table>
+                    <td valign="top" align="center" width="50%">
+                        <table class="predictStavka">
                             <% if (!predikcija.isEmpty()) { %>
                             <tr>
-                                <td>Веројатноста за одржување на креираните настани е следна:</td>
+                                <%--<td>Веројатноста за одржување на креираните настани е следна:</td>--%>
+                                <th>Ресторан</th>
+                                <th>Креатор</th>
+                                <th>Ќе се одржи</th>
                             </tr>
                             <%
                                 for (String tmp : predikcija){
@@ -67,7 +69,13 @@
                              %>
                              <tr>
                                  <td>
-                                     <%=tmp2[0]%> креиран од <%=tmp2[1]%> ќе се одржи со <%=tmp2[2]%>%
+                                     <%=tmp2[0]%> 
+                                 </td>
+                                 <td>
+                                     <%=tmp2[1]%>
+                                 </td>
+                                 <td>
+                                     <%=tmp2[2]%>%
                                  </td>
                              </tr>
                                     <%}%>
@@ -81,11 +89,13 @@
                             <%}%>
                         </table>
                     </td>
-                    <td>
-                        <table>
+                    <td valign="top" align="center" width="50%">
+                        <table class="predictStavka">
                             <% if (!predikcijaUser.isEmpty()) { %>
                             <tr>
-                                <td>Вие би оделе во следните ресторани:</td>
+                                <%-- <td>Вие би оделе во следните ресторани:</td>--%>
+                                <th>Ресторан</th>
+                                <th>Би оделе</th>
                             </tr>
                             <%
                                 for (String tmp : predikcijaUser){
@@ -94,7 +104,10 @@
                              %>
                              <tr>
                                  <td>
-                                     <%=tmp2[0]%> со <%=tmp2[1]%>
+                                     <%=tmp2[0]%> 
+                                 </td>
+                                 <td>
+                                     <%=tmp2[1]%>
                                  </td>
                              </tr>
                                     <%}%>
