@@ -28,8 +28,8 @@ public class Test {
         for(int i = 0; i < users.size(); i++){
             b.add(users.get(i));
         }
-        b.BuildRestoran();
-        b.BuildAllClassifiers();
+        b.BuildRestoran(new String());
+        b.BuildAllClassifiers(new String());
         HashMap<String,String> map = new HashMap<String, String>();
         map.put("fhrisafov5", "Маракана");
         map.put("fhrisafov6", "Маракана");

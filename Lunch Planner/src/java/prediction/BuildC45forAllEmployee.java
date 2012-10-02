@@ -37,23 +37,23 @@ public class BuildC45forAllEmployee {
     ArrayList<Attribute> attrAll = new ArrayList<Attribute>();
     ArrayList<Attribute> attrOdrzuvanje = new ArrayList<Attribute>();
 
-    public void BuildAllClassifiers() throws Exception {
+    public void BuildAllClassifiers(String date) throws Exception {
         if (restoranPredict.isEmpty()) {
             return;
         }
         ArrayList<String> keys = new ArrayList<String>(restoranPredict.keySet());
         for (int i = 0; i < keys.size(); i++) {
-            BuildClassifierForUser(keys.get(i));
+            BuildClassifierForUser(keys.get(i), date);
         }
 
     }
 
-    public void BuildRestoran() throws Exception {
+    public void BuildRestoran(String date) throws Exception {
         for (int i = 1; i < restorants.size(); i++) {
             OdrzuvanjePredict.put(restorants.get(i), new J48());
         }
         for (int i = 1; i < restorants.size(); i++) {
-            BuildCalssifierForRestoran(restorants.get(i));
+            BuildCalssifierForRestoran(restorants.get(i), date);
         }
     }
 
@@ -64,10 +64,10 @@ public class BuildC45forAllEmployee {
 
     public void addAndBuild(String user) throws Exception {
         add(user);
-        BuildClassifierForUser(user);
+        BuildClassifierForUser(user, DataBaseHelper.getFirstDate());
     }
 
-    public void BuildCalssifierForRestoran(String Restoran) throws Exception {
+    public void BuildCalssifierForRestoran(String Restoran, String datePred) throws Exception {
         attrOdrzuvanje.clear();
         ArrayList<String> users = new ArrayList<String>(restoranPredict.keySet());
         users.add(0, "");
@@ -85,7 +85,7 @@ public class BuildC45forAllEmployee {
         attrOdrzuvanje.add(attrOdr);
         Instances dataOdr = new Instances("dataOdrzuvanje", attrOdrzuvanje, 0);
         dataOdr.setClass(attrOdr);
-        ArrayList<OdrzuvanjePredict> OdrzuvanjeList = DataBaseHelper.getOdrzuvanjePredict(Restoran);
+        ArrayList<OdrzuvanjePredict> OdrzuvanjeList = DataBaseHelper.getOdrzuvanjePredict(Restoran, datePred);
         int i = 0;
         for (i = 0; i < OdrzuvanjeList.size(); i++) {
             double values[] = new double[dataOdr.numAttributes()];
@@ -105,7 +105,7 @@ public class BuildC45forAllEmployee {
         OdrzuvanjePredict.put(Restoran, three);
     }
 
-    public void BuildClassifierForUser(String user) throws Exception {
+    public void BuildClassifierForUser(String user,String date) throws Exception {
         attrAll.clear();
         attrRestorans.clear();
         ArrayList<String> users = new ArrayList<String>(restoranPredict.keySet());
@@ -146,7 +146,7 @@ public class BuildC45forAllEmployee {
         Instances dataResTest = new Instances("dataRestorantest", attrRestorans, 0);
         dataAllTest.setClass(attrStavki);
         dataResTest.setClass(attrRes);
-        ArrayList<RestoranPredict> restoranList = DataBaseHelper.getRestoranPredict(user);
+        ArrayList<RestoranPredict> restoranList = DataBaseHelper.getRestoranPredict(user, date);
         int i = 0;
         for (i = 0; i < restoranList.size(); i++) {
             double values[] = new double[dataRes.numAttributes()];
@@ -419,7 +419,7 @@ public class BuildC45forAllEmployee {
         dataOdr.setClass(attrOdr);
         Instances dataOdrTest = new Instances("dataOdrTest", attrOdrzuvanje, 0);
         dataOdrTest.setClass(attrOdr);
-        ArrayList<OdrzuvanjePredict> OdrzuvanjeList = DataBaseHelper.getOdrzuvanjePredict(Restoran);
+        ArrayList<OdrzuvanjePredict> OdrzuvanjeList = DataBaseHelper.getOdrzuvanjePredict(Restoran, new String());
         int i = 0;
         for (i = 0; i < (int)(OdrzuvanjeList.size() * 0.95); i++) {
             double values[] = new double[dataOdr.numAttributes()];
@@ -528,7 +528,7 @@ public class BuildC45forAllEmployee {
         Instances dataResTest = new Instances("dataRestorantest", attrRestorans, 0);
         dataAllTest.setClass(attrStavki);
         dataResTest.setClass(attrRes);
-        ArrayList<RestoranPredict> restoranList = DataBaseHelper.getRestoranPredict(user);
+        ArrayList<RestoranPredict> restoranList = DataBaseHelper.getRestoranPredict(user, DataBaseHelper.getFirstDate());
         int i = 0;
         for (i = 0; i < (int) (restoranList.size() * 0.9); i++) {
             double values[] = new double[dataRes.numAttributes()];

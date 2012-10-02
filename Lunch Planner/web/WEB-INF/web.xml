@@ -154,6 +154,10 @@
         <servlet-name>Arhiviraj</servlet-name>
         <servlet-class>Admin.Arhiviraj</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DateForClassificator</servlet-name>
+        <servlet-class>Admin.DateForClassificator</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -253,6 +257,10 @@
     <servlet-mapping>
         <servlet-name>Arhiviraj</servlet-name>
         <url-pattern>/AdminPages/Arhiviraj.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DateForClassificator</servlet-name>
+        <url-pattern>/AdminPages/DateForClassificator.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -10,9 +10,12 @@
 <html>
     <%
     synchronized(application){
+                      
                       BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
                       if (bC45==null) {
-                          bC45 = prediction.SetC45.set();
+                          application.setAttribute("DatumObuka", DataBase.DataBaseHelper.getFirstDate());
+                          application.setAttribute("DatumUser", DataBase.DataBaseHelper.getFirstDate());
+                          bC45 = prediction.SetC45.set(DataBase.DataBaseHelper.getFirstDate(), DataBase.DataBaseHelper.getFirstDate());
                           application.setAttribute("PredikcijaRestorani", bC45);
                       }
                 }

@@ -23,7 +23,7 @@ public class SortedString {
             for(int j = 0; j < strsplit.length - 1; j++){
                 tmp.str.append(strsplit[j]+";");
             }
-            tmp.p = Double.parseDouble(strsplit[strsplit.length - 1]);
+            tmp.p = Double.parseDouble((strsplit[strsplit.length - 1]).replace(',', '.'));
             lstobj.add(tmp);
         }
         Object1 lista[] = new Object1[lstobj.size()];
