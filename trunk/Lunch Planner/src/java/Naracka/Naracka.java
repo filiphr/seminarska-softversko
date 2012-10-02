@@ -139,8 +139,9 @@ public class Naracka extends HttpServlet {
                 ServletContext application = getServletContext();
                 BuildC45forAllEmployee bC45 = (BuildC45forAllEmployee) application.getAttribute("PredikcijaRestorani");
                 String restoran = DataBaseHelper.getRestaurantName(IDGroup);
+                String date = (String) application.getAttribute("DatumObuka");
                 try {
-                   bC45.BuildRestoran();
+                   bC45.BuildRestoran(date);
                     synchronized(application){
                         application.setAttribute("PredikcijaRestorani", bC45);
                     }

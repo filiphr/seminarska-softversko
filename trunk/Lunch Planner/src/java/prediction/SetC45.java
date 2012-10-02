@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class SetC45 {
     
-    public static BuildC45forAllEmployee set() throws Exception
+    public static BuildC45forAllEmployee set(String date, String dateUser) throws Exception
     {
         BuildC45forAllEmployee b = new BuildC45forAllEmployee();
         b.setOptionsforRestorants("-C 0.25 -M 2");
@@ -22,8 +22,8 @@ public class SetC45 {
         for(int i = 0; i < users.size(); i++){
             b.add(users.get(i));
         }
-        b.BuildRestoran();
-        b.BuildAllClassifiers(); 
+        b.BuildRestoran(date);
+        b.BuildAllClassifiers(dateUser); 
         return b;
     }
 }

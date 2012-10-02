@@ -889,10 +889,43 @@ public class DataBaseHelper {
         return new String();
     }
     
-    public static ArrayList<OdrzuvanjePredict> getOdrzuvanjePredict(String Restoran){
+    public static String getLastDate(){
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<List<String>> lst = new ArrayList<List<String>>();
+        lst.add(GetQuery("select * from grupa", 4));        
+        String date =  ((lst.get(0).get(lst.get(0).size() - 1)).split(" "))[0];
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, Integer.parseInt((date.split("-"))[0]));
+        c.set(Calendar.MONTH, Integer.parseInt((date.split("-"))[1]) - 1);
+        c.set(Calendar.DAY_OF_MONTH, Integer.parseInt((date.split("-"))[2]));
+                System.out.println(sdf.format(c.getTime()));
+        c.add(Calendar.MONTH, -1);
+        System.out.println(sdf.format(c.getTime()));
+
+        return sdf.format(c.getTime());
+    }
+    
+    public static String getFirstDate(){
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<List<String>> lst = new ArrayList<List<String>>();
+        lst.add(GetQuery("select * from grupa", 4));
+        String date = (lst.get(0).get(0).split(" "))[0];
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, Integer.parseInt((date.split("-"))[0]));
+        c.set(Calendar.MONTH, Integer.parseInt((date.split("-"))[1]) - 1);
+        c.set(Calendar.DAY_OF_MONTH, Integer.parseInt((date.split("-"))[2]));
+        System.out.println(sdf.format(c.getTime()));
+        c.add(Calendar.DATE, -1);
+        System.out.println(sdf.format(c.getTime()));
+        return sdf.format(c.getTime());
+    }
+    
+    public static ArrayList<OdrzuvanjePredict> getOdrzuvanjePredict(String Restoran, String date){
         List<List<String>> lstGrupa = new ArrayList<List<String>>();
         for(int i = 1; i <=5; i++){
-            lstGrupa.add(GetQuery("select * from grupa where Restoran='" + Restoran + "'", i));
+//            `Vreme` > '2010-02-03'
+//            String asdfasd = "select * from grupa where Restoran='" + Restoran + "' and `Vreme` > '" + date + "'";
+            lstGrupa.add(GetQuery("select * from grupa where Restoran='" + Restoran + "' and `Vreme` > '" + date + "'", i));
         }
         if(lstGrupa.get(0).isEmpty()) return new ArrayList<OdrzuvanjePredict>();
         StringBuilder mnozestvo = new StringBuilder();
@@ -992,7 +1025,7 @@ public class DataBaseHelper {
         return predictObject;
     }
     
-    public static ArrayList<RestoranPredict> getRestoranPredict(String user){
+    public static ArrayList<RestoranPredict> getRestoranPredict(String user, String date){
         List<String> groupIDS = GetQuery("select Grupa from arhiviranagrupa where Korisnik_User='" + user + "'", 1);
         StringBuilder mnozestvo = new StringBuilder();
         mnozestvo.append("( ");
@@ -1004,7 +1037,7 @@ public class DataBaseHelper {
         int tmpStavki[] = {1,3,4};
         List<List<String>> lstgrupa = new ArrayList<List<String>>();
         for(int i = 0; i < tmp.length; i++){
-            List<String> temp = GetQuery("select * from grupa where idGrupa in " + mnozestvo.toString(), tmp[i]);
+            List<String> temp = GetQuery("select * from grupa where idGrupa in " + mnozestvo.toString() + " and `Vreme` > '" + date + "'", tmp[i]);
             lstgrupa.add(temp);
         }
         List<List<String>> lstGrupa_Korisnik = new ArrayList<List<String>>();
